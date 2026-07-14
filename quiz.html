@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's question — DailyCharter</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+<style>
+  .quiz-stage{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+  .q-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-bottom:10px;flex-wrap:wrap;gap:8px}
+  .q-chips{display:flex;gap:8px}
+  .q-chip{background:var(--paper-2);border-radius:14px;padding:4px 12px;font-family:var(--mono);font-size:.72rem;color:var(--ink)}
+  .q-card{background:#fff;border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:0 14px 40px rgba(19,37,58,.10)}
+  .q-accent{display:flex;height:5px}
+  .q-accent i:first-child{flex:1;background:var(--ledger)}
+  .q-accent i:last-child{width:18%;background:var(--marker)}
+  .q-inner{padding:28px}
+  .q-stem{font-family:var(--display);font-weight:700;font-size:1.2rem;line-height:1.4;margin:8px 0 22px}
+  .opts{display:grid;gap:10px}
+  .optbtn{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font-family:var(--body);font-size:1rem;background:var(--paper);border:1.5px solid var(--rule);border-radius:8px;padding:14px 16px;cursor:pointer;color:var(--ink);transition:border-color .12s ease,background .12s ease,transform .08s ease}
+  .optbtn:hover{border-color:var(--ink);transform:translateX(2px)}
+  .optbtn .key{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--display);font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+  .optbtn.correct{background:#E7F5EF;border-color:var(--ledger)}
+  .optbtn.correct .key{background:var(--ledger)}
+  .optbtn.wrong{background:#FBEFEF;border-color:var(--error);animation:shake .3s ease}
+  .optbtn.wrong .key{background:var(--error)}
+  .optbtn.dim{opacity:.45}
+  .optbtn[disabled]{cursor:default;transform:none}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .why{font-size:.83rem;color:var(--muted);margin-left:42px;margin-top:4px;display:none}
+  .why.show{display:block}
+  .verdict-line{display:none;margin-top:22px;padding-top:18px;border-top:1px dashed var(--rule)}
+  .verdict-line.show{display:block}
+  .verdict-line .v{font-family:var(--display);font-weight:800;font-size:1.15rem}
+  .verdict-line .v.ok{color:var(--ledger)}
+  .verdict-line .v.ko{color:var(--error)}
+  .stats-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .stat{background:var(--paper-2);border-radius:8px;padding:10px 16px;font-family:var(--mono);font-size:.78rem;color:var(--ink)}
+  .stat b{font-family:var(--display);font-size:1.05rem;display:block}
+  .after-actions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .kbd-hint{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;margin-top:14px}
+  kbd{border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:1px 6px;background:#fff}
+  /* confetti (correct answers only; respects reduced motion) */
+  .confetti{position:fixed;top:-12px;width:8px;height:12px;z-index:99;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+  @media (prefers-reduced-motion:reduce){.confetti{display:none}.optbtn.wrong{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="archive.html">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="quiz-stage">
+    <div class="q-meta">
+      <span id="q-label">Pill 042 / 180 · Quantitative Methods</span>
+      <div class="q-chips">
+        <span class="q-chip">🔥 <span id="chip-streak">12</span>-day streak</span>
+        <span class="q-chip">🎯 <span id="chip-acc">84</span>%</span>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-accent"><i></i><i></i></div>
+      <div class="q-inner">
+        <span class="eyebrow" style="margin-bottom:6px">✎ Today's question</span>
+        <p class="q-stem" id="q-stem"></p>
+
+        <div class="opts" id="opts" role="group" aria-label="Answer options"></div>
+
+        <div class="verdict-line" id="verdict-line">
+          <p class="v" id="verdict-text"></p>
+          <div class="stats-row">
+            <span class="stat"><b id="s-streak">—</b>day streak</span>
+            <span class="stat"><b id="s-acc">—</b>accuracy</span>
+            <span class="stat"><b id="s-prog">—</b>of curriculum</span>
+          </div>
+          <div class="after-actions">
+            <button class="btn" id="bonus-btn" type="button">Bonus review question →</button>
+            <a class="btn btn-ghost" href="archive.html">Read more pills</a>
+          </div>
+          <p style="font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-top:16px" id="see-you">
+            Pill 043 lands tomorrow at 7:00 — Annuities.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="kbd-hint">Tip: answer with your keyboard — <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></p>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@dailycharter.example">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   DailyCharter interactive quiz
+   ---------------------------------------------------------------------
+   Arrives from email as:  /quiz.html?pill=042&u=<token>[&a=B]
+     pill → which question to load
+     u    → signed subscriber token (see backend-quiz-spec.md §5)
+     a    → optional pre-selected answer from the email's A/B/C buttons
+   RULES honored here:
+     - Page load records NOTHING (mail scanners prefetch links).
+     - &a= is only submitted after a human gesture (first pointer/key event).
+     - Verdict comes from the SERVER; the demo below fakes it locally.
+   GO LIVE: set API_BASE, delete DEMO, uncomment the fetch in submit().
+   ===================================================================== */
+
+var API_BASE = null; // e.g. "https://api.dailycharter.example"
+
+var params = new URLSearchParams(location.search);
+var pill   = params.get("pill") || "042";
+var token  = params.get("u")    || "demo";
+var preSel = (params.get("a") || "").toUpperCase();
+
+/* ---- DEMO data (server-side in production; note: no correct flag
+       is exposed pre-submit in the real flow — spec §6.6) ---- */
+var DEMO = {
+  daily: {
+    id:"q042-1", label:"Pill 042 / 180 · Quantitative Methods",
+    stem:"A preferred stock pays a fixed $4.50 annual dividend. If the required return is 6%, its value is closest to:",
+    choices:[
+      {key:"A",text:"$27.00", why:"The multiply trap: 4.50 × 0.06. If the answer is smaller than one payment, something's off."},
+      {key:"B",text:"$75.00", why:"PV = PMT / r = 4.50 / 0.06. Fixed-dividend preferred stock is a perpetuity."},
+      {key:"C",text:"$270.00",why:"A rate misread — always restate the rate as a decimal before dividing."}
+    ],
+    correct:"B",
+    stats:{streak_days:13, accuracy_pct:85, progress_pct:23}
+  },
+  bonus: {
+    id:"q019-1", label:"Review · Pill 019 · Economics",
+    stem:"If demand is price-elastic, a small price cut will cause total revenue to:",
+    choices:[
+      {key:"A",text:"Increase",  why:"Elastic demand: quantity rises proportionally more than price falls, so revenue rises."},
+      {key:"B",text:"Decrease",  why:"That happens when demand is inelastic."},
+      {key:"C",text:"Stay equal",why:"Only at unit elasticity."}
+    ],
+    correct:"A",
+    stats:{streak_days:13, accuracy_pct:86, progress_pct:23}
+  }
+};
+
+var current, answered=false, humanTouched=false;
+
+function render(q){
+  current=q; answered=false;
+  document.getElementById("q-label").textContent=q.label;
+  document.getElementById("q-stem").textContent=q.stem;
+  var box=document.getElementById("opts"); box.innerHTML="";
+  q.choices.forEach(function(c,i){
+    var b=document.createElement("button");
+    b.className="optbtn"; b.dataset.key=c.key;
+    b.innerHTML='<span class="key">'+c.key+'</span><span>'+c.text+'</span>';
+    b.addEventListener("click",function(){submit(c.key,"web")});
+    box.appendChild(b);
+    var why=document.createElement("p");
+    why.className="why"; why.id="why-"+c.key; why.textContent=c.why;
+    box.appendChild(why);
+  });
+  document.getElementById("verdict-line").classList.remove("show");
+}
+
+function submit(choice, source){
+  if(answered) return; answered=true;
+
+  /* ---- PRODUCTION ----
+  fetch(API_BASE+"/api/attempts",{
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({token:token, question_id:current.id, choice:choice, source:source})
+  }).then(r=>r.json()).then(showResult);
+  --------------------- */
+
+  // DEMO: fake the server response locally
+  showResult({
+    correct: choice===current.correct,
+    correct_key: current.correct,
+    picked: choice,
+    stats: current.stats
+  });
+}
+
+function showResult(res){
+  var picked = res.picked;
+  document.querySelectorAll(".optbtn").forEach(function(b){
+    b.disabled=true;
+    var k=b.dataset.key;
+    if(k===res.correct_key){ b.classList.add("correct"); document.getElementById("why-"+k).classList.add("show"); }
+    else if(k===picked){ b.classList.add("wrong"); document.getElementById("why-"+k).classList.add("show"); }
+    else b.classList.add("dim");
+  });
+  var v=document.getElementById("verdict-text");
+  if(res.correct){ v.textContent="✓ Correct — recorded."; v.className="v ok"; confetti(); }
+  else{ v.textContent="✗ Not quite — it returns in Sunday's recap."; v.className="v ko"; }
+  document.getElementById("s-streak").textContent=res.stats.streak_days;
+  document.getElementById("s-acc").textContent=res.stats.accuracy_pct+"%";
+  document.getElementById("s-prog").textContent=res.stats.progress_pct+"%";
+  document.getElementById("chip-streak").textContent=res.stats.streak_days;
+  document.getElementById("chip-acc").textContent=res.stats.accuracy_pct;
+  document.getElementById("verdict-line").classList.add("show");
+}
+
+/* Bonus review question (GET /api/review-next in production) */
+document.getElementById("bonus-btn").addEventListener("click",function(){
+  this.style.display="none";
+  document.getElementById("see-you").textContent="Nice — clearing your review queue early.";
+  render(DEMO.bonus);
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+/* Keyboard 1/2/3 */
+document.addEventListener("keydown",function(e){
+  var map={"1":0,"2":1,"3":2};
+  if(e.key in map && !answered){
+    var b=document.querySelectorAll(".optbtn")[map[e.key]];
+    if(b) b.click();
+  }
+});
+
+/* Email pre-selection (&a=B): submit only after a human gesture —
+   scanners load pages but don't move pointers or press keys. */
+function armPreselect(){
+  if(humanTouched) return; humanTouched=true;
+  if(preSel && !answered){
+    var b=document.querySelector('.optbtn[data-key="'+preSel+'"]');
+    if(b){ submit(preSel,"email_tap"); }
+  }
+}
+["pointerdown","pointermove","keydown","touchstart","scroll"].forEach(function(ev){
+  window.addEventListener(ev, armPreselect, {once:true, passive:true});
+});
+
+/* Confetti — brief, brand colors, skipped under reduced motion */
+function confetti(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var colors=["#0E7C5B","#FFE86B","#13253A"];
+  for(var i=0;i<36;i++){
+    var c=document.createElement("i");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[i%3];
+    c.style.animationDuration=(1.4+Math.random()*1.2)+"s";
+    c.style.animationDelay=(Math.random()*.25)+"s";
+    document.body.appendChild(c);
+    setTimeout(function(el){return function(){el.remove()}}(c),3200);
+  }
+}
+
+render(DEMO.daily);
+</script>
+</body>
+</html>
