@@ -7,14 +7,14 @@
 | Fase | Estado |
 |---|---|
 | 0. Mover proyecto a `C:\Users\migue\Proyectos\dailycharter` | ✅ Hecho |
-| 1. Comprobar entorno | ✅ Hecho (ver tabla abajo) |
-| 2. Repos y despliegue web | ⛔ BLOQUEADA — falta `git` |
-| 3. Piloto de contenido (plan 90) | 🔄 En curso |
-| 4. Control de calidad | ⏳ Pendiente de fase 3 |
-| 5. Generación completa (180/270/365) | ⏳ Pendiente de aprobación fase 4 |
-| 6. Motor de emails (Cloudflare) | ⛔ BLOQUEADA — falta `wrangler`, falta login Cloudflare, falta API key Resend |
+| 1. Comprobar entorno | ✅ Hecho (git, node, npm, gh, wrangler instalados con tu aprobación) |
+| 2. Repos y despliegue web | 🔶 PARCIAL — git init + primer commit hechos; deploy a GitHub Pages ⛔ bloqueado: falta `gh auth login` (tuyo) |
+| 3. Piloto de contenido (plan 90) | 🔄 En curso — generación de 90 píldoras con Ollama/qwen3:14b corriendo en background (~80-110 min ETA) |
+| 4. Control de calidad | ⏳ Pendiente de que termine fase 3 |
+| 5. Generación completa (180/270/365) | ⏳ Pendiente de tu aprobación en el checkpoint de fase 4 |
+| 6. Motor de emails (Cloudflare) | 🔶 PREP — wrangler 4.110.0 instalado localmente en mail-engine/ y funcional. Bloqueado: falta `wrangler login` (tuyo) y API key de Resend (tuya) |
 | 7. Cablear web ↔ motor | ⏳ Pendiente de fase 6 |
-| 8. Prueba de fuego | ⏳ Pendiente de fases 6-7 |
+| 8. Prueba de fuego | ⏳ Pendiente de fases 6-7, y de tu confirmación de email recibido |
 
 ## Fase 1 — Tabla de entorno
 
@@ -37,26 +37,45 @@
 
 ## PDFs
 
-Los 5 PDFs (`CFA_Public_1..5.pdf`) YA estaban en `pill-factory/pdfs/` al mover el proyecto. No ha hecho falta pedir confirmación de copia (regla 6).
+Los 5 PDFs YA estaban en `pill-factory/pdfs/` al mover el proyecto (regla 6: no hizo falta pedir
+confirmación de copia). Se llamaban genéricamente `CFA_Public_1..5.pdf`, lo que hacía que
+`pill_factory.py scan` los mapeara todos a topic "General" (no existe en `TOPIC_WEIGHTS`, así que la
+generación real habría quedado sin texto de referencia). Los inspeccioné (extraje el índice de cada
+uno) e identifiqué su contenido real:
+
+| Archivo original | Contenido real (por índice) | Renombrado a |
+|---|---|---|
+| CFA_Public_1.pdf | Ethics and Trust, Code/Standards, GIPS, Time Value of Money | `01-ethics-quant.pdf` |
+| CFA_Public_2.pdf | Demand/Supply, Market Structures, Aggregate Output | `02-economics.pdf` |
+| CFA_Public_3.pdf | FSA intro, Financial Reporting Standards, Income Statements | `03-reporting-analysis.pdf` |
+| CFA_Public_4.pdf | Corporate Governance/ESG, Capital Budgeting, Cost of Capital | `04-corporate-finance.pdf` |
+| CFA_Public_5.pdf | Derivative Markets/Pricing, Alt Investments, Portfolio Mgmt | `05-derivatives-portfolio.pdf` |
+
+Tras el renombrado, `scan` mapea correctamente los 7 topics del temario CFA L1. Verificado con
+`pill_factory.py scan --pdf-dir pill-factory/pdfs` (salida en el log de la sesión).
 
 ## Bloqueado — y por qué
 
-1. **Fase 2 (git init, deploy GitHub Pages)**: imposible sin `git`. Sin `gh` también costaría más
-   (tendría que usar la API REST de GitHub con un token, menos robusto que `gh`).
-2. **Fase 6 (Cloudflare Worker + D1)**: imposible sin `wrangler` (requiere `npm`, que requiere `node`).
-   Además necesito: (a) que hagas login de `wrangler` (Cloudflare) tú mismo, (b) la API key de Resend.
+1. **Fase 2, deploy a GitHub Pages**: `git` ya instalado y usado (init + primer commit ✅). Falta
+   `gh auth login` — solo tú tienes esa credencial. En cuanto esté, ejecuto
+   `gh repo create dailycharter --public --source=site --remote=origin --push` (o equivalente) y
+   habilito Pages, luego verifico con `curl -I` que responde 200.
+2. **Fase 6 (Cloudflare Worker + D1)**: `wrangler` 4.110.0 ya instalado y funcional (local, en
+   `mail-engine/`, vía `npx wrangler`). Falta: (a) `wrangler login` (Cloudflare, tuyo),
+   (b) API key de Resend (tuya). `TOKEN_SECRET` lo genero yo (string aleatorio largo) cuando lleguemos.
 
 ## Qué necesito de ti
 
-- **Decisión de instalación de sistema**: ¿instalo git, Node.js LTS, gh y wrangler con winget (comandos
-  arriba), o prefieres instalarlos tú? Sin esto no puedo avanzar en fases 2, 6, 7, 8.
-- **Login de GitHub (`gh auth login`)** — cuando gh esté instalado.
-- **Login de Cloudflare (`wrangler login`)** — cuando wrangler esté instalado.
-- **API key de Resend** — para la fase 6, cuando lleguemos ahí.
+- **`gh auth login`** — corre `! gh auth login` cuando puedas, para desbloquear el deploy de la web (fase 2).
+- **`wrangler login`** (Cloudflare) — para la fase 6, cuando lleguemos ahí.
+- **API key de Resend** — para la fase 6 (antes crea cuenta en resend.com y verifica dominio con SPF/DKIM).
 - **Checkpoint de calidad fase 4**: en cuanto `review.html` esté listo, te aviso aquí y espero tu OK
   antes de lanzar la fase 5 (generación completa 180/270/365).
 
 ## Avance en paralelo mientras espero
 
-Mientras se resuelve el bloqueo de fase 2, sigo con la fase 3 (scan + generación del plan de 90 días
-con Ollama/qwen3:14b), que no depende de git ni de ninguna credencial externa.
+- Fase 3: generación del plan de 90 días corriendo en background (Ollama/qwen3:14b), log en
+  `pill-factory/generate-90.log`, checkpoint automático en `pill-factory/plans/plan-90.json.partial`.
+- Fase 6 prep: `wrangler` instalado y verificado localmente en `mail-engine/` (con `package.json` propio,
+  scripts de instalación de `esbuild`/`workerd`/`sharp` aprobados explícitamente — npm 11+ los bloquea
+  por defecto).
