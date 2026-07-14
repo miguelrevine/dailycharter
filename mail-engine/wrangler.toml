@@ -1,0 +1,21 @@
+name = "dailycharter-engine"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# Hourly: every timezone gets its 7:00 (send_hour_utc per subscriber)
+[triggers]
+crons = ["0 * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dailycharter"
+database_id = "REPLACE_AFTER_wrangler_d1_create"
+
+[vars]
+SITE_URL   = "https://YOUR_USER.github.io/dailycharter"
+WORKER_URL = "https://dailycharter-engine.YOUR_SUBDOMAIN.workers.dev"
+FROM_EMAIL = "DailyCharter <pills@yourdomain.com>"
+
+# Secrets (never in this file):
+#   wrangler secret put TOKEN_SECRET   ← long random string; rotating it kills all links
+#   wrangler secret put ESP_API_KEY    ← Resend (or adapt sendEmail() for Postmark/SES)

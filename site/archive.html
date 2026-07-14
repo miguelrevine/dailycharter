@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample pills — DailyCharter</title>
+<meta name="description" content="Read real DailyCharter study pills before you subscribe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="index.html#how">How it works</a>
+      <a href="archive.html" aria-current="page">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a class="btn" href="checkout.html">Get the program</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">The archive</span>
+      <h1 style="font-size:clamp(1.8rem,3.4vw,2.6rem)">Read a pill before you swallow one.</h1>
+      <p>This is exactly what lands in subscribers' inboxes. One concept, the formula that matters, one exam-style question. The first is fully open — try the question.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="archive-grid">
+
+      <!-- Open pill -->
+      <div class="pill">
+        <div class="pill-top">
+          <span>Pill 042 / 180 · Quantitative Methods</span>
+          <span class="tag">Free sample</span>
+        </div>
+        <div class="pill-body">
+          <h3>Time Value of Money: Present Value of a Perpetuity</h3>
+          <p>A perpetuity pays a fixed amount forever. Because payments never end, you can't sum them one by one — but the geometric series collapses to a single division:</p>
+          <div class="formula">PV = PMT / r</div>
+          <p>Two things the exam loves to test: the formula gives the value <em>one period before</em> the first payment, and preferred stock with a fixed dividend is the classic real-world perpetuity.</p>
+          <div class="quiz">
+            <p class="q">A preferred stock pays a fixed $4.50 annual dividend. If the required return is 6%, its value is closest to:</p>
+            <button data-a="0">A. $27.00</button>
+            <button data-a="1">B. $75.00</button>
+            <button data-a="0">C. $270.00</button>
+            <p class="expl">✓ Correct — PV = 4.50 / 0.06 = $75.00. Answer A multiplies instead of dividing; answer C slips a decimal.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locked pill 1 -->
+      <div class="pill locked" aria-label="Subscriber-only pill">
+        <div class="pill-top">
+          <span>Pill 007 / 180 · Ethical &amp; Professional Standards</span>
+          <span class="tag">Subscribers</span>
+        </div>
+        <div class="lock-msg">
+          <span>🔒 Standard III(A) Loyalty, Prudence, and Care — who is the client when you manage a pension?</span>
+          <a class="btn" href="checkout.html">Unlock all 180 pills</a>
+        </div>
+        <div class="pill-body" aria-hidden="true">
+          <h3>Standard III(A): Loyalty, Prudence, and Care</h3>
+          <p>When managing a pension plan, your duty of loyalty runs to the beneficiaries of the plan, not to the sponsoring company that hired you. This distinction is one of the most frequently tested points in the Ethics section, and the exam will often present a scenario where the plan sponsor pressures the manager.</p>
+          <div class="formula">Client = beneficiaries, not the sponsor</div>
+        </div>
+      </div>
+
+      <!-- Locked pill 2 -->
+      <div class="pill locked" aria-label="Subscriber-only pill">
+        <div class="pill-top">
+          <span>Pill 118 / 180 · Fixed Income</span>
+          <span class="tag">Subscribers</span>
+        </div>
+        <div class="lock-msg">
+          <span>🔒 Duration — why a 5-year bond doesn't move like a 5-year bond.</span>
+          <a class="btn" href="checkout.html">Unlock all 180 pills</a>
+        </div>
+        <div class="pill-body" aria-hidden="true">
+          <h3>Modified Duration as Price Sensitivity</h3>
+          <p>Duration approximates the percentage price change of a bond for a one percent change in yield. The linear approximation works well for small yield changes but understates gains and overstates losses because of convexity, which the exam tests both conceptually and numerically.</p>
+          <div class="formula">%ΔP ≈ −ModDur × Δy</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@dailycharter.example">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.quiz button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var quiz = b.closest('.quiz');
+      var correct = b.dataset.a === "1";
+      quiz.querySelectorAll('button').forEach(function(x){x.classList.remove('correct','wrong')});
+      b.classList.add(correct ? 'correct' : 'wrong');
+      if(correct){ quiz.querySelector('.expl').classList.add('show'); }
+    });
+  });
+</script>
+</body>
+</html>

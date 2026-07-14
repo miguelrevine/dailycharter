@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — DailyCharter</title>
+<meta name="description" content="Start the full 180-pill CFA Level I program.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="index.html#how">How it works</a>
+      <a href="archive.html">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="checkout-grid">
+
+      <!-- LEFT: billing + payment -->
+      <div>
+        <span class="eyebrow">Checkout</span>
+        <h1 style="font-size:clamp(1.7rem,3vw,2.3rem)">You're 5 minutes a day from exam day.</h1>
+
+        <div class="co-panel" style="margin-top:28px">
+          <span class="co-step-label">STEP 1 OF 3</span>
+          <h2>Choose your billing cycle</h2>
+          <div class="cycle-toggle" role="group" aria-label="Billing cycle">
+            <button class="cyc" id="cyc-month" aria-pressed="true" type="button">
+              <span class="cyc-name">Monthly</span>
+              <span class="cyc-price">$12.00 / month · cancel anytime</span>
+            </button>
+            <button class="cyc" id="cyc-year" aria-pressed="false" type="button">
+              <span class="cyc-name">Annual <span class="save">SAVE 31%</span></span>
+              <span class="cyc-price">$99.00 / year · covers a full exam cycle</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="co-panel" style="margin-top:24px">
+          <span class="co-step-label">STEP 2 OF 3</span>
+          <h2>Your details</h2>
+          <form id="billing-form" novalidate>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+              <p class="hint">Your pills — and your receipt — go here. Double-check it.</p>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="fname">Full name</label>
+                <input type="text" id="fname" name="name" autocomplete="name" placeholder="Jordan Rivera" required>
+              </div>
+              <div class="field">
+                <label for="country">Country</label>
+                <select id="country" name="country" autocomplete="country-name">
+                  <option value="">Select…</option>
+                  <option>United States</option><option>United Kingdom</option><option>Spain</option>
+                  <option>Germany</option><option>France</option><option>India</option>
+                  <option>Singapore</option><option>United Arab Emirates</option><option>Canada</option>
+                  <option>Australia</option><option>Other</option>
+                </select>
+                <p class="hint">Used only to calculate applicable tax/VAT.</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="examdate">Exam window (optional)</label>
+              <select id="examdate" name="examdate">
+                <option value="">I'll set it later</option>
+                <option>August 2026</option>
+                <option>November 2026</option>
+                <option>February 2027</option>
+                <option>May 2027</option>
+              </select>
+              <p class="hint">We pace your 180-pill sequence backwards from this date.</p>
+            </div>
+          </form>
+        </div>
+
+        <div class="co-panel" style="margin-top:24px">
+          <span class="co-step-label">STEP 3 OF 3</span>
+          <h2>Payment</h2>
+          <div class="pay-placeholder" id="payment-element">
+            <strong>Payment module</strong>
+            Stripe Elements mounts here.<br>
+            (card · Apple Pay · Google Pay · SEPA)
+          </div>
+          <p class="secure-note">🔒 Payments processed by Stripe. Card details never touch our servers.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: order summary -->
+      <aside class="summary">
+        <div class="co-panel">
+          <h2 style="margin-bottom:6px">Order summary</h2>
+          <p style="font-size:.88rem;color:var(--muted)">Full program · CFA® Level I</p>
+
+          <div class="sum-rows">
+            <div class="sum-row"><span class="lbl">Plan</span><span id="sum-plan">Monthly</span></div>
+            <div class="sum-row"><span class="lbl">Price</span><span id="sum-price">$12.00 / mo</span></div>
+            <div class="sum-row"><span class="lbl">Tax / VAT</span><span id="sum-tax">Calculated at payment</span></div>
+            <div class="sum-row total"><span>Due today</span><span id="sum-total">$12.00</span></div>
+          </div>
+
+          <div class="coupon">
+            <input type="text" id="coupon" placeholder="COUPON CODE" aria-label="Coupon code">
+            <button class="btn btn-ghost" type="button" id="apply-coupon">Apply</button>
+          </div>
+          <p class="hint" id="coupon-msg" style="font-size:.78rem;color:var(--muted);margin-top:6px"></p>
+
+          <button class="btn btn-marker btn-block" id="pay-btn" style="margin-top:20px" disabled title="Enabled once payment integration is connected">Pay $12.00</button>
+          <p class="hint" style="margin-top:10px;text-align:center">Button activates when the payment provider is connected.</p>
+
+          <div class="guarantee">
+            <strong>14-day guarantee.</strong> If daily pills don't fit your routine, reply to any email within 14 days and we refund you in full — no questions, no forms.
+          </div>
+        </div>
+
+        <ul style="list-style:none;margin-top:18px;font-family:var(--mono);font-size:.76rem;color:var(--muted);display:grid;gap:6px">
+          <li>✓ Cancel anytime, one click from any email</li>
+          <li>✓ You keep every pill already delivered</li>
+          <li>✓ Secure checkout · PCI-DSS via Stripe</li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@dailycharter.example">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+  // ---- Billing cycle state ----
+  var PLANS = {
+    month: { label:"Monthly", price:1200, suffix:"/ mo", human:"$12.00" },
+    year:  { label:"Annual",  price:9900, suffix:"/ yr", human:"$99.00" }
+  };
+  var state = { cycle:"month", discount:0 };
+
+  function money(cents){ return "$" + (cents/100).toFixed(2); }
+
+  function render(){
+    var p = PLANS[state.cycle];
+    var total = Math.max(0, p.price - state.discount);
+    document.getElementById("sum-plan").textContent  = p.label;
+    document.getElementById("sum-price").textContent = p.human + " " + p.suffix;
+    document.getElementById("sum-total").textContent = money(total);
+    document.getElementById("pay-btn").textContent   = "Pay " + money(total);
+    document.getElementById("cyc-month").setAttribute("aria-pressed", state.cycle==="month");
+    document.getElementById("cyc-year").setAttribute("aria-pressed",  state.cycle==="year");
+  }
+
+  document.getElementById("cyc-month").addEventListener("click", function(){ state.cycle="month"; state.discount=0; clearCouponMsg(); render(); });
+  document.getElementById("cyc-year").addEventListener("click",  function(){ state.cycle="year";  state.discount=0; clearCouponMsg(); render(); });
+
+  // ---- Coupon (demo logic; validate server-side in production) ----
+  var COUPONS = { "EARLYBIRD": .20, "STUDYGROUP": .10 };
+  function clearCouponMsg(){ document.getElementById("coupon-msg").textContent=""; }
+  document.getElementById("apply-coupon").addEventListener("click", function(){
+    var code = document.getElementById("coupon").value.trim().toUpperCase();
+    var msg  = document.getElementById("coupon-msg");
+    if (COUPONS[code]) {
+      state.discount = Math.round(PLANS[state.cycle].price * COUPONS[code]);
+      msg.textContent = "✓ " + code + " applied — " + (COUPONS[code]*100) + "% off.";
+      msg.style.color = "var(--ledger)";
+    } else {
+      state.discount = 0;
+      msg.textContent = code ? "That code isn't valid. Check the spelling and try again." : "Enter a code first.";
+      msg.style.color = "var(--error)";
+    }
+    render();
+  });
+
+  render();
+
+  /* ---- INTEGRATION NOTES (remove in production) ----
+     1. Create Products/Prices in Stripe: price_monthly ($12), price_annual ($99).
+     2. On page load, POST /api/create-checkout-session or mount Stripe Elements:
+          const stripe = Stripe("pk_live_...");
+          const elements = stripe.elements({ clientSecret });
+          elements.create("payment").mount("#payment-element");
+     3. Enable #pay-btn once elements are ready; on click call stripe.confirmPayment
+        with return_url = success.html.
+     4. Validate coupons server-side (Stripe promotion codes) — the demo list above
+        is illustrative only.
+     5. Tax: enable Stripe Tax so "Tax / VAT" resolves from the billing country.
+  ---------------------------------------------------- */
+</script>
+</body>
+</html>

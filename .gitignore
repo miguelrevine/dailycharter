@@ -1,0 +1,13 @@
+# copyrighted source material — never commit
+pill-factory/pdfs/
+# generation checkpoints & caches
+*.partial
+__pycache__/
+*.pyc
+# node / wrangler
+node_modules/
+.wrangler/
+.dev.vars
+# OS junk
+.DS_Store
+Thumbs.db

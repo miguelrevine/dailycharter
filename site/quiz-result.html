@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz result — DailyCharter</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+<style>
+  .result-hero{padding:64px 0 24px;text-align:center}
+  .verdict{display:inline-block;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;padding:6px 14px;border-radius:6px;margin-bottom:18px;font-weight:600}
+  .verdict.ok{background:#E7F5EF;color:var(--ledger)}
+  .verdict.ko{background:#FBEFEF;color:var(--error)}
+  .answer-review{max-width:640px;margin:0 auto;text-align:left}
+  .opt{border:1px solid var(--rule);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:.95rem;background:#fff}
+  .opt.correct{border-color:var(--ledger);background:#E7F5EF}
+  .opt.picked-wrong{border-color:var(--error);background:#FBEFEF}
+  .opt .why{display:block;font-size:.82rem;color:var(--muted);margin-top:4px}
+  .streak{font-family:var(--mono);font-size:.8rem;color:var(--muted);text-align:center;margin-top:26px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="archive.html">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap result-hero">
+    <span class="verdict ok" id="verdict">✓ CORRECT — ANSWER RECORDED</span>
+    <h1 style="font-size:clamp(1.6rem,3vw,2.2rem)" id="headline">PV = 4.50 / 0.06 = $75.00</h1>
+    <p style="color:var(--muted);max-width:52ch;margin:0 auto 36px" id="subline">
+      Pill 042 · Present Value of a Perpetuity. Here's why each option is there:
+    </p>
+  </div>
+
+  <div class="wrap answer-review" id="review">
+    <div class="opt" data-opt="A">
+      <strong>A. $27.00</strong>
+      <span class="why">The multiply trap: 4.50 × 0.06 = 0.27, shifted. If your answer is smaller than the payment, something's off — a perpetuity is worth many payments.</span>
+    </div>
+    <div class="opt correct" data-opt="B">
+      <strong>B. $75.00 ✓</strong>
+      <span class="why">PV = PMT / r = 4.50 / 0.06. Fixed-dividend preferred stock is valued exactly like a perpetuity.</span>
+    </div>
+    <div class="opt" data-opt="C">
+      <strong>C. $270.00</strong>
+      <span class="why">The decimal slip: dividing by 6 instead of 0.06 loses a factor of... wait, that gives 0.75. This one divides by 0.0166 — a rate misread. Always restate the rate as a decimal before you divide.</span>
+    </div>
+
+    <p class="streak">Recap on Sunday · Concepts you miss re-enter your queue automatically</p>
+
+    <div style="text-align:center;margin:32px 0 72px">
+      <a class="btn" href="archive.html">Read more pills</a>
+      &nbsp;&nbsp;
+      <a class="btn btn-ghost" href="index.html">Back to home</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@dailycharter.example">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+  /* Demo logic: reads ?a=A|B|C from the email link.
+     In production the backend records {subscriber, pill, answer}
+     BEFORE rendering this page, then passes the verdict in. */
+  var params = new URLSearchParams(location.search);
+  var picked = (params.get("a") || "B").toUpperCase();
+  var CORRECT = "B";
+  var verdict = document.getElementById("verdict");
+
+  if (picked !== CORRECT) {
+    verdict.textContent = "✗ NOT QUITE — RECORDED FOR YOUR RECAP";
+    verdict.classList.remove("ok"); verdict.classList.add("ko");
+    document.getElementById("subline").textContent =
+      "Pill 042 · Present Value of a Perpetuity. No penalty — this concept will simply return in Sunday's recap. Here's the breakdown:";
+    var pickedEl = document.querySelector('.opt[data-opt="'+picked+'"]');
+    if (pickedEl && !pickedEl.classList.contains("correct")) pickedEl.classList.add("picked-wrong");
+  }
+</script>
+</body>
+</html>
