@@ -220,15 +220,23 @@ def generate_pill(model, topic, day, days, reference, retries=4):
         f"{reference}"
     )
     for attempt in range(retries + 1):
-        r = requests.post(f"{OLLAMA_URL}/api/chat", json={
-            "model": model,
-            "messages": [{"role":"system","content":system},
-                         {"role":"user","content":user}],
-            "format": "json",
-            "stream": False,
-            "options": {"temperature": 0.7},
-        }, timeout=600)
-        r.raise_for_status()
+        try:
+            r = requests.post(f"{OLLAMA_URL}/api/chat", json={
+                "model": model,
+                "messages": [{"role":"system","content":system},
+                             {"role":"user","content":user}],
+                "format": "json",
+                "stream": False,
+                "options": {"temperature": 0.7},
+            }, timeout=600)
+            r.raise_for_status()
+        # Ollama hiccups (404 while the model reloads, timeouts, resets)
+        # are transient — back off and retry instead of killing the run.
+        except requests.RequestException:
+            if attempt == retries:
+                raise
+            time.sleep(5 * (attempt + 1))
+            continue
         raw = r.json().get("message", {}).get("content", "")
         try:
             pill = json.loads(raw)
@@ -329,9 +337,9 @@ def regen_pills(pdf_dir, plan_path, days_list, model, log=print):
         pill.update({"day": day, "topic": topic,
                      "id": f"{plan['plan_id']}-{day:03d}"})
         plan["pills"][by_day[day]] = pill
+        with open(plan_path, "w", encoding="utf-8") as f:   # keep progress on crash
+            json.dump(plan, f, ensure_ascii=False, indent=1)
         log(f"  regenerated day {day:>3}  ({topic})")
-    with open(plan_path, "w", encoding="utf-8") as f:
-        json.dump(plan, f, ensure_ascii=False, indent=1)
     log(f"✔ {len(days_list)} pill(s) regenerated in {plan_path}")
 
 # ──────────────────────────────────────────────────────────
