@@ -337,7 +337,7 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
     log(f"✔ Plan written to {out_path}  ({len(plan['pills'])} pills)")
     return out_path
 
-def regen_pills(pdf_dir, plan_path, days_list, model, log=print):
+def regen_pills(pdf_dir, plan_path, days_list, model, avoid="", log=print):
     """Regenerate specific days of an existing plan JSON in place.
     Pre-seed QA use only — once a plan is seeded its version is immutable."""
     with open(plan_path, encoding="utf-8") as f:
@@ -353,12 +353,18 @@ def regen_pills(pdf_dir, plan_path, days_list, model, log=print):
         ref   = slice_reference(corpus.get(topic, ""), index, counts[topic])
         # regen only runs on QA-rejected pills — push harder against copying
         # and add sampling variance so retries don't reproduce the same text.
-        pill  = generate_pill(model, topic, day, total, ref, extra_rules=(
+        rules = (
             "A previous draft of this pill was REJECTED for copying wording "
             "from the reference. Never reuse any sequence of 6+ consecutive "
             "words from the reference: restructure every sentence, change the "
-            "order of ideas, and use your own examples and phrasing. "),
-            temperature=0.85)
+            "order of ideas, and use your own examples and phrasing. ")
+        if avoid:
+            banned = "; ".join(f"“{p.strip()}”"
+                               for p in avoid.split(";") if p.strip())
+            rules += ("These phrases from rejected drafts are BANNED — write "
+                      f"nothing resembling them: {banned}. ")
+        pill  = generate_pill(model, topic, day, total, ref,
+                              extra_rules=rules, temperature=0.85)
         pill.update({"day": day, "topic": topic,
                      "id": f"{plan['plan_id']}-{day:03d}"})
         plan["pills"][by_day[day]] = pill
@@ -539,6 +545,8 @@ def main():
     p4.add_argument("--plan-json", required=True)
     p4.add_argument("--days", required=True, help="comma-separated day numbers, e.g. 5,7,17")
     p4.add_argument("--model", default=DEFAULT_MODEL)
+    p4.add_argument("--avoid", default="",
+                    help="';'-separated phrases the new pills must not contain")
 
     p3 = sub.add_parser("serve", help="local web app to pick & generate plans")
     p3.add_argument("--pdf-dir", required=True)
@@ -556,7 +564,7 @@ def main():
     elif a.cmd == "regen":
         require_model(a.model)
         regen_pills(a.pdf_dir, a.plan_json,
-                    [int(x) for x in a.days.split(",")], a.model)
+                    [int(x) for x in a.days.split(",")], a.model, a.avoid)
     elif a.cmd == "serve":
         find_pdfs(a.pdf_dir)  # fail fast if folder is wrong
         print(f"▸ Pill Factory app → http://localhost:{a.port}")
