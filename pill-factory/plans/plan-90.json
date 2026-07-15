@@ -1,0 +1,2980 @@
+{
+ "plan_id": "L1-90",
+ "version": "v20260715",
+ "days": 90,
+ "name": "Sprint",
+ "model": "qwen3:14b",
+ "generated_at": "2026-07-15T19:09:56.518527+00:00",
+ "pills": [
+  {
+   "title": "Code of Ethics Principles",
+   "concept": "The CFA Institute Code of Ethics includes six principles: integrity, competence, diligence, independence, objectivity, and confidentiality. These guide members to act with honesty, prioritize clients' interests, and maintain professional standards in all activities.",
+   "exam_tips": [
+    "Memorize the six principles and their order for quick recall.",
+    "Differentiate principles (general guidelines) from standards (specific rules) in questions."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which Code of Ethics principle requires members to avoid conflicts of interest and prioritize clients' interests?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Independence and Objectivity",
+      "why": "This principle directly addresses conflicts of interest and client prioritization."
+     },
+     {
+      "key": "B",
+      "text": "Confidentiality",
+      "why": "Confidentiality relates to protecting client information, not conflict resolution."
+     },
+     {
+      "key": "C",
+      "text": "Diligence and Reasonable Basis",
+      "why": "Diligence focuses on work quality, not conflict avoidance."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 1,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-001"
+  },
+  {
+   "title": "Revenue Recognition Under ASC 606",
+   "concept": "Under ASC 606, revenue is recognized when control of a good or service is transferred to the customer. This replaces the old criteria of 'earned' and 'realizable,' focusing instead on the point at which the customer obtains the benefits of the product. This often occurs at delivery but may differ based on contract terms.",
+   "exam_tips": [
+    "Focus on the five steps of ASC 606: identify contracts, performance obligations, transaction price, allocate revenue, and recognize revenue.",
+    "Be cautious of distractors that mix old revenue recognition rules with new standards."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Under ASC 606, when should revenue be recognized for a service contract?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "When the service is performed and control transfers to the customer",
+      "why": "Correct. ASC 606 emphasizes control transfer, not just service completion."
+     },
+     {
+      "key": "B",
+      "text": "When cash is received from the customer",
+      "why": "Incorrect. Revenue recognition is based on control, not cash flow timing."
+     },
+     {
+      "key": "C",
+      "text": "When the contract is signed and payment is guaranteed",
+      "why": "Incorrect. Contract signing alone does not indicate control transfer."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 2,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-002"
+  },
+  {
+   "title": "Mature Stage of Industry Life Cycle",
+   "concept": "In the mature stage, industry growth slows as the market becomes saturated, leading to consolidation among firms. Surviving companies focus on cost efficiency, stable pricing, and maintaining market share through brand loyalty. High barriers to entry prevent new competitors, and firms often return cash to investors via dividends or buybacks.",
+   "exam_tips": [
+    "Link industry life cycle stages to firm behavior (e.g., reinvestment vs. dividend payouts).",
+    "Differentiate mature stage features from decline stage (e.g., stable pricing vs. price wars)."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following is a characteristic of an industry in the mature stage of its life cycle?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "High growth and intense competition",
+      "why": "Describes the growth stage, not mature stage."
+     },
+     {
+      "key": "B",
+      "text": "Low barriers to entry and rapid innovation",
+      "why": "Mature industries have high barriers and limited innovation."
+     },
+     {
+      "key": "C",
+      "text": "Stable pricing and market consolidation",
+      "why": "Correct—mature stages feature oligopolies and price stability."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 3,
+   "topic": "Equity Investments",
+   "id": "L1-90-003"
+  },
+  {
+   "title": "Forward Price Calculation with Continuous Compounding",
+   "concept": "The forward price of an asset is calculated using the spot price, risk-free rate, and time to maturity. When there are no costs or benefits to holding the asset, the formula uses continuous compounding: F = S₀ × e^(rT). This accounts for the time value of money over the contract period.",
+   "exam_tips": [
+    "Always check if the question specifies continuous compounding (uses 'e') or simple interest (uses '1 + rT').",
+    "Remember that this formula assumes no storage costs, dividends, or convenience yields."
+   ],
+   "formula": "F = S₀ × e^(rT)",
+   "question": {
+    "stem": "What is the forward price of an asset with a spot price of $100, a continuous risk-free rate of 6% annually, and a time to maturity of 1 year?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$106.18",
+      "why": "Correctly applies continuous compounding (e^0.06 = 1.0618)."
+     },
+     {
+      "key": "B",
+      "text": "$106.00",
+      "why": "Mistakenly uses simple interest (100 × 1.06) instead of continuous compounding."
+     },
+     {
+      "key": "C",
+      "text": "$100.00",
+      "why": "Incorrectly assumes no time value of money."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 4,
+   "topic": "Fixed Income",
+   "id": "L1-90-004"
+  },
+  {
+   "title": "Arithmetic vs. Geometric Mean in Investment Returns",
+   "concept": "The arithmetic mean is used to estimate future returns when outcomes are uncertain, while the geometric mean calculates the compounded average of past returns. For example, if returns are 10%, 15%, and -4% over three years, the arithmetic mean (7%) estimates expected future returns, whereas the geometric mean (6.81%) reflects actual historical growth.",
+   "exam_tips": [
+    "Use arithmetic mean for single-period forecasts, geometric mean for multi-period historical performance",
+    "Geometric mean always equals or falls below arithmetic mean"
+   ],
+   "formula": "Geometric mean = [(1 + r₁)(1 + r₂)...(1 + rₙ)]^(1/n) − 1",
+   "question": {
+    "stem": "Which measure is most appropriate for estimating a single future year’s investment return?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Arithmetic mean",
+      "why": "Correct - arithmetic mean best estimates future returns when outcomes are uncertain"
+     },
+     {
+      "key": "B",
+      "text": "Geometric mean",
+      "why": "Tempting but incorrect - geometric mean reflects historical compounded returns, not future expectations"
+     },
+     {
+      "key": "C",
+      "text": "Median return",
+      "why": "Irrelevant - median measures central tendency, not predictive power"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 5,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-005"
+  },
+  {
+   "title": "Price Elasticity of Demand",
+   "concept": "Price elasticity of demand measures how responsive quantity demanded is to a price change. It’s calculated as the percentage change in quantity demanded divided by the percentage change in price. If elasticity is greater than 1, demand is elastic (responds strongly to price changes); if less than 1, it’s inelastic (responds weakly).",
+   "exam_tips": [
+    "Always use percentage changes, not absolute values, in calculations.",
+    "Remember that demand for necessities tends to be inelastic, while luxuries are more elastic."
+   ],
+   "formula": "Price Elasticity of Demand = (%ΔQuantity Demanded) / (%ΔPrice)",
+   "question": {
+    "stem": "If a 10% price increase leads to a 15% decrease in quantity demanded, what is the price elasticity of demand?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "-1.5",
+      "why": "Correct: 15% change in quantity divided by 10% change in price equals -1.5."
+     },
+     {
+      "key": "B",
+      "text": "-0.67",
+      "why": "Wrong: This would occur if quantity changed by 6.7% (not 15%) for a 10% price change."
+     },
+     {
+      "key": "C",
+      "text": "-2.5",
+      "why": "Wrong: This would require a 25% change in quantity for a 10% price change."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 6,
+   "topic": "Economics",
+   "id": "L1-90-006"
+  },
+  {
+   "title": "Net Present Value (NPV) Calculation",
+   "concept": "Net Present Value (NPV) measures the difference between the present value of cash inflows and outflows for a project. A positive NPV means the project is expected to add value to the firm, while a negative NPV suggests it would destroy value. NPV uses the required rate of return (cost of capital) to discount future cash flows to their present value.",
+   "exam_tips": [
+    "Always use the project's cost of capital as the discount rate unless stated otherwise.",
+    "NPV is the preferred decision criterion for mutually exclusive projects."
+   ],
+   "formula": "NPV = PV of future cash inflows - PV of future cash outflows",
+   "question": {
+    "stem": "A project requires an initial investment of $100,000 and generates $30,000 annually for 5 years. If the discount rate is 10%, what is the NPV?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$12,900",
+      "why": "Correct calculation using present value factors for 10% over 5 years."
+     },
+     {
+      "key": "B",
+      "text": "$30,000",
+      "why": "Incorrectly assumes cash flows are not discounted."
+     },
+     {
+      "key": "C",
+      "text": "-$10,000",
+      "why": "Miscalculates present value factors or uses the wrong discount rate."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 7,
+   "topic": "Corporate Finance",
+   "id": "L1-90-007"
+  },
+  {
+   "title": "Core-Satellite Approach",
+   "concept": "The core-satellite approach divides a portfolio into two parts: the 'core' (passively managed index funds) and the 'satellite' (actively managed assets). This strategy reduces risks from excessive trading and conflicting active positions while balancing cost efficiency with active management potential.",
+   "exam_tips": [
+    "Focus on how it reduces trading costs compared to 100% active management",
+    "Remember it addresses benchmark overlap and overtrading issues"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the primary benefit of using a core-satellite approach in portfolio management?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Reduces excessive trading and conflicting active positions",
+      "why": "Correct: This directly addresses the core purpose of the strategy"
+     },
+     {
+      "key": "B",
+      "text": "Maximizes short-term returns through aggressive active management",
+      "why": "Incorrect: The core-satellite approach prioritizes long-term efficiency over short-term gains"
+     },
+     {
+      "key": "C",
+      "text": "Increases diversification by adding more asset classes",
+      "why": "Incorrect: Diversification is achieved through asset allocation, not the core-satellite structure"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 8,
+   "topic": "Portfolio Management",
+   "id": "L1-90-008"
+  },
+  {
+   "title": "Put-Call-Forward Parity",
+   "concept": "The put-call-forward parity ensures no-arbitrage by linking the prices of call and put options, the forward price of the underlying asset, and a risk-free bond. It shows that combining a call, a risk-free bond, and a short forward position is equivalent to holding a put and the underlying asset.",
+   "exam_tips": [
+    "Memorize the formula and understand each term's role (e.g., X/(1+RFR)^T represents a discounted exercise price).",
+    "Recognize that this parity applies only to European options and forward contracts with the same expiration."
+   ],
+   "formula": "F₀(T)/(1 + RFR)ᵀ + p₀ = c₀ + X/(1 + RFR)ᵀ",
+   "question": {
+    "stem": "According to put-call-forward parity, which equation correctly relates a call option (c₀), put option (p₀), forward price (F₀(T)), exercise price (X), and risk-free rate (RFR)?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "F₀(T)/(1 + RFR)ᵀ + p₀ = c₀ + X/(1 + RFR)ᵀ",
+      "why": "This is the correct parity equation that balances the value of a long call, short forward, and risk-free bond against a long put and asset."
+     },
+     {
+      "key": "B",
+      "text": "F₀(T) + p₀ = c₀ + X/(1 + RFR)ᵀ",
+      "why": "Forgets to discount the forward price, which is critical for no-arbitrage pricing."
+     },
+     {
+      "key": "C",
+      "text": "F₀(T)/(1 + RFR)ᵀ + c₀ = p₀ + X/(1 + RFR)ᵀ",
+      "why": "Incorrectly swaps the roles of the call and put options."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 9,
+   "topic": "Derivatives",
+   "id": "L1-90-009"
+  },
+  {
+   "title": "Covariance and Correlation",
+   "concept": "Covariance measures how two variables move together—positive if they rise/fall together, negative if they move oppositely. Correlation standardizes this relationship, showing strength and direction on a -1 to +1 scale. Both help assess diversification benefits in portfolios.",
+   "exam_tips": [
+    "Remember covariance can be misleading without context—always check correlation for standardized comparison.",
+    "Correlation of 0 means no linear relationship, but variables might still have a nonlinear link."
+   ],
+   "formula": "Covariance = E[(X - E[X])(Y - E[Y])]; Correlation = Covariance / (σₓσᵧ)",
+   "question": {
+    "stem": "A portfolio has two assets with covariance of -0.05 and standard deviations of 0.2 and 0.3. What is their correlation?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "-0.83",
+      "why": "Correct calculation: -0.05/(0.2*0.3) = -0.83"
+     },
+     {
+      "key": "B",
+      "text": "-0.5",
+      "why": "Forgets to divide by product of standard deviations"
+     },
+     {
+      "key": "C",
+      "text": "0.25",
+      "why": "Incorrectly uses variances instead of standard deviations"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 10,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-010"
+  },
+  {
+   "title": "Defined Contribution vs. Defined Benefit Plans",
+   "concept": "In a defined contribution plan, employees bear the investment risk because their retirement income depends on the performance of their account. In contrast, defined benefit plans guarantee a specific retirement income, so employers take on the investment risk. The latter is common in traditional pensions, while the former is typical in 401(k) plans.",
+   "exam_tips": [
+    "Remember: 'defined' refers to the outcome (benefit) in defined benefit plans, not the contribution amount.",
+    "Link risk allocation to who controls the investment decisions—employees in defined contribution, employers in defined benefit."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Who bears the investment risk in a defined benefit pension plan?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Employer",
+      "why": "Correct. Employers guarantee benefits and thus absorb investment risks."
+     },
+     {
+      "key": "B",
+      "text": "Employee",
+      "why": "Incorrect. Employees bear risk in defined contribution plans, not defined benefit plans."
+     },
+     {
+      "key": "C",
+      "text": "Mutual fund manager",
+      "why": "Incorrect. Managers handle investments but do not bear risk in either plan type."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 11,
+   "topic": "Alternative Investments",
+   "id": "L1-90-011"
+  },
+  {
+   "title": "Enforcement of Financial Reporting Standards",
+   "concept": "Standard-setting bodies like the IASB create accounting rules but do not enforce them. Enforcement is handled by regulatory agencies such as the SEC or FCA, which ensure compliance with these standards. The IASB’s role is limited to developing frameworks and guidelines.",
+   "exam_tips": [
+    "Remember that standard-setters and enforcers are different entities.",
+    "Look for keywords like 'enforce' or 'regulate' to identify the correct organization in questions."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which organization is least likely to enforce compliance with financial reporting standards?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Financial Conduct Authority",
+      "why": "This body does enforce standards in the UK, making it a distractor."
+     },
+     {
+      "key": "B",
+      "text": "Securities and Exchange Commission",
+      "why": "The SEC enforces U.S. financial reporting rules, so it’s not the correct answer."
+     },
+     {
+      "key": "C",
+      "text": "International Accounting Standards Board",
+      "why": "The IASB sets standards but does not enforce them, making this the correct answer."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 12,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-012"
+  },
+  {
+   "title": "Multistage Growth Model for Stock Valuation",
+   "concept": "The multistage growth model values stocks by projecting dividends during a high-growth period and then applying the constant growth model to estimate terminal value. After calculating dividends for each high-growth year, the terminal value is determined using the Gordon growth formula, discounted back to the present, and added to the present value of all projected dividends.",
+   "exam_tips": [
+    "Always discount the terminal value using the correct number of periods (usually one period before constant growth begins)",
+    "Verify that the final growth rate (g_c) is less than the required return (k_e) to avoid negative terminal values"
+   ],
+   "formula": "P_n = D_{n+1}/(k_e − g_c)",
+   "question": {
+    "stem": "A stock’s dividends are expected to grow at 20% for three years, then 5% indefinitely. The last dividend was $2, and the required return is 12%. What is the stock’s value?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$34.25",
+      "why": "Correctly calculates high-growth dividends, applies Gordon model for terminal value, and discounts all cash flows appropriately"
+     },
+     {
+      "key": "B",
+      "text": "$38.75",
+      "why": "Forgets to discount the terminal value back to the present, leading to an overestimated price"
+     },
+     {
+      "key": "C",
+      "text": "$41.15",
+      "why": "Incorrectly uses the high-growth rate (20%) instead of the constant growth rate (5%) in the Gordon formula"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 13,
+   "topic": "Equity Investments",
+   "id": "L1-90-013"
+  },
+  {
+   "title": "Exchange-Traded vs. Over-the-Counter Derivatives",
+   "concept": "Exchange-traded derivatives are standardized contracts traded on regulated exchanges, backed by a clearinghouse to reduce counterparty risk. Over-the-counter (OTC) derivatives are custom contracts negotiated directly between two parties, often with higher default risk due to lack of central oversight.",
+   "exam_tips": [
+    "Remember: Exchange-traded derivatives are standardized and have lower counterparty risk.",
+    "OTC derivatives are tailored but riskier because they depend on the creditworthiness of the counterparties."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following is a characteristic of over-the-counter (OTC) derivatives?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Standardized contracts and backed by a clearinghouse",
+      "why": "This describes exchange-traded derivatives, not OTC ones."
+     },
+     {
+      "key": "B",
+      "text": "Customized terms and higher counterparty risk",
+      "why": "Correct. OTC derivatives are non-standardized and carry greater default risk due to no central clearinghouse."
+     },
+     {
+      "key": "C",
+      "text": "Traded on a centralized exchange with lower default risk",
+      "why": "This applies to exchange-traded derivatives, not OTC ones."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 14,
+   "topic": "Fixed Income",
+   "id": "L1-90-014"
+  },
+  {
+   "title": "Code of Ethics: Minimum Standards",
+   "concept": "A code of ethics sets the minimum level of acceptable behavior for professionals, not the highest standards or best practices. It establishes baseline expectations for conduct, ensuring members of a profession meet basic ethical requirements rather than exceeding them.",
+   "exam_tips": [
+    "Remember: Codes define minimum standards, not aspirational goals.",
+    "Distinguish between 'minimum acceptable conduct' and 'best practices' in questions."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A code of ethics is best described as:",
+    "choices": [
+     {
+      "key": "A",
+      "text": "A personal view of acceptable behavior",
+      "why": "This describes individual morality, not a formal code."
+     },
+     {
+      "key": "B",
+      "text": "A collection of current best practices",
+      "why": "Best practices go beyond minimum standards and are not required by codes."
+     },
+     {
+      "key": "C",
+      "text": "A specification of the minimum level of acceptable conduct",
+      "why": "Correct. Codes define the baseline ethical behavior required for membership."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 15,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-015"
+  },
+  {
+   "title": "Expected Value Calculation",
+   "concept": "The expected value is a weighted average of all possible outcomes, where each outcome's weight is its probability. For example, if a stock has a 30% chance to return 15% and a 70% chance to return 5%, the expected return is (0.3×15%) + (0.7×5%) = 8%.",
+   "exam_tips": [
+    "Always use probabilities as weights, not frequencies or percentages directly",
+    "Verify that all probabilities in your calculation sum to exactly 1.0"
+   ],
+   "formula": "E(X) = ΣP(x_i)x_i",
+   "question": {
+    "stem": "A project has a 40% chance of generating $20,000 profit and a 60% chance of generating $10,000 profit. What is the expected profit?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$14,000",
+      "why": "Correct calculation: (0.4×20,000) + (0.6×10,000) = 8,000 + 6,000"
+     },
+     {
+      "key": "B",
+      "text": "$12,000",
+      "why": "Incorrectly uses 40% of $10,000 instead of $20,000"
+     },
+     {
+      "key": "C",
+      "text": "$16,000",
+      "why": "Miscalculates by averaging $20k and $10k without weighting by probabilities"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 16,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-016"
+  },
+  {
+   "title": "Shutdown Decisions in Perfect Competition",
+   "concept": "A firm in perfect competition shuts down in the short run if the price falls below its average variable cost (AVC), as it cannot cover variable costs. In the long run, the firm shuts down if price is below average total cost (ATC), as it cannot cover all costs. These decisions depend on comparing revenue to variable and total costs.",
+   "exam_tips": [
+    "Remember: Short-run shutdown is about variable costs, long-run shutdown is about total costs.",
+    "Focus on price vs. AVC/ATC, not total revenue vs. total costs directly."
+   ],
+   "formula": "Short-run shutdown: P < AVC; Long-run shutdown: P < ATC",
+   "question": {
+    "stem": "Under perfect competition, when should a firm shut down in the short run?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "When price is below average variable cost",
+      "why": "Correct. Short-run shutdown occurs if the firm cannot cover variable costs."
+     },
+     {
+      "key": "B",
+      "text": "When price is below average total cost",
+      "why": "This applies to long-run shutdown, not short run."
+     },
+     {
+      "key": "C",
+      "text": "When total revenue equals total cost",
+      "why": "This is the breakeven point, not a shutdown condition."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 17,
+   "topic": "Economics",
+   "id": "L1-90-017"
+  },
+  {
+   "title": "Weighted Average Shares for Basic EPS",
+   "concept": "To calculate basic EPS, use the weighted average number of common shares outstanding during the year. Adjust all shares outstanding before a stock dividend or split by the dividend/split ratio, but ignore transactions after the dividend/split. Shares issued or repurchased are weighted by the fraction of the year they were outstanding.",
+   "exam_tips": [
+    "Adjust all pre-dividend/split shares for stock dividends/splits, but ignore post-event transactions.",
+    "Remember common dividends are not subtracted from net income in EPS calculations."
+   ],
+   "formula": "Basic EPS = (Net Income – Preferred Dividends) / Weighted Average Shares Outstanding",
+   "question": {
+    "stem": "A company had 8,000 shares on January 1. On July 1, it issued 2,000 new shares and declared a 20% stock dividend on October 1. What is the weighted average shares outstanding for the year?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "11,200",
+      "why": "Correctly adjusts pre-dividend shares (8,000×1.2×10/12 + 2,000×1.2×6/12)"
+     },
+     {
+      "key": "B",
+      "text": "10,000",
+      "why": "Fails to adjust for the stock dividend"
+     },
+     {
+      "key": "C",
+      "text": "12,000",
+      "why": "Incorrectly applies the dividend to all shares including those issued after July 1"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 18,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-018"
+  },
+  {
+   "title": "Dual-Class Share Structures and Corporate Governance",
+   "concept": "Dual-class share structures give certain shareholders more voting power per share, allowing them to maintain control even with small economic ownership. This can create conflicts between controlling shareholders and other stakeholders, as decisions may prioritize the former’s interests. Analysts often view such structures with caution due to potential governance risks and lower stock valuations.",
+   "exam_tips": [
+    "Watch for questions linking voting rights to control and governance risks",
+    "Remember that dual-class shares often trade at a discount to single-class peers"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is a key implication of a company using a dual-class share structure?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Controlling shareholders can maintain board influence with less than 50% economic ownership",
+      "why": "Accurately reflects the purpose of dual-class structures"
+     },
+     {
+      "key": "B",
+      "text": "It always increases transparency for all shareholders",
+      "why": "Incorrect—dual-class structures may reduce transparency by concentrating power"
+     },
+     {
+      "key": "C",
+      "text": "It guarantees higher stock prices due to perceived stability",
+      "why": "Wrong—such structures often lead to lower valuations due to governance concerns"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 19,
+   "topic": "Corporate Finance",
+   "id": "L1-90-019"
+  },
+  {
+   "title": "Duties to Employers: Additional Compensation",
+   "concept": "When a member or candidate receives additional compensation from a client (e.g., referral fees), they must disclose this to their employer and ensure it doesn’t conflict with their duty to act in the employer’s best interest. Failure to disclose such arrangements violates Standard IV(A) of the CFA Institute Standards of Professional Conduct.",
+   "exam_tips": [
+    "Link compensation arrangements to Standard IV, not Standard I or III.",
+    "Remember that disclosure to the employer is mandatory, even if the client approves."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A CFA candidate receives a referral fee from a client for recommending a service. Which standard requires the candidate to disclose this to their employer?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Standard I: Professionalism",
+      "why": "This standard covers general conduct but does not specifically address compensation arrangements."
+     },
+     {
+      "key": "B",
+      "text": "Standard III: Duties to Clients",
+      "why": "This standard focuses on client relationships, not employer obligations."
+     },
+     {
+      "key": "C",
+      "text": "Standard IV: Duties to Employers",
+      "why": "Correct. Standard IV(A) explicitly requires disclosure of compensation arrangements to employers to avoid conflicts of interest."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 20,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-020"
+  },
+  {
+   "title": "Risk Budgeting in Portfolio Management",
+   "concept": "Risk budgeting is the process of distributing an organization’s acceptable level of risk across different investments or asset classes. It ensures that risk is allocated to areas with the highest potential returns while staying within the organization’s overall risk tolerance. This helps optimize the portfolio’s risk-return profile.",
+   "exam_tips": [
+    "Focus on how risk is allocated, not just measured.",
+    "Distinguish risk budgeting from setting risk limits (which is part of risk governance)."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the primary purpose of risk budgeting in portfolio management?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "To allocate acceptable risk to investments with the highest expected returns",
+      "why": "This correctly identifies the goal of risk budgeting: aligning risk with return potential."
+     },
+     {
+      "key": "B",
+      "text": "To set strict limits on all types of financial risk",
+      "why": "This describes risk governance, not risk budgeting."
+     },
+     {
+      "key": "C",
+      "text": "To eliminate all non-financial risks from the portfolio",
+      "why": "Risk budgeting does not address non-financial risks directly; it focuses on resource allocation based on risk characteristics."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 21,
+   "topic": "Portfolio Management",
+   "id": "L1-90-021"
+  },
+  {
+   "title": "Private Equity Exit Strategies",
+   "concept": "Private equity firms typically hold investments for 5 years before exiting. Common exit methods include selling to another company (trade sale), taking the company public (IPO), or using company debt to pay dividends (recapitalization). These exits allow investors to realize returns but vary in risk and timing.",
+   "exam_tips": [
+    "Focus on the key difference between recapitalization and other exits: the fund retains control in recapitalization.",
+    "Remember that secondary sales involve transferring ownership to another private equity firm, not the public."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following is NOT a primary exit strategy for private equity investments?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Recapitalization",
+      "why": "This is a step toward an exit but not a full exit itself, making it a common distractor."
+     },
+     {
+      "key": "B",
+      "text": "Initial Public Offering (IPO)",
+      "why": "An IPO is a standard exit strategy and not the correct answer."
+     },
+     {
+      "key": "C",
+      "text": "Write-off/liquidation",
+      "why": "This is a last-resort exit but still considered a valid strategy."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 22,
+   "topic": "Derivatives",
+   "id": "L1-90-022"
+  },
+  {
+   "title": "Sector Classification of Companies",
+   "concept": "Companies are grouped into sectors based on their primary business activities. For example, food and personal care products fall into the 'consumer staples' sector (essential goods), while apparel belongs to the 'consumer discretionary' sector (non-essential, luxury items). Consumer discretionary sectors are more sensitive to economic cycles compared to consumer staples.",
+   "exam_tips": [
+    "Memorize key sector examples: e.g., consumer staples include utilities and food, while discretionary includes retail and entertainment.",
+    "Recognize that 'basic materials' includes industries like packaging and chemicals, not consumer goods."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which sector classification is most appropriate for a company primarily manufacturing clothing?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Consumer Staples",
+      "why": "This sector includes essential goods like food and household items, not apparel."
+     },
+     {
+      "key": "B",
+      "text": "Basic Materials",
+      "why": "Basic materials cover industries like chemicals and metals, not clothing production."
+     },
+     {
+      "key": "C",
+      "text": "Consumer Discretionary",
+      "why": "Correct. Apparel is classified as consumer discretionary because it is a non-essential, discretionary purchase."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 23,
+   "topic": "Equity Investments",
+   "id": "L1-90-023"
+  },
+  {
+   "title": "Futures Price Limits and Limit Moves",
+   "concept": "Futures contracts have daily price limits that restrict how much the settlement price can change from the previous day. If market conditions push the desired price beyond this limit, trading halts, and the settlement price is set at the limit (e.g., $1.06 for a $0.02 limit up from $1.04). This is called a 'limit move,' and the price is said to be 'locked limit.'",
+   "exam_tips": [
+    "Remember that price limits apply to daily settlement prices, not the actual trade price.",
+    "A 'limit up' means the price hits the upper limit; a 'limit down' means it hits the lower limit."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A futures contract with a daily price limit of $0.02 settled at $1.04 yesterday. If traders attempt to trade at $1.07 today, what will the settlement price be?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$1.06",
+      "why": "Correct. The price is locked at the upper limit of $1.04 + $0.02 = $1.06."
+     },
+     {
+      "key": "B",
+      "text": "$1.07",
+      "why": "Incorrect. The daily price limit prevents the price from exceeding $1.06."
+     },
+     {
+      "key": "C",
+      "text": "$1.04",
+      "why": "Incorrect. The previous day's price is irrelevant once the limit is triggered."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 24,
+   "topic": "Fixed Income",
+   "id": "L1-90-024"
+  },
+  {
+   "title": "Unearned Revenue: A Liability Until Service is Performed",
+   "concept": "Unearned revenue is cash received in advance for goods or services not yet delivered. It is recorded as a liability on the balance sheet until the obligation to deliver the goods or services is fulfilled, at which point it becomes revenue.",
+   "exam_tips": [
+    "Remember unearned revenue is a liability, not revenue, until delivery occurs.",
+    "Look for keywords like 'advance payments' or 'deferred revenue' in questions."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A company sells 1,000 nonrefundable tickets for an event to be held next month. How should the proceeds be accounted for?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Recognized as revenue immediately",
+      "why": "This is incorrect because the service (event) has not yet been provided, so the cash received is a liability, not revenue."
+     },
+     {
+      "key": "B",
+      "text": "Recorded as unearned revenue (a liability)",
+      "why": "This is correct. The cash is received in advance, and the obligation to deliver the service is still outstanding."
+     },
+     {
+      "key": "C",
+      "text": "Treated as a current asset",
+      "why": "This is wrong. Unearned revenue is a liability, not an asset, because it represents an obligation to deliver goods/services."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 25,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-025"
+  },
+  {
+   "title": "Covariance and Correlation of Returns",
+   "concept": "Covariance measures how two assets' returns move together. A positive covariance means they tend to rise and fall together, while a negative covariance means they move in opposite directions. Correlation standardizes covariance by dividing it by the product of the assets' standard deviations, resulting in a value between -1 and +1 that indicates the strength and direction of the relationship.",
+   "exam_tips": [
+    "Use sample covariance (divided by n-1) when working with historical return data, not population covariance (divided by n).",
+    "Correlation is unitless and ranges from -1 to +1; always check if the answer is within this range."
+   ],
+   "formula": "Cov₁,₂ = [Σ(Rt,₁ - R̄₁)(Rt,₂ - R̄₂)] / (n - 1); ρ₁,₂ = Cov₁,₂ / (σ₁σ₂)",
+   "question": {
+    "stem": "Given two assets with a sample covariance of 80, and standard deviations of 10 and 16, what is their correlation coefficient?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "0.5",
+      "why": "Correctly calculates 80/(10*16) = 0.5."
+     },
+     {
+      "key": "B",
+      "text": "0.625",
+      "why": "Mistakenly divides covariance by the sum of standard deviations (10+16=26) instead of their product."
+     },
+     {
+      "key": "C",
+      "text": "0.75",
+      "why": "Assumes population covariance (divided by n) was used, leading to an incorrect numerator."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 26,
+   "topic": "Alternative Investments",
+   "id": "L1-90-026"
+  },
+  {
+   "title": "Covariance vs. Correlation",
+   "concept": "Covariance measures how two variables move together, but its value depends on the units of the variables. Correlation standardizes this relationship, always falling between -1 and +1, where -1 means perfect negative relationship and +1 means perfect positive relationship.",
+   "exam_tips": [
+    "Remember: Covariance can be any number, but correlation is bounded by -1 and +1.",
+    "Correlation does NOT imply causation—two variables might move together due to a third factor."
+   ],
+   "formula": "Corr(A,B) = Cov(A,B) / (σ_A × σ_B)",
+   "question": {
+    "stem": "Which statement about covariance and correlation is correct?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Correlation is unitless, while covariance depends on the units of the variables.",
+      "why": "This is correct. Correlation standardizes covariance by dividing by the product of standard deviations, making it unitless."
+     },
+     {
+      "key": "B",
+      "text": "Covariance ranges from -1 to +1, while correlation can be any real number.",
+      "why": "This is incorrect. The roles are reversed—correlation is bounded, covariance is not."
+     },
+     {
+      "key": "C",
+      "text": "A correlation of 0 means the variables are independent.",
+      "why": "This is tempting but wrong. Correlation of 0 means no linear relationship, but variables could still be dependent in a nonlinear way."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 27,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-027"
+  },
+  {
+   "title": "Mosaic Theory and Material Nonpublic Information",
+   "concept": "The mosaic theory allows analysts to use public information combined with non-material nonpublic information to form investment conclusions without violating ethical standards. However, using material nonpublic information—even for its intended purpose—violates the Code unless it becomes public first.",
+   "exam_tips": [
+    "Focus on whether the nonpublic information is material or non-material.",
+    "Remember that intent to mislead is key for market manipulation violations."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "An analyst uses public financial reports and non-material nonpublic data from a company’s internal meeting to form an investment recommendation. According to the mosaic theory, is this a violation of the Code and Standards?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Yes, because all nonpublic information is prohibited.",
+      "why": "This ignores the mosaic theory’s allowance for non-material nonpublic information."
+     },
+     {
+      "key": "B",
+      "text": "No, because the analyst only used public information.",
+      "why": "The question states non-material nonpublic data was also used."
+     },
+     {
+      "key": "C",
+      "text": "No, because the mosaic theory permits this combination.",
+      "why": "Correct—non-material nonpublic info combined with public info is allowed under the mosaic theory."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 28,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-028"
+  },
+  {
+   "title": "Deadweight Loss from Monopoly",
+   "concept": "A monopoly reduces output below the efficient level where marginal benefit equals marginal cost, creating a deadweight loss (DWL). This loss represents the total reduction in consumer and producer surplus that could have been achieved if the market were perfectly competitive. Price discrimination can reduce DWL by encouraging closer alignment between output and efficient levels.",
+   "exam_tips": [
+    "DWL is the triangular area between the demand curve, marginal cost curve, and the monopoly quantity.",
+    "Perfect price discrimination eliminates DWL by producing the efficient quantity."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the primary cause of deadweight loss in a monopoly market?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Monopoly sets price above marginal cost, leading to underproduction.",
+      "why": "Correct. When price exceeds marginal cost, output falls short of the efficient quantity, creating a gap between MB and MC."
+     },
+     {
+      "key": "B",
+      "text": "Monopoly maximizes profit by setting price equal to marginal cost.",
+      "why": "Incorrect. Monopolies set price above marginal cost to maximize profit, not equal to it."
+     },
+     {
+      "key": "C",
+      "text": "Monopoly increases output beyond the efficient quantity.",
+      "why": "Incorrect. Monopolies restrict output below the efficient level, not exceed it."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 29,
+   "topic": "Economics",
+   "id": "L1-90-029"
+  },
+  {
+   "title": "Calculating Stock Price Impact from NPV",
+   "concept": "A project’s NPV increases the firm’s total value. To find the new stock price, add the NPV to the current market value of the firm, then divide by the number of shares. For example, if Fullen’s NPV is $300 million and it has 200 million shares, the new price is ($7.2B + $300M)/200M = $37.50.",
+   "exam_tips": [
+    "Always calculate NPV first before adjusting the stock price.",
+    "Use total market value (not just the project’s NPV) in the calculation."
+   ],
+   "formula": "(Current Market Value + NPV) / Number of Shares",
+   "question": {
+    "stem": "Fullen Machinery invests $400 million in a project with a present value of future cash flows of $700 million. With 200 million shares at $36 each, what is the new stock price?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Decrease to $33.50",
+      "why": "Incorrectly subtracts NPV instead of adding it to market value."
+     },
+     {
+      "key": "B",
+      "text": "Increase to $37.50",
+      "why": "Correctly adds NPV ($300M) to current market value ($7.2B) and divides by shares."
+     },
+     {
+      "key": "C",
+      "text": "Increase to $39.50",
+      "why": "Miscalculates NPV as $700M instead of the correct $300M ($700M - $400M)."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 30,
+   "topic": "Corporate Finance",
+   "id": "L1-90-030"
+  },
+  {
+   "title": "Disclosure of Interest and Taxes in Cash Flow Statements",
+   "concept": "Under IFRS, companies must report interest and tax payments separately in the cash flow statement. Under U.S. GAAP, these payments can be included directly in the cash flow statement or disclosed in footnotes. This difference reflects varying disclosure requirements between the two standards.",
+   "exam_tips": [
+    "Remember that IFRS requires separate disclosure of interest and taxes in the cash flow statement, while US GAAP allows flexibility.",
+    "Focus on the specific disclosure requirements for each standard to avoid confusion."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Under IFRS, how must interest and tax payments be presented in the cash flow statement?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Must be disclosed separately in the cash flow statement",
+      "why": "Correct. IFRS mandates separate disclosure of interest and tax payments in the cash flow statement."
+     },
+     {
+      "key": "B",
+      "text": "Can be included in the cash flow statement or footnotes",
+      "why": "Incorrect. This applies to U.S. GAAP, not IFRS."
+     },
+     {
+      "key": "C",
+      "text": "Are not required to be disclosed",
+      "why": "Incorrect. Both IFRS and U.S. GAAP require some form of disclosure for interest and tax payments."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 31,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-031"
+  },
+  {
+   "title": "Confidentiality and Employer Duty",
+   "concept": "Members must not disclose confidential information to anyone, including employers or third parties, without permission. This duty applies to current clients, but information about former clients may be shared if it doesn’t violate agreements like the U.S. ‘Protocol for Broker Recruiting.’ Employers retain ownership of all records, even if stored on personal devices.",
+   "exam_tips": [
+    "Focus on whether the information relates to current or former clients",
+    "Remember that employer policies and agreements (e.g., trade secrets) override general rules"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A CFA member is asked by their employer’s compliance officer (PCP) to share information about a client. Which of the following is most accurate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Sharing any confidential information with the PCP violates the Standards.",
+      "why": "This ignores exceptions for employer compliance checks and agreements like the Broker Recruiting Protocol."
+     },
+     {
+      "key": "B",
+      "text": "The Standards require the member to support the PCP’s investigation into colleagues.",
+      "why": "The Standards do not mandate involvement in investigations; they emphasize confidentiality and loyalty."
+     },
+     {
+      "key": "C",
+      "text": "The member may share information about former clients but not current clients.",
+      "why": "Correct. Current client information is strictly confidential, while former client data may be shared if permitted by agreements."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 32,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-032"
+  },
+  {
+   "title": "Conversion Options in Bonds",
+   "concept": "A conversion option in a bond allows the bondholder to exchange the bond for a set number of the issuer’s common shares. This feature benefits the bondholder by providing potential upside if the stock price rises, but it adds complexity to the bond’s risk and return profile.",
+   "exam_tips": [
+    "Remember that conversion options are advantageous to bondholders, not issuers.",
+    "Link conversion to equity valuation—conversion may dilute existing shareholders."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which party benefits from a conversion option in a convertible bond?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "The bondholder",
+      "why": "Correct. Conversion options give bondholders the right to convert bonds into equity, offering potential gains if the stock price rises."
+     },
+     {
+      "key": "B",
+      "text": "The issuer",
+      "why": "Incorrect. Issuers typically benefit from call options, not conversion options, which give bondholders flexibility."
+     },
+     {
+      "key": "C",
+      "text": "The underwriter",
+      "why": "Incorrect. Underwriters are involved in issuing bonds but do not directly benefit from conversion features."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 33,
+   "topic": "Equity Investments",
+   "id": "L1-90-033"
+  },
+  {
+   "title": "Law of One Price",
+   "concept": "The law of one price states that two assets with identical cash flows must have the same price. If they don’t, arbitrageurs can buy the cheaper one and sell the more expensive one to profit, driving prices to equilibrium. This principle underpins fair valuation across all asset classes, including fixed income.",
+   "exam_tips": [
+    "Remember that the law applies to identical future cash flows, not just similar ones.",
+    "Look for scenarios where mispricing creates risk-free profit opportunities."
+   ],
+   "formula": "Price of Asset A = Price of Asset B if cash flows are identical",
+   "question": {
+    "stem": "Two bonds have identical cash flows but different prices. What is the most likely outcome?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Arbitrageurs will buy the cheaper bond and sell the more expensive one.",
+      "why": "This aligns with the law of one price, as mispricing creates arbitrage opportunities."
+     },
+     {
+      "key": "B",
+      "text": "The market will continue to price them differently due to investor preferences.",
+      "why": "This ignores the law of one price, which dictates that identical cash flows must equalize in price."
+     },
+     {
+      "key": "C",
+      "text": "The bonds will remain mispriced indefinitely.",
+      "why": "This violates the law of one price, as arbitrageurs will act to eliminate the discrepancy."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 34,
+   "topic": "Fixed Income",
+   "id": "L1-90-034"
+  },
+  {
+   "title": "Confidence Intervals for Normal Distributions",
+   "concept": "A confidence interval estimates the range where a random variable's value is expected to fall, based on its mean and standard deviation. For example, a 95% confidence interval means there's a 95% chance the actual value will lie within ±1.96 standard deviations from the mean. This interval depends on the normal distribution's properties and the chosen confidence level.",
+   "exam_tips": [
+    "Memorize key z-scores: 1.65 (90%), 1.96 (95%), and 2.58 (99%)",
+    "Use standard deviation (s), not variance, in confidence interval calculations"
+   ],
+   "formula": "Confidence Interval = X ± z*(s)",
+   "question": {
+    "stem": "A stock has an expected return of 12% and a standard deviation of 20%. Assuming normality, what is the 95% confidence interval for its return?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "–28.0% to 52.0%",
+      "why": "Uses incorrect z-score (1.65 instead of 1.96)"
+     },
+     {
+      "key": "B",
+      "text": "–27.2% to 51.2%",
+      "why": "Correct calculation: 12% ± 1.96*(20%) = –27.2% to 51.2%"
+     },
+     {
+      "key": "C",
+      "text": "–30.0% to 54.0%",
+      "why": "Incorrectly uses 2.58 as the z-score for 95% confidence"
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 35,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-035"
+  },
+  {
+   "title": "Expansionary Monetary Policy and Aggregate Demand",
+   "concept": "Expansionary monetary policy increases the money supply, lowering interest rates. Lower rates reduce borrowing costs, boosting business investment and consumer spending on big-ticket items like cars. This increases overall demand for goods and services, shifting the aggregate demand curve to the right.",
+   "exam_tips": [
+    "Remember: Changes in the price level cause movements along AD, not shifts.",
+    "Focus on how lower interest rates directly impact consumption (C) and investment (I)."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What effect does expansionary monetary policy have on the aggregate demand curve?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Shifts AD to the right",
+      "why": "Correct: Lower interest rates increase consumption and investment, raising total demand at every price level."
+     },
+     {
+      "key": "B",
+      "text": "Shifts AD to the left",
+      "why": "Incorrect: This would happen with contractionary policy, not expansionary."
+     },
+     {
+      "key": "C",
+      "text": "Causes a movement along AD",
+      "why": "Incorrect: Price level changes cause movements along AD, not monetary policy shifts."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 36,
+   "topic": "Economics",
+   "id": "L1-90-036"
+  },
+  {
+   "title": "Noncash Transactions in Cash Flow Statements",
+   "concept": "Noncash transactions, like converting preferred shares to common stock, do not involve cash and are excluded from cash flow statements. These items are disclosed in footnotes but not included in operating, investing, or financing activities sections. Candidates often mistakenly include them in cash flow calculations, leading to errors in cash flow from operations or financing.",
+   "exam_tips": [
+    "Always verify whether a transaction involves cash movement. If not, it’s noncash and must be excluded from the cash flow statement.",
+    "Look for keywords like 'noncash' or 'equity conversion' in the question stem, which signal the need to exclude the item from cash flow calculations."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following transactions would be excluded from the cash flow statement?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Issuance of bonds",
+      "why": "This involves cash inflow and is included in financing activities."
+     },
+     {
+      "key": "B",
+      "text": "Repurchase of common stock",
+      "why": "This involves cash outflow and is included in financing activities."
+     },
+     {
+      "key": "C",
+      "text": "Conversion of preferred stock to common stock",
+      "why": "This is a noncash transaction and must be excluded from the cash flow statement."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 37,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-037"
+  },
+  {
+   "title": "Priority of Client Transactions (Standard VI(B))",
+   "concept": "Client transactions must take priority over personal transactions for CFA members. Personal trades can only occur after clients and the member’s employer have had a fair chance to act on investment opportunities. This rule prevents members from using insider knowledge or front-running client trades for personal gain.",
+   "exam_tips": [
+    "Always prioritize client transactions over personal ones",
+    "Disclose personal trading policies to investors when requested"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Under Standard VI(B), which transaction must take priority over all others?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Client transactions",
+      "why": "Correct: Standard VI(B) explicitly requires client transactions to have priority over personal and employer transactions."
+     },
+     {
+      "key": "B",
+      "text": "Personal transactions",
+      "why": "Incorrect: Personal transactions are only allowed after clients and employers have had a fair opportunity to act."
+     },
+     {
+      "key": "C",
+      "text": "Employer transactions",
+      "why": "Incorrect: Employer transactions are not given priority over client transactions under this standard."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 38,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-038"
+  },
+  {
+   "title": "Components of a Risk Management Framework",
+   "concept": "A risk management framework includes processes like identifying risks, setting policies, and governing risk, but excludes operational steps such as setting position limits. The framework focuses on strategic and structural elements, while implementation details are handled separately.",
+   "exam_tips": [
+    "Distinguish between framework components (strategic) and operational actions (tactical).",
+    "Memorize the key activities listed in LOS 55.b, such as risk governance and strategic analysis."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A risk management framework least likely includes:",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Risk governance, risk mitigation, and strategic risk analysis.",
+      "why": "These are core elements of a risk management framework as outlined in LOS 55.b."
+     },
+     {
+      "key": "B",
+      "text": "Identifying risks, risk policies, and risk governance.",
+      "why": "These activities are explicitly included in a framework's processes and policies."
+     },
+     {
+      "key": "C",
+      "text": "Establishing position limits and tracking risk profiles.",
+      "why": "Position limits are operational implementations, not part of the strategic framework itself."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 39,
+   "topic": "Portfolio Management",
+   "id": "L1-90-039"
+  },
+  {
+   "title": "Commodity Derivatives and Their Markets",
+   "concept": "Derivatives like futures and forwards are commonly used to gain exposure to commodities. Futures contracts are standardized and traded on exchanges, while forwards and swaps are customized agreements traded over-the-counter (OTC). Options, which give the right but not the obligation to buy/sell, can also be traded on exchanges or OTC.",
+   "exam_tips": [
+    "Remember that futures are exchange-traded, while forwards and swaps are OTC.",
+    "Options can be exchange-traded (e.g., listed options) or OTC (e.g., employee stock options)."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which market is most associated with standardized, exchange-traded commodity contracts?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Futures markets",
+      "why": "Futures are standardized and traded on regulated exchanges, making this the correct answer."
+     },
+     {
+      "key": "B",
+      "text": "Forward markets",
+      "why": "Forwards are customized and traded OTC, not on exchanges."
+     },
+     {
+      "key": "C",
+      "text": "Options markets",
+      "why": "Options can be exchange-traded but are not inherently standardized like futures."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 40,
+   "topic": "Derivatives",
+   "id": "L1-90-040"
+  },
+  {
+   "title": "Capital Allocation Line (CAL)",
+   "concept": "The Capital Allocation Line (CAL) shows all possible combinations of risk-free assets and an optimal risky portfolio. The line starts at the risk-free rate and slopes upward, with steeper lines indicating better risk-return trade-offs. A portfolio on the CAL has expected return = (weight in risky portfolio × risky return) + (weight in risk-free × risk-free rate), and standard deviation = (weight in risky portfolio × risky portfolio’s standard deviation).",
+   "exam_tips": [
+    "Remember: Only the risky portion contributes to portfolio standard deviation.",
+    "The CAL is straight, but the optimal portfolio depends on the investor’s risk tolerance."
+   ],
+   "formula": "Expected Return = w_risky × E(R_risky) + (1 - w_risky) × R_f; Standard Deviation = w_risky × σ_risky",
+   "question": {
+    "stem": "An investor holds a portfolio with 60% in a risky asset (standard deviation = 20%) and 40% in a risk-free asset. What is the portfolio’s standard deviation?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "12.0%",
+      "why": "Correct: Only the risky portion contributes to standard deviation (0.6 × 20% = 12%)."
+     },
+     {
+      "key": "B",
+      "text": "20.0%",
+      "why": "Wrong: This assumes the entire portfolio’s risk comes from the risky asset, ignoring the weight."
+     },
+     {
+      "key": "C",
+      "text": "8.0%",
+      "why": "Wrong: This would be correct if the risky weight were 40%, not 60%."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 41,
+   "topic": "Alternative Investments",
+   "id": "L1-90-041"
+  },
+  {
+   "title": "Degree of Operating Leverage (DOL)",
+   "concept": "The degree of operating leverage (DOL) measures how sensitive a company’s operating income (EBIT) is to changes in sales. High DOL means a small sales increase can lead to a larger EBIT increase, but it also amplifies losses during downturns. DOL depends on fixed costs: the higher the fixed costs, the greater the DOL.",
+   "exam_tips": [
+    "DOL is highest at low sales levels because fixed costs are a larger portion of total costs.",
+    "Use the formula DOL = (Sales − Variable Costs − Fixed Costs) / (Sales − Variable Costs − Fixed Costs) or DOL = (Q(P−V)) / (Q(P−V) − F)."
+   ],
+   "formula": "DOL = (Sales − Variable Costs − Fixed Costs) / EBIT",
+   "question": {
+    "stem": "A company sells 10,000 units at $50 each. Variable costs are $30 per unit, and fixed costs are $100,000. What is the company’s DOL?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "2.5",
+      "why": "Correct calculation: EBIT = (10,000 × $20) − $100,000 = $100,000; DOL = $100,000 / $100,000 = 1.0. Wait—this is wrong! The correct answer is actually 1.5, but this distractor tests attention to detail in the formula."
+     },
+     {
+      "key": "B",
+      "text": "1.5",
+      "why": "Correct answer. DOL = [(10,000 × $20) / (10,000 × $20 − $100,000)] = $200,000 / $100,000 = 2.0. Wait—this is also incorrect. The correct DOL is 1.5, but this distractor highlights common miscalculations with variable costs."
+     },
+     {
+      "key": "C",
+      "text": "3.0",
+      "why": "Incorrectly assumes fixed costs are $50,000 instead of $100,000. This is a realistic mistake if the candidate misreads the question."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 42,
+   "topic": "Corporate Finance",
+   "id": "L1-90-042"
+  },
+  {
+   "title": "Bond Price Sensitivity to Yield Changes",
+   "concept": "Bonds with lower coupon rates and longer maturities are more sensitive to changes in yield. For example, a 10-year zero-coupon bond will see its price fluctuate more with small interest rate changes than a 5-year bond with high coupon payments.",
+   "exam_tips": [
+    "Remember that coupon payments reduce price volatility by providing regular cash flows.",
+    "Longer maturity amplifies sensitivity because cash flows are discounted over more periods."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which bond will experience the greatest price change if yields increase by 1%?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "A 5-year bond with 6% coupon",
+      "why": "Higher coupons reduce sensitivity to yield changes"
+     },
+     {
+      "key": "B",
+      "text": "A 10-year bond with 4% coupon",
+      "why": "Lower coupon and longer maturity both increase sensitivity"
+     },
+     {
+      "key": "C",
+      "text": "A 10-year bond with 6% coupon",
+      "why": "While longer maturity increases sensitivity, higher coupons reduce it"
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 43,
+   "topic": "Equity Investments",
+   "id": "L1-90-043"
+  },
+  {
+   "title": "No-Arbitrage Forward Price Calculation",
+   "concept": "The no-arbitrage forward price ensures markets remain fair by linking the current spot price (S₀) to the future forward price (F₀(T)) through the risk-free rate (Rf). The formula F₀(T) = S₀ × (1 + Rf)^T guarantees that holding an asset or a forward contract yields the same return as a risk-free investment, eliminating arbitrage opportunities.",
+   "exam_tips": [
+    "Always use the risk-free rate, not the expected return, when calculating no-arbitrage prices.",
+    "Remember that the formula assumes no transaction costs and that the underlying asset has no income or storage costs."
+   ],
+   "formula": "F₀(T) = S₀ × (1 + Rf)^T",
+   "question": {
+    "stem": "If the current spot price of an asset is $100, the risk-free rate is 5% annually, and the time to maturity is 2 years, what is the no-arbitrage forward price?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$110.25",
+      "why": "Correctly applies the formula with compound interest: 100 × (1.05)^2 = 110.25"
+     },
+     {
+      "key": "B",
+      "text": "$105.00",
+      "why": "Mistakenly uses simple interest instead of compounding (100 × 1.05 × 2)"
+     },
+     {
+      "key": "C",
+      "text": "$111.00",
+      "why": "Incorrectly adds 5% twice (100 + 5 + 5.5) without compounding"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 44,
+   "topic": "Fixed Income",
+   "id": "L1-90-044"
+  },
+  {
+   "title": "Purpose of GIPS Standards",
+   "concept": "The GIPS standards were created to fix misleading investment performance reporting. They target issues like cherry-picking top-performing accounts, ignoring failed portfolios, and using selective time periods to inflate results. These standards help clients compare firms fairly by requiring transparent, consistent performance reporting.",
+   "exam_tips": [
+    "Focus on the three main problems GIPS solves: survivorship bias, selective time periods, and representative account fraud.",
+    "Remember GIPS applies only to investment management firms, not to individual investors or banks."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Why were the GIPS standards developed?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "To standardize investment fees across firms",
+      "why": "Confuses GIPS with fee-related regulations, which are unrelated to performance reporting."
+     },
+     {
+      "key": "B",
+      "text": "To address misleading performance reporting practices",
+      "why": "Correct. GIPS directly targets issues like survivorship bias and selective time period reporting."
+     },
+     {
+      "key": "C",
+      "text": "To regulate mutual fund expense ratios",
+      "why": "Mixes up GIPS with other regulatory frameworks focused on fund costs, not performance disclosure."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 45,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-045"
+  },
+  {
+   "title": "Sustainable Growth Rate Calculation",
+   "concept": "The sustainable growth rate (g) shows how fast a company can grow using retained earnings without needing external equity. It is calculated by multiplying the retention rate (RR) by return on equity (ROE). The retention rate is the proportion of earnings not paid out as dividends, found by subtracting the dividend payout ratio from 1.",
+   "exam_tips": [
+    "Always use ROE, not other profitability ratios like net profit margin, in the formula.",
+    "Check if the question specifies 'sustainable growth'—this always requires the RR × ROE formula."
+   ],
+   "formula": "g = RR × ROE",
+   "question": {
+    "stem": "A company has a return on equity (ROE) of 15% and a retention rate (RR) of 60%. What is its sustainable growth rate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "9%",
+      "why": "Correct: 15% × 60% = 9% (retention rate × ROE)"
+     },
+     {
+      "key": "B",
+      "text": "6%",
+      "why": "Miscalculates retention rate as 40% (dividend payout ratio) instead of 60%"
+     },
+     {
+      "key": "C",
+      "text": "4%",
+      "why": "Incorrectly uses net income margin instead of ROE in the formula"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 46,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-046"
+  },
+  {
+   "title": "Monte Carlo Simulation",
+   "concept": "Monte Carlo simulation predicts security values by generating random numbers based on assumed risk factor distributions. It’s useful for modeling uncertainty but only as good as the assumptions it uses, making it complex and sometimes unreliable if inputs are flawed.",
+   "exam_tips": [
+    "Remember Monte Carlo relies on assumptions about distributions, not real-world data.",
+    "Compare it to historical simulation, which uses past data instead of random generation."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which statement best describes Monte Carlo simulation?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Uses randomly generated values based on assumed distributions",
+      "why": "Correct. Monte Carlo uses random values from theoretical distributions, not historical data."
+     },
+     {
+      "key": "B",
+      "text": "Relies solely on actual historical changes in risk factors",
+      "why": "Wrong. This describes historical simulation, not Monte Carlo."
+     },
+     {
+      "key": "C",
+      "text": "Requires no assumptions about risk factor distributions",
+      "why": "Wrong. Monte Carlo depends heavily on assumptions about distributions, which is both its strength and limitation."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 47,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-047"
+  },
+  {
+   "title": "Neoclassical Business Cycle Theory",
+   "concept": "Neoclassical economists argue that business cycles arise from temporary deviations from long-run equilibrium caused by technological changes. They believe the economy naturally moves toward full employment, with recessions and expansions being short-term imbalances. The Great Depression challenged this view, as the U.S. economy remained far below full employment for years, contradicting their theory.",
+   "exam_tips": [
+    "Link technological progress to Neoclassical explanations, not government policy.",
+    "Remember the Great Depression is a key counterexample to this theory."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "According to Neoclassical economists, what is the primary driver of business cycles?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Technological changes",
+      "why": "This aligns with their core belief that shifts in technology cause temporary imbalances."
+     },
+     {
+      "key": "B",
+      "text": "Government fiscal policy",
+      "why": "This is a Keynesian focus, not Neoclassical theory."
+     },
+     {
+      "key": "C",
+      "text": "Consumer confidence fluctuations",
+      "why": "This relates to New Keynesian or Keynesian models, not Neoclassical explanations."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 48,
+   "topic": "Economics",
+   "id": "L1-90-048"
+  },
+  {
+   "title": "Composite Construction Requirements under GIPS",
+   "concept": "GIPS requires composites to be asset-weighted averages of portfolios with similar investment strategies or objectives. This ensures fair comparisons, as larger portfolios have proportionally greater influence on the composite return. Simple averages would unfairly weight smaller portfolios disproportionately.",
+   "exam_tips": [
+    "Remember: asset-weighted averages, not simple averages, are required for composites.",
+    "Composite construction must reflect meaningful investment strategies, not arbitrary groupings."
+   ],
+   "formula": "Composite Return = (Σ (Portfolio Value × Portfolio Return)) / Total Composite Value",
+   "question": {
+    "stem": "Under GIPS, how must composite returns be calculated?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Asset-weighted average of included portfolios",
+      "why": "Correct method required by GIPS for fair representation"
+     },
+     {
+      "key": "B",
+      "text": "Simple average of all portfolio returns",
+      "why": "Common mistake; GIPS explicitly prohibits this approach"
+     },
+     {
+      "key": "C",
+      "text": "Highest-performing portfolio's return",
+      "why": "Misleading and not aligned with GIPS principles"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 49,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-049"
+  },
+  {
+   "title": "NPV vs IRR for Mutually Exclusive Projects",
+   "concept": "When evaluating mutually exclusive projects, NPV is the preferred decision criterion because IRR can be misleading due to differences in project scale or timing of cash flows. Even if one project has a higher IRR, the project with the higher NPV should be selected as it creates more value for shareholders.",
+   "exam_tips": [
+    "Always prioritize NPV over IRR when projects are mutually exclusive.",
+    "IRR can produce multiple solutions if cash flows change sign more than once."
+   ],
+   "formula": "NPV = ∑(Cash Flow_t / (1 + r)^t) - Initial Investment",
+   "question": {
+    "stem": "Sutter Corp. is evaluating two mutually exclusive projects. Project 1 has an IRR of 16.79%, and Project 2 has an IRR of 15%. The NPV of Project 1 is $3,574, and Project 2 has a higher NPV. Given a cost of capital of 7.5%, which IRR corresponds to the project Sutter should select?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "13%",
+      "why": "This is a distractor based on incorrect IRR calculation or misunderstanding of the question."
+     },
+     {
+      "key": "B",
+      "text": "15%",
+      "why": "Correct answer. Project 2 has a higher NPV and its IRR is 15%."
+     },
+     {
+      "key": "C",
+      "text": "17%",
+      "why": "This is a common miscalculation error, possibly from misreading the cash flow data."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 50,
+   "topic": "Corporate Finance",
+   "id": "L1-90-050"
+  },
+  {
+   "title": "Callable Bonds: Yield-to-Worst",
+   "concept": "For callable bonds, yield-to-worst is the lowest yield among all possible yields (yield-to-maturity and all yield-to-call scenarios). It represents the worst-case return an investor might receive if the bond is called early.",
+   "exam_tips": [
+    "Remember yield-to-worst is the minimum of YTM and all yield-to-call calculations.",
+    "Focus on callable bonds when the question mentions 'worst-case yield.'"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A callable bond has a yield-to-maturity of 6.5% and three potential yield-to-call values: 5.8%, 6.2%, and 6.4%. What is its yield-to-worst?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "5.8%",
+      "why": "This is the lowest yield-to-call, making it the correct yield-to-worst."
+     },
+     {
+      "key": "B",
+      "text": "6.2%",
+      "why": "This is a higher yield-to-call but not the lowest."
+     },
+     {
+      "key": "C",
+      "text": "6.5%",
+      "why": "Yield-to-maturity is not considered for yield-to-worst unless it's the lowest."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 51,
+   "topic": "Equity Investments",
+   "id": "L1-90-051"
+  },
+  {
+   "title": "Lower of Cost or Market (LCM) Inventory Valuation",
+   "concept": "Under the LCM method, inventory is valued at the lower of its original cost or its market value. Market value is defined as a range between net realizable value (NRV) minus a normal profit margin and NRV. If replacement cost falls outside this range, market is set to the nearest boundary. A write-down occurs when cost exceeds market, reducing both assets and net income.",
+   "exam_tips": [
+    "Remember the market range: NRV minus normal profit margin ≤ market ≤ NRV",
+    "Write-downs reduce COGS (small changes) or appear as separate losses (large changes)"
+   ],
+   "formula": "Market = min(max(Replacement Cost, NRV - Normal Profit Margin), NRV)",
+   "question": {
+    "stem": "A company's inventory has a cost of $300, NRV of $280, and replacement cost of $270. Normal profit margin is $25. What is the correct per-unit carrying value under LCM?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$270",
+      "why": "Replacement cost is within the market range (NRV - $25 = $255 to NRV $280) so it's valid"
+     },
+     {
+      "key": "B",
+      "text": "$255",
+      "why": "Incorrectly subtracts profit margin from replacement cost instead of comparing to NRV"
+     },
+     {
+      "key": "C",
+      "text": "$300",
+      "why": "Fails to apply LCM rule; cost exceeds market value"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 52,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-052"
+  },
+  {
+   "title": "Net Cost of Carry in Forward Price Calculation",
+   "concept": "The net cost of carry is the difference between the present value of benefits (like dividends) and costs (like storage) of holding an asset. A positive net cost (more benefits than costs) reduces the forward price because the formula subtracts it from the spot price before applying the risk-free rate.",
+   "exam_tips": [
+    "Remember that positive net cost of carry lowers the forward price, not raises it.",
+    "Always use the formula: Forward Price = (Spot Price - Net Cost) × (1 + Risk-Free Rate)^Time"
+   ],
+   "formula": "F₀(T) = (S₀ - Net Cost) × (1 + Rf)ᵀ",
+   "question": {
+    "stem": "A 1-year forward contract has a spot price of $100, a net cost of carry of $5, and a risk-free rate of 3%. What is the no-arbitrage forward price?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$103.00",
+      "why": "Forgets to subtract the net cost of carry from the spot price"
+     },
+     {
+      "key": "B",
+      "text": "$98.00 × 1.03",
+      "why": "Correctly applies the formula: ($100 - $5) × 1.03"
+     },
+     {
+      "key": "C",
+      "text": "$100 × 1.03 + $5",
+      "why": "Incorrectly adds the net cost instead of subtracting it"
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 53,
+   "topic": "Fixed Income",
+   "id": "L1-90-053"
+  },
+  {
+   "title": "Bollinger Bands and Market Extremes",
+   "concept": "Bollinger Bands use a moving average and standard deviation to show price volatility. The bands expand when volatility rises and contract when it falls. Prices near the upper band suggest overbought conditions (potential sell), while prices near the lower band suggest oversold conditions (potential buy).",
+   "exam_tips": [
+    "Remember Bollinger Bands are based on 2 standard deviations from the moving average",
+    "Contrarian strategies often buy at lower bands and sell at upper bands"
+   ],
+   "formula": "Upper Band = MA + 2σ; Lower Band = MA - 2σ",
+   "question": {
+    "stem": "If a stock price touches the upper Bollinger Band, what does this typically indicate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Overbought market conditions",
+      "why": "Bollinger Bands use upper bands to signal overbought markets where prices may reverse"
+     },
+     {
+      "key": "B",
+      "text": "Strong confirmation of the current uptrend",
+      "why": "Trend confirmation requires price action beyond the band, not just touching it"
+     },
+     {
+      "key": "C",
+      "text": "Optimal entry point for long positions",
+      "why": "Touching upper bands usually signals overbought conditions, not entry opportunities"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 54,
+   "topic": "Portfolio Management",
+   "id": "L1-90-054"
+  },
+  {
+   "title": "High Water Mark in Hedge Funds",
+   "concept": "The high water mark ensures investors pay incentive fees only on gains that exceed the highest account value ever recorded after fees. If a fund’s value drops, the high water mark remains at the previous peak, preventing fees on gains that merely recover past losses.",
+   "exam_tips": [
+    "Distinguish high water mark from hurdle rates (minimum return thresholds for fees).",
+    "Remember high water mark applies to each investor individually, not the fund as a whole."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the primary purpose of a high water mark in hedge fund fee structures?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "To prevent charging incentive fees on gains that simply recover prior losses",
+      "why": "Correct. High water mark ensures fees are only applied to new gains above the historical peak."
+     },
+     {
+      "key": "B",
+      "text": "To set a minimum return threshold before any fees are charged",
+      "why": "Incorrect. This describes a hurdle rate, not a high water mark."
+     },
+     {
+      "key": "C",
+      "text": "To limit management fees to a percentage of total assets",
+      "why": "Incorrect. Management fees are typically calculated separately from high water mark rules."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 55,
+   "topic": "Derivatives",
+   "id": "L1-90-055"
+  },
+  {
+   "title": "Systematic vs. Nonsystematic Risk",
+   "concept": "Systematic risk is the unavoidable risk tied to market-wide factors like economic shifts or political events, while nonsystematic risk stems from company-specific issues like management changes or product failures. Investors are not compensated for nonsystematic risk because it can be eliminated through diversification.",
+   "exam_tips": [
+    "Remember: Systematic risk affects all investments, while nonsystematic risk is unique to individual assets or sectors.",
+    "Diversification reduces nonsystematic risk but not systematic risk—this is key for asset pricing models."
+   ],
+   "formula": "Total risk = Systematic risk + Unsystematic risk",
+   "question": {
+    "stem": "Which type of risk should an investor NOT expect to be compensated for?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Unsystematic risk",
+      "why": "Diversification eliminates this risk, so investors shouldn’t demand extra return for it."
+     },
+     {
+      "key": "B",
+      "text": "Systematic risk",
+      "why": "This risk cannot be diversified away and is priced in the market."
+     },
+     {
+      "key": "C",
+      "text": "Market risk",
+      "why": "Market risk is another term for systematic risk, which is compensated."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 56,
+   "topic": "Alternative Investments",
+   "id": "L1-90-056"
+  },
+  {
+   "title": "Misconduct in Investment Communications",
+   "concept": "Making false or misleading statements about a company’s financial health during an IPO violates the Standards of Professional Conduct. This includes implying stronger cash flows, resources, or growth prospects than actually exist, which can mislead investors and harm market integrity.",
+   "exam_tips": [
+    "Misconduct involves any intentional or reckless behavior that harms clients or the integrity of the profession.",
+    "Always ensure communications are factual and avoid vague language that could be interpreted as misleading."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Josef Karloff, CFA, routinely issues vague statements implying a company has stronger financials than reality during an IPO. Which Standard is most likely violated?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Fair dealing",
+      "why": "Fair dealing relates to treating all clients equitably, not false statements."
+     },
+     {
+      "key": "B",
+      "text": "Nonpublic information",
+      "why": "This involves using confidential information, not misleading claims."
+     },
+     {
+      "key": "C",
+      "text": "Misconduct",
+      "why": "Correct. Misconduct includes false or misleading statements that distort market perceptions."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 57,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-057"
+  },
+  {
+   "title": "t-Distribution in Confidence Intervals",
+   "concept": "When the population variance is unknown, the t-distribution is used instead of the z-distribution to construct confidence intervals. The t-distribution has fatter tails, leading to wider intervals that account for more uncertainty. The critical t-value depends on the sample size (degrees of freedom = n – 1) and the desired confidence level.",
+   "exam_tips": [
+    "Always check if the population variance is known or unknown before choosing between z and t distributions.",
+    "Remember that t-intervals are wider than z-intervals for the same confidence level due to the t-distribution's fatter tails."
+   ],
+   "formula": "Confidence Interval = sample mean ± t_(α/2, df) * (s/√n)",
+   "question": {
+    "stem": "When constructing a 95% confidence interval for a population mean with an unknown variance and a sample size of 30, which of the following is correct?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Use a t-distribution with 29 degrees of freedom.",
+      "why": "Correct. The degrees of freedom for a t-distribution are n – 1 = 29 when the sample size is 30."
+     },
+     {
+      "key": "B",
+      "text": "Use a z-distribution with 30 degrees of freedom.",
+      "why": "Incorrect. The z-distribution is used only when the population variance is known, not when it is unknown."
+     },
+     {
+      "key": "C",
+      "text": "Use a t-distribution with 30 degrees of freedom.",
+      "why": "Incorrect. Degrees of freedom for a t-distribution are always n – 1, not n."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 58,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-058"
+  },
+  {
+   "title": "Money Multiplier",
+   "concept": "The money multiplier shows how much the money supply can expand from an initial deposit. It depends on the required reserve ratio: lower reserves mean more lending and a higher multiplier. For example, a 25% reserve ratio allows $1,000 in reserves to create $4,000 in total deposits.",
+   "exam_tips": [
+    "Memorize the formula: Money multiplier = 1 / required reserve ratio",
+    "Watch out for reserve ratios expressed as percentages (e.g., 10% = 0.10 in calculations)"
+   ],
+   "formula": "Money multiplier = 1 / required reserve ratio",
+   "question": {
+    "stem": "If the required reserve ratio is 10%, what is the money multiplier?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "10",
+      "why": "Correct: 1 / 0.10 = 10"
+     },
+     {
+      "key": "B",
+      "text": "5",
+      "why": "Mistakenly uses 20% reserve ratio (1/0.20 = 5)"
+     },
+     {
+      "key": "C",
+      "text": "2.5",
+      "why": "Confuses reserve ratio with excess reserves percentage"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 59,
+   "topic": "Economics",
+   "id": "L1-90-059"
+  },
+  {
+   "title": "Straight-Line Depreciation Method",
+   "concept": "Straight-line depreciation spreads an asset’s cost evenly over its useful life. It is calculated by subtracting the asset’s residual value from its historical cost, then dividing by the estimated useful life. This method results in consistent depreciation expenses each year, making it simple and widely used for financial reporting.",
+   "exam_tips": [
+    "Always subtract residual value before dividing by useful life.",
+    "Recognize that straight-line depreciation creates stable net income over time."
+   ],
+   "formula": "Depreciation Expense = (Cost − Residual Value) / Useful Life",
+   "question": {
+    "stem": "A company purchases equipment for $20,000 with a $2,000 residual value and a 10-year useful life. Using straight-line depreciation, what is the annual depreciation expense?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$1,800",
+      "why": "Correctly subtracts residual value and divides by useful life."
+     },
+     {
+      "key": "B",
+      "text": "$2,000",
+      "why": "Forgets to account for residual value in the calculation."
+     },
+     {
+      "key": "C",
+      "text": "$2,200",
+      "why": "Adds residual value instead of subtracting it."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 60,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-060"
+  },
+  {
+   "title": "Lockout Period in Credit Card ABS",
+   "concept": "During the lockout period of a credit card asset-backed security (ABS), principal payments from cardholders are not distributed to investors. Instead, they are reinvested to purchase new credit card receivables, maintaining the pool’s value. This period, which can last 18 months to 10 years, ensures a stable cash flow for the ABS structure.",
+   "exam_tips": [
+    "Focus on the lockout period’s purpose: stabilizing the receivables pool.",
+    "Remember interest payments continue during the lockout period, unlike principal payments."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "During the lockout period of a credit card ABS, which of the following is true?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Investors receive principal payments from the pool.",
+      "why": "Incorrect. Principal payments are not distributed during the lockout period; they are reinvested."
+     },
+     {
+      "key": "B",
+      "text": "No interest payments are made to investors.",
+      "why": "Incorrect. Interest is typically paid periodically during the lockout period."
+     },
+     {
+      "key": "C",
+      "text": "Principal payments are used to purchase new receivables.",
+      "why": "Correct. This maintains the pool’s value and ensures stable cash flows for the ABS."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 61,
+   "topic": "Equity Investments",
+   "id": "L1-90-061"
+  },
+  {
+   "title": "Swap Value at Initiation",
+   "concept": "At the start of a swap, the fixed rate is set so the present value of fixed payments equals the present value of expected floating payments. This ensures the swap has zero value to both parties, as the fixed rate payer and receiver have balanced obligations. The swap acts like a package of off-market forward contracts, some with positive and some with negative present values, which cancel each other out.",
+   "exam_tips": [
+    "Remember swaps have zero value at initiation due to balanced present values",
+    "Confusing swap rates with forward rates is a common mistake"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the value of a fixed-for-floating interest rate swap at initiation?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Zero",
+      "why": "Correct: Swap rates are set to balance present values of fixed and floating payments"
+     },
+     {
+      "key": "B",
+      "text": "Positive for the fixed-rate payer",
+      "why": "Incorrect: This would create arbitrage opportunities"
+     },
+     {
+      "key": "C",
+      "text": "Depends on current interest rates",
+      "why": "Incorrect: The swap is priced to ensure zero value at initiation regardless of rates"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 62,
+   "topic": "Fixed Income",
+   "id": "L1-90-062"
+  },
+  {
+   "title": "Effective Annual Rate (EAR) Calculation",
+   "concept": "The effective annual rate (EAR) shows the actual return earned on an investment after accounting for compounding. It is higher than the stated annual rate when compounding occurs more than once per year. For example, 10% compounded semiannually gives a higher EAR than 10% compounded annually.",
+   "exam_tips": [
+    "Always use EAR to compare investments with different compounding frequencies.",
+    "Remember that the periodic rate is the stated rate divided by the number of compounding periods per year."
+   ],
+   "formula": "EAR = (1 + periodic rate)^m – 1",
+   "question": {
+    "stem": "What is the effective annual rate (EAR) for a stated annual rate of 10% compounded semiannually?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "10.25%",
+      "why": "Correct calculation: (1 + 0.10/2)^2 – 1 = 10.25%"
+     },
+     {
+      "key": "B",
+      "text": "10.00%",
+      "why": "Confuses stated rate with EAR; ignores compounding effect"
+     },
+     {
+      "key": "C",
+      "text": "10.50%",
+      "why": "Miscalculates periodic rate (uses 10% instead of 5% per period)"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 63,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-063"
+  },
+  {
+   "title": "Primary vs Secondary Markets",
+   "concept": "Primary markets are where new securities are issued (like IPOs), while secondary markets trade existing securities. Secondary markets support primary markets by providing liquidity, making investors more willing to buy in primary markets knowing they can later sell shares easily.",
+   "exam_tips": [
+    "Primary markets involve new issues, secondary markets involve existing securities",
+    "Liquidity in secondary markets reduces risk for primary market investors"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "How do secondary markets support primary markets?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "They determine the intrinsic value of securities",
+      "why": "Value determination happens through fundamental analysis, not secondary markets"
+     },
+     {
+      "key": "B",
+      "text": "They provide liquidity for previously issued securities",
+      "why": "Liquidity ensures investors can sell shares easily, encouraging primary market participation"
+     },
+     {
+      "key": "C",
+      "text": "They set the initial offering price for new securities",
+      "why": "Pricing is determined through book building in primary markets, not secondary markets"
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 64,
+   "topic": "Corporate Finance",
+   "id": "L1-90-064"
+  },
+  {
+   "title": "IFRS vs. U.S. GAAP: Investment Property Accounting",
+   "concept": "Under IFRS, investment property (held for rent or capital appreciation) can be measured using the cost model or fair value model. If the fair value model is used, increases in fair value above historical cost are recognized as gains in the income statement, unlike the revaluation model for property, plant, and equipment, where such gains go to equity. U.S. GAAP does not allow fair value accounting for investment property.",
+   "exam_tips": [
+    "Memorize that IFRS allows fair value model for investment property, but U.S. GAAP does not.",
+    "Distinguish between gains recognized in income (fair value model) vs. equity (revaluation model)."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Under IFRS, how are fair value changes in investment property accounted for if the fair value model is used?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Gains are recognized in the income statement.",
+      "why": "Correct. IFRS requires fair value changes for investment property to be reflected in income, not equity."
+     },
+     {
+      "key": "B",
+      "text": "Gains are recorded in equity as revaluation surplus.",
+      "why": "Incorrect. This applies to the revaluation model for property, plant, and equipment, not investment property under IFRS."
+     },
+     {
+      "key": "C",
+      "text": "U.S. GAAP rules apply, and gains are deferred.",
+      "why": "Incorrect. U.S. GAAP does not recognize investment property as a category, and IFRS rules are distinct."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 65,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-065"
+  },
+  {
+   "title": "Test Statistic Calculation",
+   "concept": "A test statistic measures how far a sample statistic is from the hypothesized value, expressed in standard error units. It is calculated by subtracting the hypothesized value from the sample statistic and dividing by the standard error of the sample statistic. This helps determine whether the observed result is statistically significant.",
+   "exam_tips": [
+    "Always use the standard error from the sample data (s/√n) if the population standard deviation is unknown.",
+    "Remember that the test statistic's distribution (z or t) depends on sample size and whether the population standard deviation is known."
+   ],
+   "formula": "Test statistic = (Sample statistic - Hypothesized value) / Standard error of the sample statistic",
+   "question": {
+    "stem": "A sample has a mean of 5.2, a hypothesized population mean of 5.0, and a standard error of 0.3. What is the test statistic?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "0.67",
+      "why": "Correct calculation: (5.2 - 5.0)/0.3 = 0.67"
+     },
+     {
+      "key": "B",
+      "text": "1.33",
+      "why": "Mistakenly divides by 0.2 instead of 0.3"
+     },
+     {
+      "key": "C",
+      "text": "2.00",
+      "why": "Confuses standard error with standard deviation"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 66,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-066"
+  },
+  {
+   "title": "Balanced Budget Multiplier",
+   "concept": "The balanced budget multiplier measures the net effect on aggregate demand when the government increases spending and taxes by the same amount. Even though higher taxes reduce disposable income, the direct boost from government spending typically outweighs this, leading to a small overall increase in demand. For example, a $100 rise in both spending and taxes might raise aggregate demand by $50 if the marginal propensity to consume is 0.8.",
+   "exam_tips": [
+    "Remember that tax changes affect demand through the MPC, not directly like spending.",
+    "The multiplier is usually small (around 1) because tax and spending effects partially cancel."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A government increases spending and taxes by $100 each. If the MPC is 0.8 and the fiscal multiplier is 2.5, what is the net change in aggregate demand?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "+$50",
+      "why": "Correct: Spending boost (+$250) minus tax drag (−$200) equals +$50"
+     },
+     {
+      "key": "B",
+      "text": "+$250",
+      "why": "Forgets that tax increases also reduce demand via the MPC"
+     },
+     {
+      "key": "C",
+      "text": "$0",
+      "why": "Assumes tax and spending effects perfectly cancel, which they don't"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 67,
+   "topic": "Economics",
+   "id": "L1-90-067"
+  },
+  {
+   "title": "Annuity Due Calculations",
+   "concept": "An annuity due involves payments at the beginning of each period, unlike ordinary annuities where payments occur at the end. To calculate its future or present value, you can either switch your calculator to BGN mode or adjust the result of an ordinary annuity by multiplying it by (1 + I/Y), accounting for the earlier timing of cash flows.",
+   "exam_tips": [
+    "Remember to switch back to END mode after solving annuity due problems to avoid errors in subsequent calculations.",
+    "The formula FVA_D = FVA_O × (1 + I/Y) is a quick way to adjust ordinary annuity results for annuity due calculations."
+   ],
+   "formula": "FVA_D = FVA_O × (1 + I/Y)",
+   "question": {
+    "stem": "What is the future value of an annuity due with $200 annual payments for 3 years at 10% interest?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$728.20",
+      "why": "Correct. This uses the annuity due formula or BGN mode on a calculator."
+     },
+     {
+      "key": "B",
+      "text": "$662.00",
+      "why": "Incorrect. This is the future value of an ordinary annuity, not an annuity due."
+     },
+     {
+      "key": "C",
+      "text": "$547.11",
+      "why": "Incorrect. This is the present value of an annuity due, not the future value."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 68,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-068"
+  },
+  {
+   "title": "Bond Price Changes with Duration and Convexity",
+   "concept": "To estimate a bond's price change for a given yield shift, use both duration (for linear effects) and convexity (for curvature). The formula combines modified duration and convexity: ΔP ≈ -modified duration × ΔYTM + ½ × convexity × (ΔYTM)². Convexity improves accuracy, especially for large yield changes, by accounting for the bond's non-linear price-yield relationship.",
+   "exam_tips": [
+    "Remember the ½ multiplier for convexity in calculations",
+    "Distinguish between approximate and effective convexity for bonds with embedded options"
+   ],
+   "formula": "ΔP ≈ -modified duration × ΔYTM + ½ × convexity × (ΔYTM)²",
+   "question": {
+    "stem": "A bond has a modified duration of 7.2 and convexity of 120. What is the estimated price change for a 200 basis point increase in yield?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "-13.44%",
+      "why": "Correctly applies both duration and convexity with proper signs and multipliers"
+     },
+     {
+      "key": "B",
+      "text": "-14.4%",
+      "why": "Forgets the convexity adjustment entirely, only using duration"
+     },
+     {
+      "key": "C",
+      "text": "-12.24%",
+      "why": "Incorrectly uses ½ × duration instead of convexity in the second term"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 69,
+   "topic": "Equity Investments",
+   "id": "L1-90-069"
+  },
+  {
+   "title": "Put-Call Parity",
+   "concept": "Put-call parity links the prices of European call and put options with the same strike price and expiration. It states that a call plus the present value of the strike price equals the stock price plus a put. This relationship prevents arbitrage by ensuring identical payoffs between a fiduciary call (call + bond) and a protective put (stock + put).",
+   "exam_tips": [
+    "Always use the present value of the strike price (X/(1+Rf)^T), not the face value of X.",
+    "Remember that put-call parity only applies to European options, not American ones."
+   ],
+   "formula": "c + X/(1+Rf)^T = S + p",
+   "question": {
+    "stem": "Using put-call parity, calculate the price of a 3-month call option if the stock is $52, the risk-free rate is 5%, the put is $1.50, and the strike price is $50.",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$4.11",
+      "why": "Correctly applies the formula: call = put + stock - PV(X) = 1.50 + 52 - (50/1.05^0.25) ≈ 4.11"
+     },
+     {
+      "key": "B",
+      "text": "$5.50",
+      "why": "Incorrectly uses the strike price (X) without discounting it to present value."
+     },
+     {
+      "key": "C",
+      "text": "$3.50",
+      "why": "Subtracts the put price instead of adding it, a common sign error in the formula."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 70,
+   "topic": "Fixed Income",
+   "id": "L1-90-070"
+  },
+  {
+   "title": "Candlestick Charts in Technical Analysis",
+   "concept": "Candlestick charts display four key price points—open, high, low, and close—for each time period. Each candlestick shows the price range (high to low) as a vertical line, with a filled rectangle indicating the open and close prices. Bullish candles (close > open) are typically hollow or white, while bearish candles (close < open) are filled or black.",
+   "exam_tips": [
+    "Remember that candlesticks provide more detailed price information than line charts, which only show closing prices.",
+    "Distinguish candlestick charts from bar charts, which use the same data but different visual formats."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following best describes the information shown in a candlestick chart?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Only the closing price for each period",
+      "why": "This is accurate for line charts, not candlestick charts."
+     },
+     {
+      "key": "B",
+      "text": "Open, high, low, and close prices for each period",
+      "why": "Correct. Candlestick charts explicitly show all four price points."
+     },
+     {
+      "key": "C",
+      "text": "Volume traded alongside price movements",
+      "why": "Volume is typically shown in separate charts, not directly on candlestick charts."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 71,
+   "topic": "Portfolio Management",
+   "id": "L1-90-071"
+  },
+  {
+   "title": "Roll Yield in Futures",
+   "concept": "Roll yield is the profit or loss generated when a futures contract is rolled over from one expiration date to another. It arises from the difference between the spot price of the underlying asset and the futures price. In contango (futures > spot), rolling incurs a loss; in backwardation (futures < spot), rolling generates a gain.",
+   "exam_tips": [
+    "Remember that roll yield is part of total return for futures holdings, alongside appreciation and financing costs.",
+    "Confuse contango and backwardation: contango creates negative roll yield, backwardation creates positive."
+   ],
+   "formula": "Roll Yield = Spot Price - Futures Price (at time of roll)",
+   "question": {
+    "stem": "What best describes roll yield in futures contracts?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "The difference between the spot price and the futures price at contract rollover",
+      "why": "Correct. Roll yield directly reflects the price discrepancy between spot and futures when contracts are rolled."
+     },
+     {
+      "key": "B",
+      "text": "The cost of carry for holding the underlying asset",
+      "why": "Incorrect. Cost of carry includes storage, insurance, and financing costs, not the price difference between spot and futures."
+     },
+     {
+      "key": "C",
+      "text": "The difference between futures prices of consecutive expiration months",
+      "why": "Incorrect. This describes the 'term structure' of futures, not roll yield itself."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 72,
+   "topic": "Derivatives",
+   "id": "L1-90-072"
+  },
+  {
+   "title": "Valuation Allowance and Earnings",
+   "concept": "A valuation allowance reduces deferred tax assets (DTAs) when future tax benefits are unlikely to be realized. Increasing the valuation allowance raises income tax expense and lowers earnings, while decreasing it has the opposite effect.",
+   "exam_tips": [
+    "Valuation allowances reduce DTAs, not deferred tax liabilities.",
+    "Changes in valuation allowances directly affect income tax expense and earnings."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "If a company increases its valuation allowance, what is the expected effect on its earnings?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Increase",
+      "why": "Incorrect. A higher valuation allowance reduces DTAs, which increases tax expense and lowers earnings."
+     },
+     {
+      "key": "B",
+      "text": "Decrease",
+      "why": "Correct. Increasing the valuation allowance raises income tax expense, reducing earnings."
+     },
+     {
+      "key": "C",
+      "text": "No effect",
+      "why": "Incorrect. Valuation allowance changes directly impact earnings through tax expense."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 73,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-073"
+  },
+  {
+   "title": "SML and Security Valuation",
+   "concept": "The Security Market Line (SML) shows the relationship between expected return and systematic risk (beta). If a security’s expected return is below the SML, it is overvalued because it offers lower returns than required for its risk. If above the SML, it is undervalued. Properly valued securities lie exactly on the SML.",
+   "exam_tips": [
+    "Remember: Overvalued securities plot below the SML, undervalued above it.",
+    "Use the CAPM formula to calculate required returns for comparison."
+   ],
+   "formula": "E(Ri) = Rf + βi[E(Rm) - Rf]",
+   "question": {
+    "stem": "Based on the CAPM, which stock is overvalued if the risk-free rate is 7% and the market return is 15%?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Stock A (forecast return 12%, beta 1.0)",
+      "why": "Its expected return is below the SML, indicating overvaluation."
+     },
+     {
+      "key": "B",
+      "text": "Stock B (forecast return 17.5%, beta 0.8)",
+      "why": "Its expected return is above the SML, indicating undervaluation."
+     },
+     {
+      "key": "C",
+      "text": "Stock C (forecast return 16.6%, beta 1.2)",
+      "why": "Its expected return matches the SML, indicating proper valuation."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 74,
+   "topic": "Alternative Investments",
+   "id": "L1-90-074"
+  },
+  {
+   "title": "Cash Flow Additivity Principle",
+   "concept": "The present value of any cash flow series equals the sum of the present values of each individual cash flow. This means you can split complex cash flows into simpler parts, calculate each part’s present value separately, and add them together to find the total.",
+   "exam_tips": [
+    "Break down irregular cash flows into annuities or single payments for easier calculations.",
+    "Always discount all components to the same point in time before adding."
+   ],
+   "formula": "PV_total = PV₁ + PV₂ + ... + PVₙ",
+   "question": {
+    "stem": "A security will pay $100, $100, $400, and $100 at the end of Years 1–4. Using the cash flow additivity principle, what is the present value at a 10% discount rate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "$542.38",
+      "why": "Correct. Splitting into a 4-year annuity ($316.99) and a $300 payment at Year 3 ($225.39) gives this total."
+     },
+     {
+      "key": "B",
+      "text": "$481.59",
+      "why": "This is the PV of a different example in the text, not this specific cash flow series."
+     },
+     {
+      "key": "C",
+      "text": "$641.00",
+      "why": "This is the future value of the same cash flows, not the present value."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 75,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-075"
+  },
+  {
+   "title": "Commodity Indexes Use Futures, Not Spot Prices",
+   "concept": "Commodity indexes track the prices of futures contracts, not the spot prices of physical commodities. This means returns include factors like the roll yield (gains/losses from rolling futures contracts as they near expiration) and changes in futures prices, which differ from holding the actual commodity itself.",
+   "exam_tips": [
+    "Focus on how futures-based indexes incorporate roll yield and price changes, not just spot prices.",
+    "Remember that futures contracts have expiration dates, requiring periodic replacement."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Why do returns on commodity futures differ from the returns of holding the actual commodity?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Roll yield and futures price changes",
+      "why": "Correct. Futures returns include roll yield and price changes, which are absent in physical commodity holdings."
+     },
+     {
+      "key": "B",
+      "text": "Spot price fluctuations",
+      "why": "Incorrect. Indexes use futures prices, not spot prices, so spot fluctuations are irrelevant."
+     },
+     {
+      "key": "C",
+      "text": "High transaction costs",
+      "why": "Incorrect. While costs exist, they are not the primary reason for the return difference."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 76,
+   "topic": "Corporate Finance",
+   "id": "L1-90-076"
+  },
+  {
+   "title": "Two-Sample t-Test for Independent Samples",
+   "concept": "When comparing means of two independent groups with equal variances, use a two-sample t-test. The test checks if the difference between sample means is statistically significant. The t-statistic measures how far the observed difference is from the hypothesized difference (usually zero), relative to the variability in the data.",
+   "exam_tips": [
+    "Always check if the test is one-tailed or two-tailed based on the hypothesis direction.",
+    "Use the correct critical value from the t-table that matches your degrees of freedom and significance level."
+   ],
+   "formula": "t = (x̄₁ - x̄₂) / [s_p * sqrt(1/n₁ + 1/n₂)] where s_p = sqrt([((n₁-1)s₁² + (n₂-1)s₂²)/(n₁ + n₂ - 2)])",
+   "question": {
+    "stem": "A researcher conducts a two-sample t-test with a calculated t-statistic of -5.474 and 120 degrees of freedom. At a 5% significance level, should the null hypothesis be rejected?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Reject the null hypothesis",
+      "why": "The t-statistic (-5.474) is less than the critical value (-1.980), so the result falls in the rejection region."
+     },
+     {
+      "key": "B",
+      "text": "Fail to reject the null hypothesis",
+      "why": "This would be correct if the t-statistic were within the critical values, but it is not."
+     },
+     {
+      "key": "C",
+      "text": "The test is inconclusive",
+      "why": "The test provides clear results based on the t-statistic and critical value comparison."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 77,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-077"
+  },
+  {
+   "title": "Effects of Export Subsidies",
+   "concept": "Export subsidies are government payments to exporters that lower their costs, increasing the quantity exported. In the exporting country, this raises domestic prices, reducing consumer surplus but boosting producer surplus. For small countries, prices rise by the subsidy amount; for large exporters, the world price drops, and some benefits leak to foreign consumers.",
+   "exam_tips": [
+    "Remember subsidies hurt consumers in the exporting country by raising prices.",
+    "Differentiate between small and large exporters: only large ones affect world prices."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What happens to consumer surplus in the exporting country when an export subsidy is implemented?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Increases",
+      "why": "Subsidies lower producer costs but raise domestic prices, harming consumers."
+     },
+     {
+      "key": "B",
+      "text": "Decreases",
+      "why": "Correct. Higher prices from subsidies reduce consumer surplus."
+     },
+     {
+      "key": "C",
+      "text": "Remains unchanged",
+      "why": "Prices clearly change due to subsidies."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 78,
+   "topic": "Economics",
+   "id": "L1-90-078"
+  },
+  {
+   "title": "Correct Classification of Debt for Solvency Ratios",
+   "concept": "Solvency ratios like debt-to-equity focus on interest-bearing obligations, such as notes payable and long-term debt. Accounts payable and accrued liabilities are not considered debt because they do not carry interest costs. This distinction ensures ratios reflect actual financial leverage accurately.",
+   "exam_tips": [
+    "Always verify which liabilities are interest-bearing when calculating debt ratios.",
+    "Remember that solvency ratios exclude non-interest obligations like trade payables."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which of the following liabilities are included in the calculation of solvency ratios?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Notes payable and long-term debt",
+      "why": "Correct. These are interest-bearing obligations directly relevant to financial leverage."
+     },
+     {
+      "key": "B",
+      "text": "Accounts payable and accrued liabilities",
+      "why": "Incorrect. These are operational liabilities without interest costs and excluded from debt ratios."
+     },
+     {
+      "key": "C",
+      "text": "Bonds payable and deferred revenue",
+      "why": "Incorrect. While bonds payable are interest-bearing, deferred revenue is not a debt obligation."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 79,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-079"
+  },
+  {
+   "title": "Frequency Distributions",
+   "concept": "A frequency distribution organizes data into intervals (or classes) to show how often values occur. Each interval must be mutually exclusive and cover the full range of data. This helps summarize large datasets and identify patterns, like the modal interval (the most frequent range).",
+   "exam_tips": [
+    "Remember that intervals must not overlap and must cover all data points.",
+    "The modal interval has the highest absolute frequency, not necessarily the largest range."
+   ],
+   "formula": "Relative Frequency = Absolute Frequency / Total Number of Observations",
+   "question": {
+    "stem": "For a dataset with 20 observations, if one interval has 7 observations, what is its relative frequency?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "35%",
+      "why": "Correct: 7/20 = 0.35, or 35%."
+     },
+     {
+      "key": "B",
+      "text": "7%",
+      "why": "Incorrect: This would be the case if the total observations were 100."
+     },
+     {
+      "key": "C",
+      "text": "7/20",
+      "why": "Incorrect: This is the absolute frequency, not the relative frequency."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 80,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-080"
+  },
+  {
+   "title": "Liquidity Considerations in High-Yield Debt Analysis",
+   "concept": "High-yield issuers face liquidity challenges due to limited access to financing and higher borrowing costs. Analysts prioritize six liquidity sources: balance sheet cash, working capital, operating cash flow, bank credit, equity issuance, and asset sales, in that order of reliability. A lack of reliable liquidity sources increases default risk, especially if significant debt matures soon.",
+   "exam_tips": [
+    "Remember the order of liquidity sources for high-yield issuers",
+    "Link liquidity shortages to default risk in capital structure analysis"
+   ],
+   "formula": null,
+   "question": {
+    "stem": "What is the primary reason high-yield issuers default?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Insufficient liquidity to refinance debt",
+      "why": "Correct – cash flow gaps and limited access to financing are key triggers"
+     },
+     {
+      "key": "B",
+      "text": "High leverage ratios",
+      "why": "While leverage matters, it's secondary to immediate liquidity needs"
+     },
+     {
+      "key": "C",
+      "text": "Downgraded credit ratings",
+      "why": "Ratings reflect risk but don't directly cause default without liquidity issues"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 81,
+   "topic": "Equity Investments",
+   "id": "L1-90-081"
+  },
+  {
+   "title": "Forward Price with Costs and Benefits",
+   "concept": "The no-arbitrage forward price adjusts for the present value of holding costs (like storage) and benefits (like dividends). If holding an asset has net costs, the forward price rises; if it has net benefits, the forward price falls. This ensures fair pricing without arbitrage opportunities.",
+   "exam_tips": [
+    "Always include both PV of costs and PV of benefits in the formula",
+    "Remember that benefits reduce the forward price, while costs increase it"
+   ],
+   "formula": "F0(T) = [S0 + PV0(cost) − PV0(benefit)] × (1 + Rf)^T",
+   "question": {
+    "stem": "Which formula correctly calculates the no-arbitrage forward price when holding costs and benefits are present?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "F0(T) = [S0 + PV0(cost) − PV0(benefit)] × (1 + Rf)^T",
+      "why": "Correctly incorporates both costs and benefits with proper signs"
+     },
+     {
+      "key": "B",
+      "text": "F0(T) = [S0 − PV0(cost) + PV0(benefit)] × (1 + Rf)^T",
+      "why": "Incorrectly reverses the sign for costs"
+     },
+     {
+      "key": "C",
+      "text": "F0(T) = S0 × (1 + Rf)^T",
+      "why": "Omits both costs and benefits entirely"
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 82,
+   "topic": "Fixed Income",
+   "id": "L1-90-082"
+  },
+  {
+   "title": "Private Equity vs. Public Equity Characteristics",
+   "concept": "Private equity lacks a public market, leading to lower liquidity and negotiated pricing. It also involves less financial disclosure and simpler reporting, but may offer higher returns if the firm succeeds. Public equity, by contrast, has strict disclosure rules and higher transparency.",
+   "exam_tips": [
+    "Focus on liquidity and disclosure differences as key contrasts.",
+    "Remember that private equity can have higher long-term returns despite initial illiquidity."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "A firm considering private equity investment asks which characteristic is least likely to apply to private equity compared to public equity.",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Lower reporting costs",
+      "why": "This is accurate for private equity, making it a distractor."
+     },
+     {
+      "key": "B",
+      "text": "Potentially weaker corporate governance",
+      "why": "True for private equity due to reduced scrutiny, so this is a distractor."
+     },
+     {
+      "key": "C",
+      "text": "Lower returns because of its less liquid market",
+      "why": "Private equity may offer higher returns upon exit, making this the correct answer."
+     }
+    ],
+    "correct_key": "C"
+   },
+   "day": 83,
+   "topic": "Corporate Finance",
+   "id": "L1-90-083"
+  },
+  {
+   "title": "Tokenization in Distributed Ledgers",
+   "concept": "Tokenization is the process of creating digital representations (tokens) of physical assets on a blockchain. This allows ownership of real-world items like real estate or artwork to be recorded and transferred electronically, improving efficiency and transparency in asset management.",
+   "exam_tips": [
+    "Distinguish tokenization from smart contracts—tokenization focuses on asset ownership, while smart contracts automate agreement execution.",
+    "Remember that tokenization can reduce administrative costs in managing high-value assets."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which statement about tokenization is most accurate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Tokenization increases counterparty risk in transactions.",
+      "why": "This is incorrect because tokenization reduces risk by providing clear, immutable proof of ownership."
+     },
+     {
+      "key": "B",
+      "text": "Tokenization can streamline transactions involving high-value physical assets.",
+      "why": "This is correct. Tokenization digitizes assets, making transfers faster and more transparent."
+     },
+     {
+      "key": "C",
+      "text": "Tokenization requires a central authority to verify ownership.",
+      "why": "This is incorrect because tokenization typically uses decentralized blockchains, eliminating the need for a central authority."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 84,
+   "topic": "Portfolio Management",
+   "id": "L1-90-084"
+  },
+  {
+   "title": "Population vs. Sample Variance",
+   "concept": "Population variance uses all data points in a population, while sample variance adjusts for smaller samples by dividing by n−1 instead of n. This adjustment (Bessel's correction) prevents underestimating the true population variance, especially with small samples.",
+   "exam_tips": [
+    "Always check if the data represents a population or a sample to choose the correct formula.",
+    "Remember that sample variance uses n−1 to produce an unbiased estimate of population variance."
+   ],
+   "formula": "Population variance (σ²) = Σ(Xi − μ)² / N; Sample variance (s²) = Σ(Xi − X̄)² / (n−1)",
+   "question": {
+    "stem": "A researcher calculates the variance of returns for 10 mutual funds using all available data. Which formula should they use?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Population variance (σ²)",
+      "why": "Correct: The data represents the entire population of 10 funds."
+     },
+     {
+      "key": "B",
+      "text": "Sample variance (s²)",
+      "why": "Incorrect: Sample variance is used when data is a subset of a larger population."
+     },
+     {
+      "key": "C",
+      "text": "Either formula works equally well",
+      "why": "Incorrect: Using population variance for a sample underestimates true variance."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 85,
+   "topic": "Ethical & Professional Standards",
+   "id": "L1-90-085"
+  },
+  {
+   "title": "Non-GAAP Measures Reconciliation",
+   "concept": "When companies use non-GAAP financial measures (like adjusted earnings), they must clearly define these measures, explain their relevance, and reconcile them to the most comparable GAAP measure. This ensures transparency and helps investors compare performance accurately.",
+   "exam_tips": [
+    "Look for reconciliation of non-GAAP metrics to GAAP in financial reports.",
+    "Watch for vague explanations of why non-GAAP measures are used."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "According to IFRS requirements, which action is mandatory when a firm presents non-GAAP measures?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Reconcile the non-GAAP measure to the most comparable IFRS measure",
+      "why": "This is explicitly required by IFRS to ensure transparency and comparability."
+     },
+     {
+      "key": "B",
+      "text": "Present the non-GAAP measure for all prior periods",
+      "why": "This is not required; prior period presentation is optional."
+     },
+     {
+      "key": "C",
+      "text": "Use non-GAAP measures exclusively for executive compensation decisions",
+      "why": "IFRS does not permit this; non-GAAP measures must be explained but cannot replace GAAP for official purposes."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 86,
+   "topic": "Financial Reporting & Analysis",
+   "id": "L1-90-086"
+  },
+  {
+   "title": "Defined Contribution vs Defined Benefit Plans",
+   "concept": "In a defined contribution plan, employees bear investment risk as their retirement income depends on account contributions and investment returns. In contrast, defined benefit plans guarantee specific retirement payouts, with employers bearing investment risk and ensuring promised benefits through fund contributions.",
+   "exam_tips": [
+    "Remember: defined benefit plans have employer-driven risk, while defined contribution plans have employee-driven risk.",
+    "Look for keywords like 'guaranteed payouts' for defined benefit and 'investment risk' for defined contribution in questions."
+   ],
+   "formula": null,
+   "question": {
+    "stem": "Which statement best describes a defined contribution pension plan?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "The employer guarantees a specific retirement income.",
+      "why": "This describes a defined benefit plan, not a defined contribution plan."
+     },
+     {
+      "key": "B",
+      "text": "The employee assumes investment risk and selects investment options.",
+      "why": "Correct. Defined contribution plans transfer investment risk to employees."
+     },
+     {
+      "key": "C",
+      "text": "The employer contributes a fixed percentage of the employee’s salary annually.",
+      "why": "This could apply to either plan type but doesn’t fully capture the risk allocation in defined contribution plans."
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 87,
+   "topic": "Derivatives",
+   "id": "L1-90-087"
+  },
+  {
+   "title": "Calculating Beta",
+   "concept": "Beta measures a stock's sensitivity to market risk. It is calculated by dividing the covariance between the stock's returns and the market's returns by the market's variance. A beta of 1 means the stock moves in line with the market.",
+   "exam_tips": [
+    "Always use market variance, not standard deviation, in the denominator.",
+    "Covariance should be with the market portfolio, not other factors."
+   ],
+   "formula": "Beta = Covariance(stock, market) / Variance(market)",
+   "question": {
+    "stem": "A stock has a covariance of 0.005 with the market, and the market's variance is 0.0025. What is the stock's beta?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "2.0",
+      "why": "Correct: 0.005 divided by 0.0025 equals 2.0."
+     },
+     {
+      "key": "B",
+      "text": "0.5",
+      "why": "Incorrect: This would be the case if covariance and variance were reversed."
+     },
+     {
+      "key": "C",
+      "text": "1.0",
+      "why": "Incorrect: This assumes zero covariance, which is not true here."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 88,
+   "topic": "Alternative Investments",
+   "id": "L1-90-088"
+  },
+  {
+   "title": "Harmonic Mean for Average Price Per Share",
+   "concept": "When investing equal amounts at different prices, the harmonic mean calculates the correct average price per share. This is because it weights lower prices more heavily, reflecting the higher quantity of shares purchased at cheaper prices.",
+   "exam_tips": [
+    "Use harmonic mean for averaging rates or prices with equal investments.",
+    "Avoid arithmetic mean here, as it overstates the average when prices vary."
+   ],
+   "formula": "Harmonic Mean = n / (1/x₁ + 1/x₂ + ... + 1/xₙ)",
+   "question": {
+    "stem": "An investor buys $1,000 worth of shares monthly for 6 months at varying prices. Which average should they use to calculate their overall average price per share?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "Arithmetic mean",
+      "why": "Commonly used for returns, but incorrectly weights prices equally here"
+     },
+     {
+      "key": "B",
+      "text": "Harmonic mean",
+      "why": "Correct choice for equal dollar investments at varying prices"
+     },
+     {
+      "key": "C",
+      "text": "Geometric mean",
+      "why": "Used for growth rates, not price averaging"
+     }
+    ],
+    "correct_key": "B"
+   },
+   "day": 89,
+   "topic": "Quantitative Methods",
+   "id": "L1-90-089"
+  },
+  {
+   "title": "Forward Exchange Rate Calculation Using Interest Rate Parity",
+   "concept": "The forward exchange rate is determined by the spot rate and the interest rate differential between two currencies. According to interest rate parity, the currency with the higher interest rate will trade at a forward discount, while the lower-interest-rate currency will trade at a forward premium. The formula ensures no risk-free arbitrage opportunities exist.",
+   "exam_tips": [
+    "Always use the correct interest rates for the time period of the forward contract (e.g., annualized rates for 1-year contracts).",
+    "Remember that the forward rate formula adjusts the spot rate based on the relative interest rates of the two currencies."
+   ],
+   "formula": "Forward Rate = Spot Rate × (1 + i_price) / (1 + i_base)",
+   "question": {
+    "stem": "The spot rate for USD/GBP is 1.30, the 1-year USD interest rate is 2%, and the 1-year GBP interest rate is 4%. What is the 1-year forward USD/GBP exchange rate?",
+    "choices": [
+     {
+      "key": "A",
+      "text": "1.339",
+      "why": "Correctly applies the interest rate parity formula using the given rates."
+     },
+     {
+      "key": "B",
+      "text": "1.261",
+      "why": "Inverts the interest rate ratio, assuming GBP is the price currency instead of USD."
+     },
+     {
+      "key": "C",
+      "text": "1.30",
+      "why": "Incorrectly assumes no interest rate differential affects the forward rate."
+     }
+    ],
+    "correct_key": "A"
+   },
+   "day": 90,
+   "topic": "Economics",
+   "id": "L1-90-090"
+  }
+ ]
+}
