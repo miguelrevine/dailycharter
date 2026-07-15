@@ -232,10 +232,13 @@ def generate_pill(model, topic, day, days, reference, retries=4):
             r.raise_for_status()
         # Ollama hiccups (404 while the model reloads, timeouts, resets)
         # are transient — back off and retry instead of killing the run.
-        except requests.RequestException:
+        except requests.RequestException as e:
+            body = getattr(getattr(e, "response", None), "text", "")
+            print(f"  ! Ollama error day {day} attempt {attempt+1}: {e} {body[:200]}",
+                  file=sys.stderr)
             if attempt == retries:
                 raise
-            time.sleep(5 * (attempt + 1))
+            time.sleep(15 * (attempt + 1))
             continue
         raw = r.json().get("message", {}).get("content", "")
         try:
