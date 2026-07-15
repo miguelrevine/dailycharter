@@ -214,7 +214,8 @@ def require_model(model):
             f"Model '{model}' not found in Ollama. Available: {', '.join(names) or '(none)'}\n"
             f"Pass --model <name> or pull it: ollama pull {model}")
 
-def generate_pill(model, topic, day, days, reference, retries=4):
+def generate_pill(model, topic, day, days, reference, retries=4,
+                  extra_rules="", temperature=0.7):
     """One LLM call → one validated pill dict."""
     system = (
         "You write daily micro-lessons ('pills') for CFA Level I candidates. "
@@ -223,7 +224,8 @@ def generate_pill(model, topic, day, days, reference, retries=4):
         "paraphrase sentences from the reference; explain in your own words. "
         "One concept per pill. B-level English, friendly but precise. "
         "The three answer choices must include realistic distractors based on "
-        "common candidate mistakes. Respond with ONLY valid JSON, no markdown, "
+        "common candidate mistakes. " + extra_rules +
+        "Respond with ONLY valid JSON, no markdown, "
         f"matching exactly this schema:\n{PILL_SCHEMA_HINT}"
     )
     user = (
@@ -240,7 +242,7 @@ def generate_pill(model, topic, day, days, reference, retries=4):
                              {"role":"user","content":user}],
                 "format": "json",
                 "stream": False,
-                "options": {"temperature": 0.7},
+                "options": {"temperature": temperature},
             }, timeout=600)
             r.raise_for_status()
         # Ollama hiccups (404 while the model reloads, timeouts, resets)
@@ -349,7 +351,14 @@ def regen_pills(pdf_dir, plan_path, days_list, model, log=print):
         topic = schedule[day - 1]
         index = schedule[:day - 1].count(topic)  # same slice as the original run
         ref   = slice_reference(corpus.get(topic, ""), index, counts[topic])
-        pill  = generate_pill(model, topic, day, total, ref)
+        # regen only runs on QA-rejected pills — push harder against copying
+        # and add sampling variance so retries don't reproduce the same text.
+        pill  = generate_pill(model, topic, day, total, ref, extra_rules=(
+            "A previous draft of this pill was REJECTED for copying wording "
+            "from the reference. Never reuse any sequence of 6+ consecutive "
+            "words from the reference: restructure every sentence, change the "
+            "order of ideas, and use your own examples and phrasing. "),
+            temperature=0.85)
         pill.update({"day": day, "topic": topic,
                      "id": f"{plan['plan_id']}-{day:03d}"})
         plan["pills"][by_day[day]] = pill
