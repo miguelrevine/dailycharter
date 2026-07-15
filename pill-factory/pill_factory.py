@@ -274,7 +274,7 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
 
     # Resume support: long runs on local hardware can be interrupted.
     if os.path.exists(resume_path):
-        with open(resume_path) as f:
+        with open(resume_path, encoding="utf-8") as f:
             plan = json.load(f)
         for p in plan["pills"]:
             seen[p["topic"]] = seen.get(p["topic"], 0) + 1
@@ -291,7 +291,7 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
         plan["pills"].append(pill)
         seen[topic] += 1
 
-        with open(resume_path, "w") as f:          # checkpoint every pill
+        with open(resume_path, "w", encoding="utf-8") as f:   # checkpoint every pill
             json.dump(plan, f, ensure_ascii=False)
 
         done = day - start_day + 1
@@ -302,7 +302,7 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
         if progress:
             progress(day, days, msg)
 
-    with open(out_path, "w") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(plan, f, ensure_ascii=False, indent=1)
     os.remove(resume_path)
     log(f"✔ Plan written to {out_path}  ({len(plan['pills'])} pills)")
