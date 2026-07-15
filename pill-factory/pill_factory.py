@@ -201,7 +201,7 @@ def ollama_ready():
     except requests.RequestException:
         return False
 
-def generate_pill(model, topic, day, days, reference, retries=2):
+def generate_pill(model, topic, day, days, reference, retries=4):
     """One LLM call → one validated pill dict."""
     system = (
         "You write daily micro-lessons ('pills') for CFA Level I candidates. "
@@ -232,12 +232,15 @@ def generate_pill(model, topic, day, days, reference, retries=2):
         raw = r.json().get("message", {}).get("content", "")
         try:
             pill = json.loads(raw)
+            assert isinstance(pill, dict)
             assert pill.get("title") and pill.get("concept")
             q = pill.get("question") or {}
             keys = [c.get("key") for c in q.get("choices", [])]
             assert sorted(keys) == ["A","B","C"] and q.get("correct_key") in keys
             return pill
-        except (json.JSONDecodeError, AssertionError):
+        # AttributeError/TypeError: model returned the right JSON but the
+        # wrong shape (e.g. choices as plain strings) — retry, don't crash.
+        except (json.JSONDecodeError, AssertionError, AttributeError, TypeError):
             if attempt == retries:
                 raise ValueError(f"Model returned invalid pill JSON (day {day})")
             time.sleep(1)
