@@ -311,6 +311,29 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
     log(f"✔ Plan written to {out_path}  ({len(plan['pills'])} pills)")
     return out_path
 
+def regen_pills(pdf_dir, plan_path, days_list, model, log=print):
+    """Regenerate specific days of an existing plan JSON in place.
+    Pre-seed QA use only — once a plan is seeded its version is immutable."""
+    with open(plan_path, encoding="utf-8") as f:
+        plan = json.load(f)
+    total    = plan["days"]
+    corpus   = build_topic_corpus(pdf_dir, log)
+    schedule = distribute_days(total)
+    counts   = {t: schedule.count(t) for t in set(schedule)}
+    by_day   = {p["day"]: i for i, p in enumerate(plan["pills"])}
+    for day in days_list:
+        topic = schedule[day - 1]
+        index = schedule[:day - 1].count(topic)  # same slice as the original run
+        ref   = slice_reference(corpus.get(topic, ""), index, counts[topic])
+        pill  = generate_pill(model, topic, day, total, ref)
+        pill.update({"day": day, "topic": topic,
+                     "id": f"{plan['plan_id']}-{day:03d}"})
+        plan["pills"][by_day[day]] = pill
+        log(f"  regenerated day {day:>3}  ({topic})")
+    with open(plan_path, "w", encoding="utf-8") as f:
+        json.dump(plan, f, ensure_ascii=False, indent=1)
+    log(f"✔ {len(days_list)} pill(s) regenerated in {plan_path}")
+
 # ──────────────────────────────────────────────────────────
 # 5) Local web app (plan selector)  —  stdlib only
 # ──────────────────────────────────────────────────────────
@@ -478,6 +501,12 @@ def main():
                     choices=sorted(PLAN_CATALOG), help="plan length in days")
     p2.add_argument("--model", default=DEFAULT_MODEL)
 
+    p4 = sub.add_parser("regen", help="regenerate specific days of an existing plan (pre-seed QA)")
+    p4.add_argument("--pdf-dir", required=True)
+    p4.add_argument("--plan-json", required=True)
+    p4.add_argument("--days", required=True, help="comma-separated day numbers, e.g. 5,7,17")
+    p4.add_argument("--model", default=DEFAULT_MODEL)
+
     p3 = sub.add_parser("serve", help="local web app to pick & generate plans")
     p3.add_argument("--pdf-dir", required=True)
     p3.add_argument("--port", type=int, default=8765)
@@ -490,6 +519,9 @@ def main():
             print(f"   topics → {', '.join(topics_for_pdf(path))}")
     elif a.cmd == "generate":
         generate_plan(a.pdf_dir, a.plan, a.model)
+    elif a.cmd == "regen":
+        regen_pills(a.pdf_dir, a.plan_json,
+                    [int(x) for x in a.days.split(",")], a.model)
     elif a.cmd == "serve":
         find_pdfs(a.pdf_dir)  # fail fast if folder is wrong
         print(f"▸ Pill Factory app → http://localhost:{a.port}")
