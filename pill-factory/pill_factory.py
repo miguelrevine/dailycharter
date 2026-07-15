@@ -201,6 +201,19 @@ def ollama_ready():
     except requests.RequestException:
         return False
 
+def require_model(model):
+    """Fail fast with a clear message if `model` isn't pulled in Ollama."""
+    try:
+        r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
+        r.raise_for_status()
+    except requests.RequestException:
+        raise SystemExit(f"Ollama not reachable at {OLLAMA_URL}")
+    names = [m["name"] for m in r.json().get("models", [])]
+    if model not in names and f"{model}:latest" not in names:
+        raise SystemExit(
+            f"Model '{model}' not found in Ollama. Available: {', '.join(names) or '(none)'}\n"
+            f"Pass --model <name> or pull it: ollama pull {model}")
+
 def generate_pill(model, topic, day, days, reference, retries=4):
     """One LLM call → one validated pill dict."""
     system = (
@@ -529,8 +542,10 @@ def main():
             print(f"📄 {os.path.basename(path)}")
             print(f"   topics → {', '.join(topics_for_pdf(path))}")
     elif a.cmd == "generate":
+        require_model(a.model)
         generate_plan(a.pdf_dir, a.plan, a.model)
     elif a.cmd == "regen":
+        require_model(a.model)
         regen_pills(a.pdf_dir, a.plan_json,
                     [int(x) for x in a.days.split(",")], a.model)
     elif a.cmd == "serve":
