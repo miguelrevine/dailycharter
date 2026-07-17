@@ -156,7 +156,8 @@ function renderEmail(env, sub, pill, token, stats, planDays) {
       </td></tr></table>
     </td></tr>
     <tr><td align="center" style="padding:24px 8px 8px;font-family:Arial,sans-serif;font-size:11px;line-height:1.7;color:#8A94A0;">
-      © 2026 DailyCharter · Original study content, not affiliated with CFA Institute.<br>
+      © 2026 DailyCharter · Daily Charter S.L. · Calle García Treviño, Spain<br>
+      Original study content, not affiliated with CFA Institute.
       CFA® is a registered trademark owned by CFA Institute.<br>
       <a href="${env.SITE_URL}" style="color:#5B6B7C;">Website</a> ·
       <a href="${env.WORKER_URL || ""}/unsubscribe?u=${token}" style="color:#5B6B7C;">Unsubscribe</a>
