@@ -12,9 +12,9 @@ database_name = "dailycharter"
 database_id = "d520a18f-a3d6-4884-b76d-377d9d4d2fd1"
 
 [vars]
-SITE_URL   = "https://miguelrevine.github.io/dailycharter"
+SITE_URL   = "https://www.daily-charter.com"
 WORKER_URL = "https://dailycharter-engine.miguelrevine.workers.dev"
-FROM_EMAIL = "DailyCharter <pills@yourdomain.com>"
+FROM_EMAIL = "DailyCharter <pills@daily-charter.com>"
 
 # Secrets (never in this file):
 #   wrangler secret put TOKEN_SECRET   ← long random string; rotating it kills all links
