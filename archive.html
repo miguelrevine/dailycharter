@@ -51,9 +51,9 @@
           <p>Two things the exam loves to test: the formula gives the value <em>one period before</em> the first payment, and preferred stock with a fixed dividend is the classic real-world perpetuity.</p>
           <div class="quiz">
             <p class="q">A preferred stock pays a fixed $4.50 annual dividend. If the required return is 6%, its value is closest to:</p>
-            <button data-a="0">A. $27.00</button>
+            <button data-a="0" data-why="The multiply trap: 4.50 × 0.06. If the answer is smaller than one payment, something's off.">A. $27.00</button>
             <button data-a="1">B. $75.00</button>
-            <button data-a="0">C. $270.00</button>
+            <button data-a="0" data-why="A rate misread — always restate the rate as a decimal before dividing.">C. $270.00</button>
             <p class="expl">✓ Correct — PV = 4.50 / 0.06 = $75.00. Answer A multiplies instead of dividing; answer C slips a decimal.</p>
           </div>
         </div>
@@ -109,10 +109,21 @@
   document.querySelectorAll('.quiz button').forEach(function(b){
     b.addEventListener('click', function(){
       var quiz = b.closest('.quiz');
-      var correct = b.dataset.a === "1";
-      quiz.querySelectorAll('button').forEach(function(x){x.classList.remove('correct','wrong')});
-      b.classList.add(correct ? 'correct' : 'wrong');
-      if(correct){ quiz.querySelector('.expl').classList.add('show'); }
+      if(quiz.classList.contains('answered')) return;
+      quiz.classList.add('answered');
+      var correctBtn = quiz.querySelector('button[data-a="1"]');
+      correctBtn.classList.add('correct');
+      if(b !== correctBtn){
+        b.classList.add('wrong');
+        if(b.dataset.why){
+          var w = document.createElement('p');
+          w.className = 'quiz-why';
+          w.textContent = '✗ ' + b.dataset.why;
+          b.insertAdjacentElement('afterend', w);
+        }
+      }
+      quiz.querySelector('.expl').classList.add('show');
+      quiz.querySelectorAll('button').forEach(function(x){ x.disabled = true; });
     });
   });
 </script>
