@@ -11,9 +11,9 @@
 | 2. Repos y despliegue web | ✅ HECHO — repo público `miguelrevine/dailycharter` (master + gh-pages via subtree); web viva en https://miguelrevine.github.io/dailycharter/ (curl 200 verificado) |
 | 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b), commit `12623c6` |
 | 4. Control de calidad | ✅ HECHO — validación limpia + **visto bueno del usuario recibido** |
-| 5. Generación completa (180/270/365) | 🔄 EN CURSO — `overnight.sh` corriendo (generate+validate en cadena); monitor activo. Si muere: relanzar `bash pill-factory/overnight.sh > pill-factory/overnight.log 2>&1 &` (los generate reanudan de checkpoint) |
+| 5. Generación completa (180/270/365) | 🔄 EN CURSO — 180 ✅ generado, validación marcó **23 píldoras** (pendientes de `regen` cuando acabe la cadena, días en `pill-factory/validate-180.log`); 270 generándose desde las 12:01. Si muere: relanzar `bash pill-factory/overnight.sh > pill-factory/overnight.log 2>&1 &` (reanuda de checkpoint) |
 | 6. Motor de emails (Cloudflare) | 🔶 CASI HECHO — D1 `dailycharter` creada (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`, WEUR, 6 tablas verificadas en remoto), worker desplegado en https://dailycharter-engine.miguelrevine.workers.dev (`/health` → `{"ok":true}` verificado), cron horario activo, TOKEN_SECRET configurado, SITE_URL/WORKER_URL en wrangler.toml. FALTA: API key de Resend (secret ESP_API_KEY), FROM_EMAIL real, y seed de planes cuando acabe la generación |
-| 7. Cablear web ↔ motor | ⏳ Pendiente de fase 6 |
+| 7. Cablear web ↔ motor | ✅ HECHO — WORKER_URL en index.html, quiz.html reescrito contra la API real (DEMO fuera), web redesplegada. De paso: **bug de CORS del worker arreglado** (ACAO enviaba URL con path; ahora envía el origin — verificado con curl) |
 | 8. Prueba de fuego | ⏳ Pendiente de fases 6-7 |
 
 ## Fase 4 — QA cerrado por mi parte, pendiente del humano
