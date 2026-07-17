@@ -1,6 +1,6 @@
 # PROGRESO — DailyCharter
 
-Última actualización: 2026-07-15 ~22:50 (sesión autónoma)
+Última actualización: 2026-07-17 ~21:30 (sesión autónoma — feature de cuentas)
 
 ## Estado general
 
@@ -8,15 +8,63 @@
 |---|---|
 | 0. Mover proyecto a `C:\Users\migue\Proyectos\dailycharter` | ✅ Hecho |
 | 1. Comprobar entorno | ✅ Hecho (git, node, npm, gh, wrangler instalados; Ollama OK con qwen3:14b) |
-| 2. Repos y despliegue web | ✅ HECHO — repo público `miguelrevine/dailycharter` (master + gh-pages via subtree); web viva en https://miguelrevine.github.io/dailycharter/ (curl 200 verificado) |
-| 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b), commit `12623c6` |
-| 4. Control de calidad | ✅ HECHO — validación limpia + **visto bueno del usuario recibido** |
-| 5. Generación completa (180/270/365) | 🔄 EN CURSO — 180 ✅ generado, validación marcó **23 píldoras** (pendientes de `regen` cuando acabe la cadena, días en `pill-factory/validate-180.log`); 270 generándose desde las 12:01. Si muere: relanzar `bash pill-factory/overnight.sh > pill-factory/overnight.log 2>&1 &` (reanuda de checkpoint) |
-| 6. Motor de emails (Cloudflare) | ✅ HECHO (salvo seed) — D1 `dailycharter` (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`, WEUR, 6 tablas), worker en https://dailycharter-engine.miguelrevine.workers.dev (`/health` OK), cron horario, secrets TOKEN_SECRET y ESP_API_KEY configurados (la key de Resend SOLO existe como secret, nunca en archivos), SITE_URL=https://www.daily-charter.com y FROM_EMAIL=pills@daily-charter.com desplegados. Seed de planes: cuando acabe la generación |
-| 6b. Dominio daily-charter.com | ✅ HECHO — https://www.daily-charter.com → 200 (título OK), Enforce HTTPS activo (cert approved), http→https 301, apex→www 301. Resend Verified con SPF/DKIM resolviendo |
-| 5b. QA de 180/270/365 | 🔄 — 180: 23→5 errores tras 1ª ronda regen; 2ª ronda en cola (5 errores + 4 títulos dup, días 43,92,123,128,147,153,165,167,174). 270: 45 marcadas, regen en cola tras el 180. 365: generándose desde 14:53. Todo con --avoid endurecido |
-| 7. Cablear web ↔ motor | ✅ HECHO — WORKER_URL en index.html, quiz.html reescrito contra la API real (DEMO fuera), web redesplegada. De paso: **bug de CORS del worker arreglado** (ACAO enviaba URL con path; ahora envía el origin — verificado con curl) |
-| 8. Prueba de fuego | ⏳ Pendiente de fases 6-7 |
+| 2. Repos y despliegue web | ✅ HECHO — repo público `miguelrevine/dailycharter`; web viva en https://www.daily-charter.com (dominio propio, ver 6b) |
+| 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b) |
+| 4. Control de calidad | ✅ HECHO — validación limpia + visto bueno del usuario |
+| 5. Generación completa (180/270/365) | 🔄 CASI — **90/180/270 generados, validados a 0 avisos y SEMBRADOS en D1**. **365 generado, aún en `qa_loop.sh` (ronda 3, convergiendo)** — ver sección dedicada abajo |
+| 6. Motor de emails (Cloudflare) | ✅ HECHO — D1 `dailycharter` (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`), worker en https://dailycharter-engine.miguelrevine.workers.dev, cron horario, secrets TOKEN_SECRET/ESP_API_KEY/ADMIN_TOKEN configurados (nunca en archivos), SITE_URL/FROM_EMAIL en daily-charter.com |
+| 6b. Dominio daily-charter.com | ✅ HECHO — HTTPS enforced, apex→www 301, Resend Verified |
+| 7. Cablear web ↔ motor | ✅ HECHO — WORKER_URL/API_BASE reales, bug de CORS corregido |
+| 8. Prueba de fuego (email real a miguelrevine@gmail.com) | ⛔ **PENDIENTE — NO completada.** El suscriptor existe en D1 (plan L1-90, next_day=1, creado 2026-07-17 16:57) pero **la tabla `sends` está vacía para él: la píldora 001 nunca se envió.** Esto es un hilo distinto al de la sesión de hoy (cuentas de usuario); queda abierto para retomar — ver "Qué necesito de ti" |
+| 9. Cuentas de usuario (accounts-design.md) | ✅ HECHO — ver sección dedicada abajo |
+
+## Feature: cuentas de usuario (2026-07-17) — HECHA y verificada
+
+Implementada siguiendo `accounts-design.md` en 5 bloques, cada uno commiteado por separado.
+
+**Bloque 1 — esquema**: `password_hash`/`password_salt` en `subscribers`, tablas `sessions` y
+`plan_equivalence` creadas. Verificado con `sqlite_master`/`PRAGMA table_info` en D1 remota.
+Añadida también `login_attempts` (no está en accounts-design.md §1, pero hace falta para el
+rate-limit de §3 — no hay binding de KV en este proyecto, así que uso D1 para eso).
+
+**Bloque 2 — `precompute_equivalence.py`**: match de cobertura acumulada por tema (no regla de
+tres). Corrido sobre 90/180/270 (365 aún no estaba limpio) → 1080 filas en `plan_equivalence`.
+Muestra verificada en D1: **L1-90 día 30 → L1-270 día 95** (no 90, que sería la regla de tres —
+confirma que el algoritmo usa cobertura real, no proporción de días).
+⚠️ **Pendiente**: cuando el 365 valide limpio, re-ejecutar `precompute_equivalence.py` con LOS 4
+planes juntos (el script hace `DELETE FROM plan_equivalence` al principio — no añade
+incrementalmente, hay que pasarle siempre el conjunto completo de planes).
+
+**Bloque 3 — Worker**: `/api/signup`, `/api/login` (rate-limit 10/hora por email+IP, verificado:
+6 fallos correctos + bloqueo en el 7º con 10 intentos acumulados), `/api/logout`, `GET
+/api/account`, `/api/account/change-plan` (restart|resume), `/api/account/cancel`,
+`/api/account/password`, `GET /api/admin/subscribers`. PBKDF2-SHA256 100k iteraciones (Web
+Crypto, nunca bcrypt). Añadido `GET /api/account/plan-options` (no está en §3 literal, pero la
+tarea 4 pide mostrar el resultado concreto ANTES de confirmar, y el endpoint de cambio de plan
+por sí solo no puede previsualizar sin aplicar). `ADMIN_TOKEN` generado aleatorio y puesto como
+secret — **te lo di una sola vez en el chat de esa sesión; si lo perdiste, pídeme que lo
+regenere** (nunca queda en archivos/commits/logs).
+
+**Bloque 4 — Frontend**: `site/login.html` (tabs login/signup), `site/account.html` (plan,
+progreso, streak/precisión, cambio de plan con las DOS opciones concretas antes de confirmar —
+"Start from scratch: pill 1 of N" vs "Keep my progress: pill X of N", cancelación con
+confirmación en dos pasos sin diálogos nativos, cambio de contraseña, logout), `site/admin.html`
+(token en memoria, nunca localStorage; tabla paginada sin datos de contraseña). Enlace "Log in"
+añadido al nav de index.html.
+
+**Bloque 5 — prueba de fuego**: hecha con una cuenta de prueba (`firetest2@daily-charter.com`,
+plan 90), NO con el suscriptor real. Verificado end-to-end: signup con contraseña → login →
+`GET /api/account` → adelanté `next_day` a 45 manualmente (SQL directo, solo para tener un caso
+de prueba) → `plan-options` predijo **día 139 de 270** → `change-plan` modo `resume` aplicado →
+**D1 confirma `next_day=139` exacto** → `cancel` → **D1 confirma `status='cancelled'`**. Cuenta de
+prueba borrada al final (D1 solo tiene ya al suscriptor real).
+
+⚠️ **Nota de testing**: al probar el flujo real haciendo clic en el navegador (Chrome vía
+automatización), una extensión instalada en ese perfil (parece un wallet cripto) intercepta y
+bloquea los fetch hacia `*.workers.dev`, dando 503/"Failed to fetch" tanto con `fetch` como con
+`XMLHttpRequest` — confirmado que NO es un bug real: el mismo endpoint responde 200 sin problema
+por curl en paralelo. La UI en sí quedó verificada visualmente (formularios, tabs, campos) y
+funcionalmente por API; si vuelves a probarlo tú en un navegador limpio debería ir sin fricción.
 
 ## Fase 4 — QA cerrado por mi parte, pendiente del humano
 
@@ -69,6 +117,20 @@ Los 5 PDFs están en `pill-factory/pdfs/` renombrados por contenido real
 (01-ethics-quant … 05-derivatives-portfolio); `scan` los mapea correctamente a los 7 topics.
 Detalle del renombrado en el historial git de este archivo si hiciera falta.
 
+## Generación 180/270/365 (2026-07-17) — estado real
+
+- **90, 180, 270**: generados, validados a 0 errores/0 avisos, **sembrados en D1 remota**
+  (`/api/plans` → `[90,180,270]` verificado). Commits con "validated clean" para 180 y 270.
+- **365**: generado (90/365... perdón, 365/365 píldoras), pero la validación marcó píldoras con
+  solape/duplicados. Corriendo `qa_loop.sh 365 8` en background — ronda 3 con 12 días pendientes,
+  convergiendo (bajó de 76→19→12). **NO está sembrado en D1 todavía.**
+- Script nuevo `pill-factory/qa_loop.sh`: automatiza el ciclo validar→regenerar (errores +
+  duplicados + avisos)→repetir hasta limpio o agotar rondas, con `--avoid` endurecido y checkpoint
+  por píldora. Úsalo así para cualquier plan futuro: `bash pill-factory/qa_loop.sh <days> <rondas>`.
+- Cuando el 365 quede limpio: (1) commit del JSON, (2) sembrarlo en D1 con `seed_plan.py`, (3)
+  re-ejecutar `precompute_equivalence.py` con los 4 planes juntos (ver nota en la sección de
+  cuentas arriba), (4) actualizar este documento.
+
 ## Auditoría externa (2026-07-17) — correcciones aplicadas
 
 1. ✅ plan-90 sembrado en D1 remota (subscribe 201 verificado); `/api/plans` nuevo endpoint;
@@ -99,8 +161,12 @@ Detalle del renombrado en el historial git de este archivo si hiciera falta.
 
 ## Qué necesito de ti
 
-1. **API key de Resend** (única credencial pendiente) — antes: cuenta en resend.com + dominio
-   verificado con SPF/DKIM. Con ella: `wrangler secret put ESP_API_KEY`, FROM_EMAIL real en
-   wrangler.toml, redeploy y verificación. Dime también qué remitente quieres (p.ej.
-   `DailyCharter <pills@tudominio.com>`).
-2. Nada más: fases 2 y 4 cerradas, 5 corriendo, 6 casi cerrada, 7 la haré mientras espero.
+1. **Fase 8 (prueba de fuego original) sigue sin hacer**: nunca se envió la píldora 001 a
+   `miguelrevine@gmail.com` (tabla `sends` vacía para ese suscriptor). Dime si quieres que la
+   retome ahora — implica ajustar `send_hour_utc` y disparar el cron manualmente, y que confirmes
+   la recepción, SPF/DKIM/DMARC en "Mostrar original" de Gmail, el botón B del email, y el
+   unsubscribe, tal y como se definió originalmente.
+2. Si perdiste el `ADMIN_TOKEN` que te di en el chat, dímelo y te genero uno nuevo (nunca queda
+   guardado en ningún archivo del repo).
+3. Nada urgente más: la feature de cuentas está completa y verificada; el 365 terminará de
+   converger solo en background.
