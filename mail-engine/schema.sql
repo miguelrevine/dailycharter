@@ -39,10 +39,39 @@ CREATE TABLE IF NOT EXISTS subscribers (
                  -- active | paused | completed | cancelled
   send_hour_utc  INTEGER NOT NULL DEFAULT 6,
   exam_date      TEXT,
-  created_at     TEXT NOT NULL DEFAULT (datetime('now'))
+  created_at     TEXT NOT NULL DEFAULT (datetime('now')),
+  password_hash  TEXT,                      -- PBKDF2 — accounts-design.md §2
+  password_salt  TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_sub_send
   ON subscribers (status, send_hour_utc);
+
+-- Accounts feature (accounts-design.md) — browser session, separate from
+-- the long-lived email quiz token; never merge the two.
+CREATE TABLE IF NOT EXISTS sessions (
+  token         TEXT PRIMARY KEY,
+  subscriber_id TEXT NOT NULL,
+  created_at    TEXT NOT NULL DEFAULT (datetime('now')),
+  expires_at    TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sessions_sub ON sessions (subscriber_id);
+
+-- Precomputed by pill-factory/precompute_equivalence.py after every plan
+-- validates clean — a lookup table, never computed live by the Worker.
+CREATE TABLE IF NOT EXISTS plan_equivalence (
+  from_plan_id TEXT NOT NULL,
+  from_day     INTEGER NOT NULL,
+  to_plan_id   TEXT NOT NULL,
+  to_day       INTEGER NOT NULL,
+  PRIMARY KEY (from_plan_id, from_day, to_plan_id)
+);
+
+-- Rate-limit storage for /api/login (no KV binding in this project).
+CREATE TABLE IF NOT EXISTS login_attempts (
+  attempt_key TEXT NOT NULL,
+  created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_login_attempts ON login_attempts (attempt_key, created_at);
 
 -- Idempotent send log: a pill can never go twice to the same person.
 CREATE TABLE IF NOT EXISTS sends (
