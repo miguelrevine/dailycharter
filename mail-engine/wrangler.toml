@@ -9,11 +9,11 @@ crons = ["0 * * * *"]
 [[d1_databases]]
 binding = "DB"
 database_name = "dailycharter"
-database_id = "REPLACE_AFTER_wrangler_d1_create"
+database_id = "d520a18f-a3d6-4884-b76d-377d9d4d2fd1"
 
 [vars]
-SITE_URL   = "https://YOUR_USER.github.io/dailycharter"
-WORKER_URL = "https://dailycharter-engine.YOUR_SUBDOMAIN.workers.dev"
+SITE_URL   = "https://miguelrevine.github.io/dailycharter"
+WORKER_URL = "https://dailycharter-engine.miguelrevine.workers.dev"
 FROM_EMAIL = "DailyCharter <pills@yourdomain.com>"
 
 # Secrets (never in this file):
