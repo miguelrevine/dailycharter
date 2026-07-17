@@ -8,10 +8,10 @@
 |---|---|
 | 0. Mover proyecto a `C:\Users\migue\Proyectos\dailycharter` | ✅ Hecho |
 | 1. Comprobar entorno | ✅ Hecho (git, node, npm, gh, wrangler instalados; Ollama OK con qwen3:14b) |
-| 2. Repos y despliegue web | 🔶 PARCIAL — git init + commits ✅; deploy a GitHub Pages ⛔ bloqueado: `gh auth status` verificado hoy → **no autenticado** |
+| 2. Repos y despliegue web | ✅ HECHO — repo público `miguelrevine/dailycharter` (master + gh-pages via subtree); web viva en https://miguelrevine.github.io/dailycharter/ (curl 200 verificado) |
 | 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b), commit `12623c6` |
-| 4. Control de calidad | 🔶 VALIDACIÓN ✅ (0 errores, 0 avisos tras 6 rondas de regen) — ⛔ FALTA TU VISTO BUENO sobre `review.html` (raíz del proyecto). NO lanzar fase 5 sin él |
-| 5. Generación completa (180/270/365) | ⏳ Pendiente del visto bueno del usuario en fase 4 |
+| 4. Control de calidad | ✅ HECHO — validación limpia + **visto bueno del usuario recibido** |
+| 5. Generación completa (180/270/365) | 🔄 EN CURSO — `overnight.sh` corriendo (generate+validate en cadena); monitor activo. Si muere: relanzar `bash pill-factory/overnight.sh > pill-factory/overnight.log 2>&1 &` (los generate reanudan de checkpoint) |
 | 6. Motor de emails (Cloudflare) | 🔶 PREP ✅ ampliada — smoke test LOCAL pasado hoy (ver abajo). Deploy real bloqueado: `wrangler whoami` verificado hoy → **no autenticado**; falta también API key de Resend |
 | 7. Cablear web ↔ motor | ⏳ Pendiente de fase 6 |
 | 8. Prueba de fuego | ⏳ Pendiente de fases 6-7 |
