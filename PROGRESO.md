@@ -1,6 +1,6 @@
 # PROGRESO — DailyCharter
 
-Última actualización: 2026-07-17 ~21:30 (sesión autónoma — feature de cuentas)
+Última actualización: 2026-07-17 ~22:15 (sesión autónoma — feature de cuentas + cierre fase 5)
 
 ## Estado general
 
@@ -11,7 +11,7 @@
 | 2. Repos y despliegue web | ✅ HECHO — repo público `miguelrevine/dailycharter`; web viva en https://www.daily-charter.com (dominio propio, ver 6b) |
 | 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b) |
 | 4. Control de calidad | ✅ HECHO — validación limpia + visto bueno del usuario |
-| 5. Generación completa (180/270/365) | 🔄 CASI — **90/180/270 generados, validados a 0 avisos y SEMBRADOS en D1**. **365 generado, aún en `qa_loop.sh` (ronda 3, convergiendo)** — ver sección dedicada abajo |
+| 5. Generación completa (180/270/365) | ✅ **HECHO — los 4 planes (90/180/270/365) generados, validados a 0 errores/0 avisos y SEMBRADOS en D1.** Verificado: 4 filas en `plans`, **905 píldoras totales** (90+180+270+365) |
 | 6. Motor de emails (Cloudflare) | ✅ HECHO — D1 `dailycharter` (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`), worker en https://dailycharter-engine.miguelrevine.workers.dev, cron horario, secrets TOKEN_SECRET/ESP_API_KEY/ADMIN_TOKEN configurados (nunca en archivos), SITE_URL/FROM_EMAIL en daily-charter.com |
 | 6b. Dominio daily-charter.com | ✅ HECHO — HTTPS enforced, apex→www 301, Resend Verified |
 | 7. Cablear web ↔ motor | ✅ HECHO — WORKER_URL/API_BASE reales, bug de CORS corregido |
@@ -28,12 +28,11 @@ Añadida también `login_attempts` (no está en accounts-design.md §1, pero hac
 rate-limit de §3 — no hay binding de KV en este proyecto, así que uso D1 para eso).
 
 **Bloque 2 — `precompute_equivalence.py`**: match de cobertura acumulada por tema (no regla de
-tres). Corrido sobre 90/180/270 (365 aún no estaba limpio) → 1080 filas en `plan_equivalence`.
-Muestra verificada en D1: **L1-90 día 30 → L1-270 día 95** (no 90, que sería la regla de tres —
-confirma que el algoritmo usa cobertura real, no proporción de días).
-⚠️ **Pendiente**: cuando el 365 valide limpio, re-ejecutar `precompute_equivalence.py` con LOS 4
-planes juntos (el script hace `DELETE FROM plan_equivalence` al principio — no añade
-incrementalmente, hay que pasarle siempre el conjunto completo de planes).
+tres). Ejecutado primero sobre 90/180/270 (1080 filas) y **reejecutado con los 4 planes juntos
+en cuanto el 365 quedó limpio** → **2715 filas** en `plan_equivalence` (12 pares ordenados × sus
+días). Muestra verificada en D1: **L1-90 día 30 → L1-270 día 95** (no 90, que sería la regla de
+tres — confirma que el algoritmo usa cobertura real, no proporción de días). Verificado también
+`COUNT(DISTINCT from_plan_id)=4` tras la reejecución.
 
 **Bloque 3 — Worker**: `/api/signup`, `/api/login` (rate-limit 10/hora por email+IP, verificado:
 6 fallos correctos + bloqueo en el 7º con 10 intentos acumulados), `/api/logout`, `GET
@@ -117,19 +116,24 @@ Los 5 PDFs están en `pill-factory/pdfs/` renombrados por contenido real
 (01-ethics-quant … 05-derivatives-portfolio); `scan` los mapea correctamente a los 7 topics.
 Detalle del renombrado en el historial git de este archivo si hiciera falta.
 
-## Generación 180/270/365 (2026-07-17) — estado real
+## Generación 180/270/365 (2026-07-17) — CERRADA
 
-- **90, 180, 270**: generados, validados a 0 errores/0 avisos, **sembrados en D1 remota**
-  (`/api/plans` → `[90,180,270]` verificado). Commits con "validated clean" para 180 y 270.
-- **365**: generado (90/365... perdón, 365/365 píldoras), pero la validación marcó píldoras con
-  solape/duplicados. Corriendo `qa_loop.sh 365 8` en background — ronda 3 con 12 días pendientes,
-  convergiendo (bajó de 76→19→12). **NO está sembrado en D1 todavía.**
-- Script nuevo `pill-factory/qa_loop.sh`: automatiza el ciclo validar→regenerar (errores +
-  duplicados + avisos)→repetir hasta limpio o agotar rondas, con `--avoid` endurecido y checkpoint
-  por píldora. Úsalo así para cualquier plan futuro: `bash pill-factory/qa_loop.sh <days> <rondas>`.
-- Cuando el 365 quede limpio: (1) commit del JSON, (2) sembrarlo en D1 con `seed_plan.py`, (3)
-  re-ejecutar `precompute_equivalence.py` con los 4 planes juntos (ver nota en la sección de
-  cuentas arriba), (4) actualizar este documento.
+- **90, 180, 270, 365**: los 4 generados, validados a 0 errores/0 avisos y **sembrados en D1
+  remota**. `/api/plans` → `[90,180,270,365]`. Verificado con SQL: 4 filas en `plans`,
+  **905 píldoras totales**.
+- El 365 necesitó 8 rondas de `qa_loop.sh` (76→19→12→6→6→5→3→3 días) y quedó con 3 avisos
+  residuales de títulos duplicados que el bucle automático no consiguió resolver solo
+  (`qa_loop.sh` tiene tope de rondas). Se cerró con el mismo patrón manual que ya había funcionado
+  en plan-90/180: `regen --avoid` nombrando el título exacto duplicado y el día que ya lo cubría,
+  forzando un concepto distinto. Días 238/288/310 (duplicaban con 226/276/34) → **0 errores,
+  0 avisos** en la validación final.
+- Script `pill-factory/qa_loop.sh` (nuevo esta sesión): automatiza validar→regenerar (errores +
+  duplicados + avisos)→repetir hasta limpio o agotar rondas. Úsalo así para futuros planes:
+  `bash pill-factory/qa_loop.sh <days> <rondas>`. Si se agota el tope de rondas con solo
+  duplicados de título restantes (no copia literal), el paso manual de arriba es el patrón a
+  seguir.
+- `plan_equivalence` reejecutada con los 4 planes juntos tras sembrar el 365 (ver bloque 2 de la
+  feature de cuentas, arriba): 2715 filas, verificado.
 
 ## Auditoría externa (2026-07-17) — correcciones aplicadas
 
