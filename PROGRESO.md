@@ -69,6 +69,26 @@ Los 5 PDFs están en `pill-factory/pdfs/` renombrados por contenido real
 (01-ethics-quant … 05-derivatives-portfolio); `scan` los mapea correctamente a los 7 topics.
 Detalle del renombrado en el historial git de este archivo si hiciera falta.
 
+## Auditoría externa (2026-07-17) — correcciones aplicadas
+
+1. ✅ plan-90 sembrado en D1 remota (subscribe 201 verificado); `/api/plans` nuevo endpoint;
+   selector de index deshabilita planes no sembrados ("Coming soon"); error 404 sin códigos internos.
+2. ✅ Validación de email en cliente (checkValidity/reportValidity) **y en servidor** (regex, 400).
+3. ✅ Botón "Start free" del nav: regla específica `.nav-links a.btn` conserva blanco (verificado
+   estilo computado en las 3 páginas que lo llevan).
+4. ✅ Quiz de muestra (index/archive): respuesta incorrecta muestra su porqué + revela la correcta
+   con explicación y bloquea el quiz (verificado en navegador).
+5. ✅ Legales rellenas (Daily Charter S.L., Calle García Treviño, España, 17-jul-2026, Stripe
+   pendiente/Resend/GitHub/Cloudflare) y footer postal del email (plantilla + worker). Banner
+   amarillo fuera; nota discreta "Pending legal review".
+   ⚠ PENDIENTE DEL USUARIO: (a) periodo de retención sigue "[N] months" en privacy.html — no se
+   me dio el número; (b) la dirección postal parece incompleta (sin número/CP/ciudad); (c) revisión
+   por abogado de ambas páginas.
+6. ✅ 404.html branded (servida por Pages, verificada en producción).
+7. ✅ cfainstitute.org enlazado (única URL en texto plano).
+8. ✅ Móvil 390px: sin overflow horizontal en las 10 páginas (test programático) + revisión visual
+   de nav/hero/selector/checkout. Sin cambios necesarios.
+
 ## Extras de esta sesión
 
 - `review.html` ahora es interactivo (plantilla `pill-factory/review_template.html`): quiz clicable
