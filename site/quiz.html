@@ -123,42 +123,17 @@
      - Page load records NOTHING (mail scanners prefetch links).
      - &a= is only submitted after a human gesture (first pointer/key event).
      - Verdict comes from the SERVER; the demo below fakes it locally.
-   GO LIVE: set API_BASE, delete DEMO, uncomment the fetch in submit().
+   LIVE: question comes from GET /api/question; the distractor "whys"
+   and the verdict arrive only in the POST /api/attempts response, so
+   nothing answer-shaped ever reaches the page pre-submit (spec §6.6).
    ===================================================================== */
 
-var API_BASE = null; // e.g. "https://api.dailycharter.example"
+var API_BASE = "https://dailycharter-engine.miguelrevine.workers.dev";
 
 var params = new URLSearchParams(location.search);
-var pill   = params.get("pill") || "042";
-var token  = params.get("u")    || "demo";
+var pill   = params.get("pill");
+var token  = params.get("u");
 var preSel = (params.get("a") || "").toUpperCase();
-
-/* ---- DEMO data (server-side in production; note: no correct flag
-       is exposed pre-submit in the real flow — spec §6.6) ---- */
-var DEMO = {
-  daily: {
-    id:"q042-1", label:"Pill 042 / 180 · Quantitative Methods",
-    stem:"A preferred stock pays a fixed $4.50 annual dividend. If the required return is 6%, its value is closest to:",
-    choices:[
-      {key:"A",text:"$27.00", why:"The multiply trap: 4.50 × 0.06. If the answer is smaller than one payment, something's off."},
-      {key:"B",text:"$75.00", why:"PV = PMT / r = 4.50 / 0.06. Fixed-dividend preferred stock is a perpetuity."},
-      {key:"C",text:"$270.00",why:"A rate misread — always restate the rate as a decimal before dividing."}
-    ],
-    correct:"B",
-    stats:{streak_days:13, accuracy_pct:85, progress_pct:23}
-  },
-  bonus: {
-    id:"q019-1", label:"Review · Pill 019 · Economics",
-    stem:"If demand is price-elastic, a small price cut will cause total revenue to:",
-    choices:[
-      {key:"A",text:"Increase",  why:"Elastic demand: quantity rises proportionally more than price falls, so revenue rises."},
-      {key:"B",text:"Decrease",  why:"That happens when demand is inelastic."},
-      {key:"C",text:"Stay equal",why:"Only at unit elasticity."}
-    ],
-    correct:"A",
-    stats:{streak_days:13, accuracy_pct:86, progress_pct:23}
-  }
-};
 
 var current, answered=false, humanTouched=false;
 
@@ -174,33 +149,40 @@ function render(q){
     b.addEventListener("click",function(){submit(c.key,"web")});
     box.appendChild(b);
     var why=document.createElement("p");
-    why.className="why"; why.id="why-"+c.key; why.textContent=c.why;
+    why.className="why"; why.id="why-"+c.key; why.textContent=c.why||"";
     box.appendChild(why);
   });
   document.getElementById("verdict-line").classList.remove("show");
 }
 
 function submit(choice, source){
-  if(answered) return; answered=true;
-
-  /* ---- PRODUCTION ----
+  if(answered || !current) return; answered=true;
   fetch(API_BASE+"/api/attempts",{
     method:"POST", headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({token:token, question_id:current.id, choice:choice, source:source})
-  }).then(r=>r.json()).then(showResult);
-  --------------------- */
-
-  // DEMO: fake the server response locally
-  showResult({
-    correct: choice===current.correct,
-    correct_key: current.correct,
-    picked: choice,
-    stats: current.stats
-  });
+    body:JSON.stringify({token:token, pill_id:current.pill_id, choice:choice, source:source})
+  }).then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.error) throw res.error;
+      showResult(res);
+    })
+    .catch(function(){
+      answered=false; // let them retry
+      var v=document.getElementById("verdict-text");
+      v.textContent="✗ Couldn't reach the server — check your connection and tap again.";
+      v.className="v ko";
+      document.getElementById("verdict-line").classList.add("show");
+    });
 }
 
 function showResult(res){
   var picked = res.picked;
+  // distractor explanations arrive only now, with the verdict
+  if(res.explanations){
+    Object.keys(res.explanations).forEach(function(k){
+      var el=document.getElementById("why-"+k);
+      if(el) el.textContent=res.explanations[k];
+    });
+  }
   document.querySelectorAll(".optbtn").forEach(function(b){
     b.disabled=true;
     var k=b.dataset.key;
@@ -219,12 +201,27 @@ function showResult(res){
   document.getElementById("verdict-line").classList.add("show");
 }
 
-/* Bonus review question (GET /api/review-next in production) */
+/* Bonus review question */
 document.getElementById("bonus-btn").addEventListener("click",function(){
-  this.style.display="none";
-  document.getElementById("see-you").textContent="Nice — clearing your review queue early.";
-  render(DEMO.bonus);
-  window.scrollTo({top:0,behavior:"smooth"});
+  var btn=this;
+  fetch(API_BASE+"/api/review-next?u="+encodeURIComponent(token))
+    .then(function(r){
+      if(r.status===204) throw "empty";
+      if(!r.ok) throw "error";
+      return r.json();
+    })
+    .then(function(q){
+      btn.style.display="none";
+      document.getElementById("see-you").textContent="Nice — clearing your review queue early.";
+      render(q);
+      window.scrollTo({top:0,behavior:"smooth"});
+    })
+    .catch(function(e){
+      btn.style.display="none";
+      document.getElementById("see-you").textContent=
+        e==="empty" ? "Review queue is clear — nothing due. 🎉"
+                    : "Couldn't load a review question right now.";
+    });
 });
 
 /* Keyboard 1/2/3 */
@@ -265,7 +262,30 @@ function confetti(){
   }
 }
 
-render(DEMO.daily);
+/* Load today's question from the personal email link (?pill=…&u=…) */
+function loadQuestion(){
+  if(!pill || !token){
+    document.getElementById("q-label").textContent="DailyCharter quiz";
+    document.getElementById("q-stem").textContent=
+      "This page opens from the answer buttons in your daily pill email — "+
+      "your personal link loads today's question. Check today's email and tap A, B or C.";
+    return;
+  }
+  fetch(API_BASE+"/api/question?pill_id="+encodeURIComponent(pill)+"&u="+encodeURIComponent(token))
+    .then(function(r){ if(!r.ok) throw r.status; return r.json(); })
+    .then(function(q){
+      render(q);
+      // gesture may have happened while the question was loading
+      if(humanTouched && preSel && !answered) submit(preSel,"email_tap");
+    })
+    .catch(function(s){
+      document.getElementById("q-label").textContent="DailyCharter quiz";
+      document.getElementById("q-stem").textContent=
+        s===401 ? "This link has expired or is invalid — use the buttons in your most recent email."
+                : "Couldn't load the question right now — try again in a minute.";
+    });
+}
+loadQuestion();
 </script>
 </body>
 </html>

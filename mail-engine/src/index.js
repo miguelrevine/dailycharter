@@ -53,8 +53,10 @@ function json(data, status = 200, extra = {}) {
 }
 
 function cors(env) {
+  // ACAO must be an origin (scheme+host), not a URL with a path —
+  // SITE_URL is e.g. https://user.github.io/dailycharter
   return {
-    "Access-Control-Allow-Origin": env.SITE_URL,
+    "Access-Control-Allow-Origin": new URL(env.SITE_URL).origin,
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
