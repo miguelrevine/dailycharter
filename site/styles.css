@@ -40,6 +40,10 @@ header.site{border-bottom:1px solid var(--rule);background:var(--paper);position
 .nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:-3px;height:5px;background:var(--marker);z-index:-1;transition:right .18s ease}
 .nav-links a:not(.btn):hover::after{right:0}
 .nav-links a:hover{color:var(--ink)}
+/* .btn inside the nav must keep its own text color (the generic
+   .nav-links a rules above would paint it ink-on-ink = invisible) */
+.nav-links a.btn,.nav-links a.btn:hover{color:#fff}
+.nav-links a.btn-marker,.nav-links a.btn-marker:hover{color:var(--ink)}
 .nav-links a[aria-current=page]{border-bottom:2px solid var(--marker)}
 
 /* ---------- buttons ---------- */
