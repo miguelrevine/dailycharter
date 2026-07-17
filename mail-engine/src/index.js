@@ -279,6 +279,8 @@ async function handleFetch(req, env) {
   if (url.pathname === "/api/subscribe" && req.method === "POST") {
     const b = await req.json().catch(() => ({}));
     if (!b.email || !b.plan_days) return json({ error: "email and plan_days required" }, 400, C);
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
+      return json({ error: "That doesn't look like a valid email address" }, 400, C);
     const planId = `L1-${parseInt(b.plan_days)}`;
     const plan = await env.DB.prepare(
       `SELECT plan_version FROM plans WHERE plan_id=?
