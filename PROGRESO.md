@@ -12,7 +12,7 @@
 | 3. Piloto de contenido (plan 90) | ✅ HECHO — `plan-90.json` (L1-90 v20260715, 90 píldoras, qwen3:14b), commit `12623c6` |
 | 4. Control de calidad | ✅ HECHO — validación limpia + **visto bueno del usuario recibido** |
 | 5. Generación completa (180/270/365) | 🔄 EN CURSO — `overnight.sh` corriendo (generate+validate en cadena); monitor activo. Si muere: relanzar `bash pill-factory/overnight.sh > pill-factory/overnight.log 2>&1 &` (los generate reanudan de checkpoint) |
-| 6. Motor de emails (Cloudflare) | 🔶 PREP ✅ ampliada — smoke test LOCAL pasado hoy (ver abajo). Deploy real bloqueado: `wrangler whoami` verificado hoy → **no autenticado**; falta también API key de Resend |
+| 6. Motor de emails (Cloudflare) | 🔶 CASI HECHO — D1 `dailycharter` creada (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`, WEUR, 6 tablas verificadas en remoto), worker desplegado en https://dailycharter-engine.miguelrevine.workers.dev (`/health` → `{"ok":true}` verificado), cron horario activo, TOKEN_SECRET configurado, SITE_URL/WORKER_URL en wrangler.toml. FALTA: API key de Resend (secret ESP_API_KEY), FROM_EMAIL real, y seed de planes cuando acabe la generación |
 | 7. Cablear web ↔ motor | ⏳ Pendiente de fase 6 |
 | 8. Prueba de fuego | ⏳ Pendiente de fases 6-7 |
 
@@ -67,10 +67,18 @@ Los 5 PDFs están en `pill-factory/pdfs/` renombrados por contenido real
 (01-ethics-quant … 05-derivatives-portfolio); `scan` los mapea correctamente a los 7 topics.
 Detalle del renombrado en el historial git de este archivo si hiciera falta.
 
-## Qué necesito de ti (todo lo demás está hecho o bloqueado por esto)
+## Extras de esta sesión
 
-1. **Visto bueno de calidad (fase 4)**: abre `review.html` (raíz del proyecto) y lee las 10 píldoras.
-   Con tu OK lanzo la fase 5 (planes 180/270/365, ~5-6 h en total, ideal de noche).
-2. **`gh auth login`** — corre `! gh auth login` para desbloquear el deploy de la web (fase 2).
-3. **`wrangler login`** (Cloudflare) — para la fase 6.
-4. **API key de Resend** — para la fase 6 (antes: cuenta en resend.com + dominio verificado SPF/DKIM).
+- `review.html` ahora es interactivo (plantilla `pill-factory/review_template.html`): quiz clicable
+  con explicaciones, veredicto 👍/👎 + notas por píldora, progreso, export de feedback en markdown.
+  Verificado en Chrome. Se sirve en http://localhost:8901/review.html mientras esta sesión viva.
+- Subdominio workers.dev registrado: `miguelrevine.workers.dev` (vía API, wrangler v4 ya no tiene
+  el comando `subdomain`).
+
+## Qué necesito de ti
+
+1. **API key de Resend** (única credencial pendiente) — antes: cuenta en resend.com + dominio
+   verificado con SPF/DKIM. Con ella: `wrangler secret put ESP_API_KEY`, FROM_EMAIL real en
+   wrangler.toml, redeploy y verificación. Dime también qué remitente quieres (p.ej.
+   `DailyCharter <pills@tudominio.com>`).
+2. Nada más: fases 2 y 4 cerradas, 5 corriendo, 6 casi cerrada, 7 la haré mientras espero.
