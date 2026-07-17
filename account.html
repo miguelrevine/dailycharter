@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My account — DailyCharter</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+<style>
+  .acct-wrap{max-width:640px;margin:0 auto;padding:48px 24px 100px}
+  .acct-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+  .acct-head h1{font-size:1.5rem}
+  .acct-head button{font:inherit;font-size:.85rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline}
+  .stat-row{display:flex;gap:12px;margin:18px 0;flex-wrap:wrap}
+  .stat{background:var(--paper-2);border-radius:8px;padding:12px 18px;font-family:var(--mono);font-size:.8rem}
+  .stat b{font-family:var(--display);font-size:1.3rem;display:block}
+  .bar{height:8px;background:var(--paper-2);border-radius:4px;overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;background:var(--ledger)}
+  .status-chip{display:inline-block;font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;padding:2px 10px;border-radius:99px;background:var(--paper-2)}
+  .status-chip.cancelled{background:#FBEFEF;color:var(--error)}
+  .status-chip.completed{background:#E7F5EF;color:var(--ledger)}
+  .plan-len-picker{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .plan-len-picker button{flex:1;min-width:70px;background:var(--paper-2);border:1.5px solid var(--rule);border-radius:8px;padding:10px 6px;font:inherit;font-weight:700;cursor:pointer;color:var(--ink)}
+  .plan-len-picker button:hover{border-color:var(--ledger)}
+  .plan-len-picker button:disabled{opacity:.4;cursor:not-allowed}
+  .switch-options{display:grid;gap:12px;margin-top:16px}
+  .switch-opt{border:1.5px solid var(--rule);border-radius:10px;padding:16px;text-align:left;background:#fff;cursor:pointer;font:inherit}
+  .switch-opt:hover{border-color:var(--ledger)}
+  .switch-opt b{display:block;font-size:1.02rem;margin-bottom:4px}
+  .switch-opt span{color:var(--muted);font-size:.86rem}
+  .danger-zone{margin-top:36px;border-top:1px solid var(--rule);padding-top:20px}
+  .confirm-row{display:flex;gap:10px;margin-top:10px}
+  .btn-danger{background:var(--error)}
+  .btn-danger:hover{background:#a3453f}
+  .acct-msg{font-size:.86rem;margin-top:12px}
+  .acct-msg.err{color:var(--error)}
+  .acct-msg.ok{color:var(--ledger)}
+  #loading{text-align:center;color:var(--muted);padding:60px 0}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="archive.html">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="acct-wrap">
+    <p id="loading">Loading your account…</p>
+
+    <div id="app" style="display:none">
+      <div class="acct-head">
+        <h1 id="greeting">Your account</h1>
+        <button type="button" id="logout-btn">Log out</button>
+      </div>
+
+      <div class="co-panel">
+        <span class="co-step-label" id="plan-label"></span>
+        <h2 id="plan-name"></h2>
+        <span class="status-chip" id="status-chip"></span>
+        <div class="bar"><i id="progress-bar"></i></div>
+        <div class="stat-row">
+          <div class="stat"><b id="stat-streak">—</b>day streak</div>
+          <div class="stat"><b id="stat-acc">—</b>accuracy</div>
+          <div class="stat"><b id="stat-day">—</b>current pill</div>
+        </div>
+      </div>
+
+      <div class="co-panel" style="margin-top:20px">
+        <h2>Change plan</h2>
+        <p class="hint" style="margin-bottom:10px">Pick a new length — you'll see exactly where you'd land before anything changes.</p>
+        <div class="plan-len-picker" id="len-picker"></div>
+        <div id="switch-options" class="switch-options" style="display:none"></div>
+        <p class="acct-msg" id="switch-msg"></p>
+      </div>
+
+      <div class="co-panel" style="margin-top:20px">
+        <h2>Password</h2>
+        <form id="password-form" novalidate>
+          <div class="field">
+            <label for="pw-current">Current password (leave blank if you never set one)</label>
+            <input type="password" id="pw-current" autocomplete="current-password">
+          </div>
+          <div class="field">
+            <label for="pw-new">New password</label>
+            <input type="password" id="pw-new" autocomplete="new-password" minlength="8" required>
+          </div>
+          <button class="btn" type="submit">Update password</button>
+          <p class="acct-msg" id="pw-msg"></p>
+        </form>
+      </div>
+
+      <div class="danger-zone">
+        <h2 style="font-size:1.1rem;margin-bottom:8px">Cancel subscription</h2>
+        <p class="hint" style="margin-bottom:10px">You keep every pill already delivered. This just stops future ones — same as the unsubscribe link in any email.</p>
+        <button class="btn btn-ghost" type="button" id="cancel-start-btn">Cancel subscription</button>
+        <div class="confirm-row" id="cancel-confirm-row" style="display:none">
+          <button class="btn btn-danger" type="button" id="cancel-yes-btn">Yes, cancel it</button>
+          <button class="btn btn-ghost" type="button" id="cancel-no-btn">Never mind</button>
+        </div>
+        <p class="acct-msg" id="cancel-msg"></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@daily-charter.com">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+var WORKER_URL = "https://dailycharter-engine.miguelrevine.workers.dev";
+var sessionToken = localStorage.getItem('dc_session_token');
+if(!sessionToken){ location.href = 'login.html'; }
+
+var authedFetch = function(path, opts){
+  opts = opts || {};
+  opts.headers = Object.assign({}, opts.headers, { 'Authorization': 'Bearer ' + sessionToken });
+  return fetch(WORKER_URL + path, opts);
+};
+
+var account = null;
+var ALL_PLANS = [90, 180, 270, 365];
+
+function loadAccount(){
+  authedFetch('/api/account').then(function(r){
+    if(r.status === 401){ localStorage.removeItem('dc_session_token'); location.href = 'login.html'; return null; }
+    return r.json();
+  }).then(function(d){
+    if(!d) return;
+    account = d;
+    renderAccount();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = '';
+  }).catch(function(){
+    document.getElementById('loading').textContent = 'Could not load your account — try again in a minute.';
+  });
+}
+
+function renderAccount(){
+  document.getElementById('greeting').textContent = account.first_name ? 'Hi, ' + account.first_name : 'Your account';
+  document.getElementById('plan-label').textContent = account.email;
+  document.getElementById('plan-name').textContent =
+    account.plan_id.replace('L1-', '') + '-day plan · pill ' + account.next_day + ' of ' + account.plan_days;
+  var chip = document.getElementById('status-chip');
+  chip.textContent = account.status;
+  chip.className = 'status-chip ' + account.status;
+  document.getElementById('progress-bar').style.width = account.progress_pct + '%';
+  document.getElementById('stat-streak').textContent = account.stats.streak_days;
+  document.getElementById('stat-acc').textContent = account.stats.accuracy_pct + '%';
+  document.getElementById('stat-day').textContent = account.next_day;
+
+  var picker = document.getElementById('len-picker');
+  picker.innerHTML = '';
+  ALL_PLANS.forEach(function(days){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = days + 'd';
+    var isCurrent = ('L1-' + days) === account.plan_id;
+    b.disabled = isCurrent;
+    if(!isCurrent) b.addEventListener('click', function(){ showSwitchOptions(days); });
+    picker.appendChild(b);
+  });
+  document.getElementById('switch-options').style.display = 'none';
+  document.getElementById('switch-options').innerHTML = '';
+  setMsg('switch-msg', '');
+}
+
+function setMsg(id, text, kind){
+  var el = document.getElementById(id);
+  el.textContent = text || '';
+  el.className = 'acct-msg' + (kind ? ' ' + kind : '');
+}
+
+function showSwitchOptions(newDays){
+  setMsg('switch-msg', 'Loading options…');
+  authedFetch('/api/account/plan-options?new_plan_days=' + newDays).then(function(r){
+    return r.json().then(function(d){ return {ok:r.ok, d:d}; });
+  }).then(function(res){
+    if(!res.ok){ setMsg('switch-msg', res.d.error || 'Could not load plan options.', 'err'); return; }
+    setMsg('switch-msg', '');
+    var box = document.getElementById('switch-options');
+    box.style.display = 'grid';
+    box.innerHTML = '';
+
+    var restartBtn = document.createElement('button');
+    restartBtn.type = 'button'; restartBtn.className = 'switch-opt';
+    restartBtn.innerHTML = '<b>Start from scratch</b><span>Restart at pill 1 of ' + res.d.restart.days + '</span>';
+    restartBtn.addEventListener('click', function(){ confirmSwitch(newDays, 'restart', restartBtn); });
+
+    var resumeBtn = document.createElement('button');
+    resumeBtn.type = 'button'; resumeBtn.className = 'switch-opt';
+    resumeBtn.innerHTML = '<b>Keep my progress</b><span>Resume at pill ' + res.d.resume.day + ' of ' + res.d.resume.days + ' (matched by topic coverage, not just day count)</span>';
+    resumeBtn.addEventListener('click', function(){ confirmSwitch(newDays, 'resume', resumeBtn); });
+
+    box.appendChild(restartBtn);
+    box.appendChild(resumeBtn);
+  }).catch(function(){ setMsg('switch-msg', 'Network error — try again.', 'err'); });
+}
+
+function confirmSwitch(newDays, mode, btnEl){
+  document.querySelectorAll('.switch-opt').forEach(function(b){ b.disabled = true; });
+  setMsg('switch-msg', 'Switching…');
+  authedFetch('/api/account/change-plan', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ session_token: sessionToken, new_plan_days: newDays, mode: mode })
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if(res.ok){ setMsg('switch-msg', 'Done — you are on the ' + newDays + '-day plan now.', 'ok'); loadAccount(); }
+      else {
+        setMsg('switch-msg', res.d.error || 'Something went wrong.', 'err');
+        document.querySelectorAll('.switch-opt').forEach(function(b){ b.disabled = false; });
+      }
+    })
+    .catch(function(){
+      setMsg('switch-msg', 'Network error — try again.', 'err');
+      document.querySelectorAll('.switch-opt').forEach(function(b){ b.disabled = false; });
+    });
+}
+
+document.getElementById('password-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var newPw = document.getElementById('pw-new');
+  if(!newPw.checkValidity()){ newPw.reportValidity(); return; }
+  setMsg('pw-msg', 'Updating…');
+  authedFetch('/api/account/password', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      session_token: sessionToken,
+      current_password: document.getElementById('pw-current').value,
+      new_password: newPw.value
+    })
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if(res.ok){
+        setMsg('pw-msg', 'Password updated.', 'ok');
+        document.getElementById('pw-current').value = '';
+        newPw.value = '';
+      } else setMsg('pw-msg', res.d.error || 'Something went wrong.', 'err');
+    })
+    .catch(function(){ setMsg('pw-msg', 'Network error — try again.', 'err'); });
+});
+
+document.getElementById('cancel-start-btn').addEventListener('click', function(){
+  document.getElementById('cancel-confirm-row').style.display = 'flex';
+});
+document.getElementById('cancel-no-btn').addEventListener('click', function(){
+  document.getElementById('cancel-confirm-row').style.display = 'none';
+});
+document.getElementById('cancel-yes-btn').addEventListener('click', function(){
+  setMsg('cancel-msg', 'Cancelling…');
+  authedFetch('/api/account/cancel', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ session_token: sessionToken })
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      document.getElementById('cancel-confirm-row').style.display = 'none';
+      if(res.ok){ setMsg('cancel-msg', 'Cancelled — no more emails. Good luck!', 'ok'); loadAccount(); }
+      else setMsg('cancel-msg', res.d.error || 'Something went wrong.', 'err');
+    })
+    .catch(function(){ setMsg('cancel-msg', 'Network error — try again.', 'err'); });
+});
+
+document.getElementById('logout-btn').addEventListener('click', function(){
+  authedFetch('/api/logout', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ session_token: sessionToken })
+  }).catch(function(){}).finally(function(){
+    localStorage.removeItem('dc_session_token');
+    location.href = 'login.html';
+  });
+});
+
+loadAccount();
+</script>
+</body>
+</html>

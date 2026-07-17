@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — DailyCharter</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+<style>
+  .auth-wrap{max-width:420px;margin:0 auto;padding:64px 24px 100px}
+  .auth-tabs{display:flex;gap:6px;margin-bottom:24px;background:var(--paper-2);border-radius:8px;padding:4px}
+  .auth-tabs button{flex:1;font:inherit;font-weight:600;font-size:.9rem;padding:10px;border:none;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer}
+  .auth-tabs button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(19,37,58,.15)}
+  .auth-msg{font-size:.86rem;margin-top:14px;min-height:1.2em}
+  .auth-msg.err{color:var(--error)}
+  .auth-msg.ok{color:var(--ledger)}
+  .auth-foot{text-align:center;margin-top:18px;font-size:.86rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="archive.html">Sample pills</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="auth-wrap">
+    <div class="auth-tabs" role="tablist">
+      <button type="button" id="tab-login" class="active" role="tab" aria-selected="true">Log in</button>
+      <button type="button" id="tab-signup" role="tab" aria-selected="false">Create account</button>
+    </div>
+
+    <div class="co-panel">
+      <!-- LOGIN -->
+      <form id="login-form" novalidate>
+        <h2 style="margin-bottom:18px">Welcome back</h2>
+        <div class="field">
+          <label for="li-email">Email address</label>
+          <input type="email" id="li-email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="li-password">Password</label>
+          <input type="password" id="li-password" autocomplete="current-password" required>
+        </div>
+        <button class="btn" type="submit" id="li-btn" style="width:100%">Log in</button>
+        <p class="auth-msg" id="li-msg"></p>
+      </form>
+
+      <!-- SIGNUP -->
+      <form id="signup-form" novalidate style="display:none">
+        <h2 style="margin-bottom:18px">Create your account</h2>
+        <div class="field">
+          <label for="su-name">First name (optional)</label>
+          <input type="text" id="su-name" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="su-email">Email address</label>
+          <input type="email" id="su-email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="su-password">Password</label>
+          <input type="password" id="su-password" autocomplete="new-password" minlength="8" required>
+          <p class="hint">At least 8 characters.</p>
+        </div>
+        <div class="field">
+          <label for="su-plan">Plan</label>
+          <select id="su-plan">
+            <option value="90">90 days — Sprint</option>
+            <option value="180" selected>180 days — Standard</option>
+            <option value="270">270 days — Extended</option>
+            <option value="365">365 days — Marathon</option>
+          </select>
+        </div>
+        <button class="btn" type="submit" id="su-btn" style="width:100%">Create account</button>
+        <p class="auth-msg" id="su-msg"></p>
+      </form>
+    </div>
+
+    <p class="auth-foot">Just want your daily pill without an account? <a href="index.html#signup">Sign up on the homepage</a> instead.</p>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="mailto:hello@daily-charter.com">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+var WORKER_URL = "https://dailycharter-engine.miguelrevine.workers.dev";
+
+var tabLogin = document.getElementById('tab-login'), tabSignup = document.getElementById('tab-signup');
+var formLogin = document.getElementById('login-form'), formSignup = document.getElementById('signup-form');
+function showTab(which){
+  var isLogin = which === 'login';
+  tabLogin.classList.toggle('active', isLogin); tabLogin.setAttribute('aria-selected', isLogin);
+  tabSignup.classList.toggle('active', !isLogin); tabSignup.setAttribute('aria-selected', !isLogin);
+  formLogin.style.display = isLogin ? '' : 'none';
+  formSignup.style.display = isLogin ? 'none' : '';
+}
+tabLogin.addEventListener('click', function(){ showTab('login'); });
+tabSignup.addEventListener('click', function(){ showTab('signup'); });
+if(location.hash === '#signup') showTab('signup');
+
+function setMsg(el, text, kind){
+  el.textContent = text || '';
+  el.className = 'auth-msg' + (kind ? ' ' + kind : '');
+}
+
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var email = document.getElementById('li-email');
+  var password = document.getElementById('li-password');
+  if(!email.checkValidity()){ email.reportValidity(); return; }
+  var btn = document.getElementById('li-btn'), msg = document.getElementById('li-msg');
+  btn.disabled = true; btn.textContent = 'Logging in…'; setMsg(msg, '');
+  fetch(WORKER_URL + '/api/login', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ email: email.value.trim(), password: password.value })
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if(res.ok){
+        localStorage.setItem('dc_session_token', res.d.session_token);
+        location.href = 'account.html';
+      } else {
+        btn.disabled = false; btn.textContent = 'Log in';
+        setMsg(msg, res.d.error || 'Something went wrong.', 'err');
+      }
+    })
+    .catch(function(){
+      btn.disabled = false; btn.textContent = 'Log in';
+      setMsg(msg, 'Network error — check your connection and try again.', 'err');
+    });
+});
+
+document.getElementById('signup-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var email = document.getElementById('su-email');
+  var password = document.getElementById('su-password');
+  if(!email.checkValidity()){ email.reportValidity(); return; }
+  if(!password.checkValidity()){ password.reportValidity(); return; }
+  var btn = document.getElementById('su-btn'), msg = document.getElementById('su-msg');
+  btn.disabled = true; btn.textContent = 'Creating account…'; setMsg(msg, '');
+  fetch(WORKER_URL + '/api/signup', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      email: email.value.trim(), password: password.value,
+      first_name: document.getElementById('su-name').value.trim() || null,
+      plan_days: parseInt(document.getElementById('su-plan').value)
+    })
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if(res.ok){
+        localStorage.setItem('dc_session_token', res.d.session_token);
+        location.href = 'account.html';
+      } else {
+        btn.disabled = false; btn.textContent = 'Create account';
+        setMsg(msg, res.d.error || 'Something went wrong.', 'err');
+      }
+    })
+    .catch(function(){
+      btn.disabled = false; btn.textContent = 'Create account';
+      setMsg(msg, 'Network error — check your connection and try again.', 'err');
+    });
+});
+</script>
+</body>
+</html>
