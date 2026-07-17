@@ -45,36 +45,27 @@ def pill_text(p):
     return " ".join(parts)
 
 def write_review(plan, n, out="review.html"):
-    """Render n random pills as cards for the mandatory human read-through."""
-    import html as H, random
-    picks = random.sample(plan["pills"], min(n, len(plan["pills"])))
-    cards = []
-    for p in sorted(picks, key=lambda x: x["day"]):
-        q = p.get("question") or {}
-        chs = "".join(
-            f"<li><b>{H.escape(c.get('key',''))}.</b> {H.escape(c.get('text',''))}"
-            f"{' ✓' if c.get('key')==q.get('correct_key') else ''}"
-            f"<br><small>{H.escape(c.get('why',''))}</small></li>"
-            for c in q.get("choices", []))
-        tips = "".join(f"<li>{H.escape(t)}</li>" for t in (p.get("exam_tips") or []))
-        cards.append(f"""
-<div class="pill"><div class="meta">Day {p['day']} · {H.escape(p.get('topic',''))}</div>
-<h2>{H.escape(p.get('title',''))}</h2>
-<p>{H.escape(p.get('concept',''))}</p>
-{'<pre>'+H.escape(p['formula'])+'</pre>' if p.get('formula') else ''}
-{'<ul class="tips">'+tips+'</ul>' if tips else ''}
-<p class="stem">{H.escape(q.get('stem',''))}</p><ol class="chs">{chs}</ol></div>""")
-    doc = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><title>Review — {plan['plan_id']}</title>
-<style>body{{font-family:Arial;background:#FBFAF7;color:#13253A;max-width:720px;margin:30px auto;padding:0 20px}}
-.pill{{background:#fff;border:1px solid #D8D4C8;border-radius:10px;padding:22px;margin-bottom:24px}}
-.meta{{font-family:monospace;font-size:.75rem;color:#5B6B7C}}h2{{margin:6px 0 10px}}
-pre{{background:#F2F0EA;border-left:3px solid #0E7C5B;padding:10px 14px}}
-.tips li{{font-size:.9rem}}.stem{{font-weight:bold;border-top:1px dashed #D8D4C8;padding-top:12px}}
-.chs li{{margin:8px 0}}small{{color:#5B6B7C}}</style></head>
-<body><h1>Human review — {plan['plan_id']} {plan.get('version','')} · {len(picks)} random pills</h1>
-<p>Read each like a subscriber: is the concept taught (not just named)?
-Is the question answerable from the text? Are distractors plausible mistakes?</p>
-{''.join(cards)}</body></html>"""
+    """Render n random pills into the interactive review page
+    (template: review_template.html next to this script)."""
+    import os, random
+    tpl_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "review_template.html")
+    if not os.path.exists(tpl_path):
+        sys.exit(f"✗ Missing template {tpl_path} — restore it from git.")
+    picks = sorted(random.sample(plan["pills"], min(n, len(plan["pills"]))),
+                   key=lambda x: x["day"])
+    data = {
+        "plan_id": plan.get("plan_id", "?"),
+        "version": plan.get("version", ""),
+        "model":   plan.get("model", ""),
+        "total":   len(plan["pills"]),
+        "pills":   picks,
+    }
+    doc = open(tpl_path, encoding="utf-8").read()
+    doc = doc.replace("{{PLAN_ID}}", str(data["plan_id"]))
+    # </script> inside JSON strings would end the script block early
+    doc = doc.replace("{{PLAN_JSON}}",
+                      json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
     open(out, "w", encoding="utf-8").write(doc)
     print(f"\n▸ Human-review file → {out} ({len(picks)} pills). Open it in a browser.")
 

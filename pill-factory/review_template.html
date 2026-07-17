@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review — {{PLAN_ID}}</title>
+<style>
+:root{
+  --ink:#13253A; --paper:#FBFAF7; --paper-2:#F2F0EA; --ledger:#0E7C5B;
+  --marker:#FFE86B; --rule:#D8D4C8; --muted:#5B6B7C; --error:#C0564F;
+  --card:#FFFFFF; --shadow:rgba(19,37,58,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#E8EAF0; --paper:#101820; --paper-2:#1A2430; --ledger:#3FBF95;
+    --marker:#B49A1E; --rule:#2C3A4A; --muted:#8FA0B2; --error:#E07A72;
+    --card:#16202B; --shadow:rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Public Sans','Segoe UI',Arial,sans-serif;color:var(--ink);
+  background:var(--paper);line-height:1.6;font-size:16.5px;
+  background-image:repeating-linear-gradient(transparent 0 31px, var(--shadow) 31px 32px);
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+header{
+  position:sticky;top:0;z-index:10;background:var(--paper);
+  border-bottom:1px solid var(--rule);padding:12px 0;
+}
+header .wrap{padding-bottom:0;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.logo{font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
+.logo .dot{color:var(--ledger)}
+.hmeta{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.72rem;color:var(--muted)}
+.stats{display:flex;gap:14px;margin-left:auto;align-items:center;font-size:.85rem}
+.stat b{color:var(--ledger)}
+.bar{height:6px;background:var(--paper-2);border-radius:3px;overflow:hidden;margin:10px 0 2px;flex-basis:100%}
+.bar i{display:block;height:100%;width:0;background:var(--ledger);transition:width .3s ease}
+h1{font-size:1.35rem;margin:28px 0 6px}
+.sub{color:var(--muted);font-size:.92rem;margin-bottom:26px}
+.pill{
+  background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  padding:24px;margin-bottom:26px;box-shadow:0 2px 8px var(--shadow);
+  transition:border-color .2s;
+}
+.pill.done-ok{border-left:5px solid var(--ledger)}
+.pill.done-bad{border-left:5px solid var(--error)}
+.meta{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.72rem;color:var(--muted);
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chip{background:var(--paper-2);border:1px solid var(--rule);border-radius:99px;
+  padding:1px 10px;font-size:.7rem}
+h2{margin:8px 0 10px;font-size:1.15rem}
+.concept{margin-bottom:12px}
+pre.formula{
+  background:var(--paper-2);border-left:3px solid var(--ledger);
+  padding:10px 14px;border-radius:0 8px 8px 0;overflow-x:auto;
+  font-family:'IBM Plex Mono',Consolas,monospace;font-size:.88rem;margin:12px 0;
+  white-space:pre-wrap;
+}
+.tips{margin:10px 0 4px 20px;font-size:.9rem}
+.tips li{margin:3px 0}
+.tips li::marker{color:var(--ledger)}
+.stem{font-weight:700;border-top:1px dashed var(--rule);padding-top:14px;margin-top:14px}
+.chs{list-style:none;margin-top:10px}
+.chs button{
+  display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;
+  background:var(--paper-2);border:1px solid var(--rule);border-radius:8px;
+  font:inherit;font-size:.95rem;color:var(--ink);cursor:pointer;transition:transform .08s;
+}
+.chs button:hover:not(:disabled){transform:translateX(3px);border-color:var(--ledger)}
+.chs button:disabled{cursor:default;opacity:.92}
+.chs button.correct{background:color-mix(in srgb, var(--ledger) 16%, var(--card));border-color:var(--ledger)}
+.chs button.wrong{background:color-mix(in srgb, var(--error) 14%, var(--card));border-color:var(--error)}
+.chs .key{font-weight:800;margin-right:8px}
+.chs .why{display:none;font-size:.82rem;color:var(--muted);margin-top:5px}
+.answered .chs .why{display:block}
+.result{display:none;font-size:.9rem;font-weight:600;margin-top:8px}
+.answered .result{display:block}
+.verdict{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--rule);margin-top:16px;padding-top:14px;
+}
+.verdict span{font-size:.85rem;color:var(--muted)}
+.vbtn{
+  font:inherit;font-size:.85rem;padding:6px 14px;border-radius:99px;cursor:pointer;
+  background:var(--paper-2);border:1px solid var(--rule);color:var(--ink);
+}
+.vbtn.ok.active{background:var(--ledger);border-color:var(--ledger);color:#fff}
+.vbtn.bad.active{background:var(--error);border-color:var(--error);color:#fff}
+.note{
+  flex-basis:100%;display:none;font:inherit;font-size:.88rem;width:100%;
+  margin-top:8px;padding:8px 12px;border:1px solid var(--rule);border-radius:8px;
+  background:var(--paper);color:var(--ink);resize:vertical;min-height:56px;
+}
+.note.show{display:block}
+.export{
+  position:fixed;right:22px;bottom:22px;z-index:20;
+  background:var(--ink);color:var(--paper);border:none;border-radius:99px;
+  padding:12px 20px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;
+  box-shadow:0 4px 14px var(--shadow);
+}
+.export:hover{opacity:.92}
+.toast{
+  position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:30;
+  background:var(--ledger);color:#fff;border-radius:8px;padding:10px 18px;
+  font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo">DailyCharter<span class="dot">.</span> <span style="font-weight:400">review</span></div>
+  <div class="hmeta" id="hmeta"></div>
+  <div class="stats">
+    <div class="stat">reviewed <b id="s-rev">0</b>/<span id="s-tot">0</span></div>
+    <div class="stat">quiz <b id="s-quiz">0/0</b></div>
+  </div>
+  <div class="bar"><i id="progress"></i></div>
+</div></header>
+
+<div class="wrap">
+  <h1>Human quality review</h1>
+  <p class="sub">Read each pill like a subscriber: is the concept <em>taught</em> (not just named)?
+  Answer the question yourself — is it answerable from the text? Are the distractors plausible mistakes?
+  Mark every pill 👍/👎 (notes welcome), then hit <b>Export feedback</b>. Your progress is saved locally.</p>
+  <div id="cards"></div>
+</div>
+
+<button class="export" id="export">📋 Export feedback</button>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {{PLAN_JSON}};
+const KEY  = "dc-review-" + DATA.plan_id + "-" + DATA.version;
+const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+// state[day] = {answer:"A", verdict:"ok"|"bad", note:""}
+
+const $  = (s, el=document) => el.querySelector(s);
+const esc = t => (t||"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+$("#hmeta").textContent = DATA.plan_id + " " + DATA.version + " · model " + (DATA.model||"?") + " · " + DATA.pills.length + " of " + DATA.total + " pills";
+$("#s-tot").textContent = DATA.pills.length;
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); refresh(); }
+
+function refresh(){
+  const days = DATA.pills.map(p=>p.day);
+  const rev  = days.filter(d => state[d] && state[d].verdict).length;
+  const answered = days.filter(d => state[d] && state[d].answer);
+  const right = answered.filter(d => {
+    const p = DATA.pills.find(x=>x.day===d);
+    return state[d].answer === p.question.correct_key;
+  }).length;
+  $("#s-rev").textContent = rev;
+  $("#s-quiz").textContent = right + "/" + answered.length;
+  $("#progress").style.width = (100*rev/days.length) + "%";
+  for (const p of DATA.pills){
+    const el = $("#pill-"+p.day), st = state[p.day]||{};
+    el.classList.toggle("done-ok",  st.verdict==="ok");
+    el.classList.toggle("done-bad", st.verdict==="bad");
+  }
+}
+
+function render(){
+  const box = $("#cards");
+  for (const p of DATA.pills){
+    const q = p.question||{}, st = state[p.day]||{};
+    const el = document.createElement("div");
+    el.className = "pill"; el.id = "pill-"+p.day;
+    el.innerHTML = `
+      <div class="meta">Day ${p.day} <span class="chip">${esc(p.topic)}</span></div>
+      <h2>${esc(p.title)}</h2>
+      <p class="concept">${esc(p.concept)}</p>
+      ${p.formula ? `<pre class="formula">${esc(p.formula)}</pre>` : ""}
+      ${(p.exam_tips&&p.exam_tips.length) ? `<ul class="tips">${p.exam_tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+      <p class="stem">${esc(q.stem)}</p>
+      <ol class="chs">${(q.choices||[]).map(c=>`
+        <li><button data-k="${esc(c.key)}"><span class="key">${esc(c.key)}.</span>${esc(c.text)}
+        <div class="why">${esc(c.why)}</div></button></li>`).join("")}</ol>
+      <p class="result"></p>
+      <div class="verdict">
+        <span>Verdict:</span>
+        <button class="vbtn ok">👍 Good</button>
+        <button class="vbtn bad">👎 Needs work</button>
+        <textarea class="note" placeholder="What's wrong / what to improve? (goes into the export)"></textarea>
+      </div>`;
+    // quiz
+    el.querySelectorAll(".chs button").forEach(b => b.onclick = () => answer(p, b.dataset.k));
+    // verdict
+    $(".vbtn.ok",  el).onclick = () => setVerdict(p.day, "ok");
+    $(".vbtn.bad", el).onclick = () => setVerdict(p.day, "bad");
+    const note = $(".note", el);
+    note.value = st.note||"";
+    note.oninput = () => { (state[p.day] = state[p.day]||{}).note = note.value; localStorage.setItem(KEY, JSON.stringify(state)); };
+    box.appendChild(el);
+    if (st.answer) paintAnswer(p);
+    paintVerdict(p.day);
+  }
+  refresh();
+}
+
+function answer(p, k){
+  if ((state[p.day]||{}).answer) return;
+  (state[p.day] = state[p.day]||{}).answer = k;
+  paintAnswer(p); save();
+}
+
+function paintAnswer(p){
+  const el = $("#pill-"+p.day), st = state[p.day], q = p.question;
+  el.classList.add("answered");
+  el.querySelectorAll(".chs button").forEach(b => {
+    b.disabled = true;
+    if (b.dataset.k === q.correct_key) b.classList.add("correct");
+    else if (b.dataset.k === st.answer) b.classList.add("wrong");
+  });
+  const ok = st.answer === q.correct_key;
+  const r = $(".result", el);
+  r.textContent = ok ? "✓ Correct — " + st.answer : "✗ You picked " + st.answer + " · correct is " + q.correct_key;
+  r.style.color = ok ? "var(--ledger)" : "var(--error)";
+}
+
+function setVerdict(day, v){
+  const st = (state[day] = state[day]||{});
+  st.verdict = st.verdict === v ? null : v;
+  paintVerdict(day); save();
+}
+
+function paintVerdict(day){
+  const el = $("#pill-"+day), st = state[day]||{};
+  $(".vbtn.ok",  el).classList.toggle("active", st.verdict==="ok");
+  $(".vbtn.bad", el).classList.toggle("active", st.verdict==="bad");
+  $(".note", el).classList.toggle("show", st.verdict==="bad" || !!st.note);
+}
+
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+$("#export").onclick = async () => {
+  const lines = ["# Review feedback — " + DATA.plan_id + " " + DATA.version, ""];
+  let ok=0, bad=0, none=0;
+  for (const p of DATA.pills){
+    const st = state[p.day]||{};
+    const v = st.verdict==="ok" ? "👍" : st.verdict==="bad" ? "👎" : "—";
+    if (st.verdict==="ok") ok++; else if (st.verdict==="bad") bad++; else none++;
+    lines.push(`- Day ${p.day} (${p.topic}) “${p.title}”: ${v}` + (st.note ? ` — ${st.note}` : ""));
+  }
+  lines.push("", `Summary: ${ok} good · ${bad} needs work · ${none} unreviewed`);
+  const md = lines.join("\n");
+  try { await navigator.clipboard.writeText(md); toast("Feedback copied to clipboard ✓"); }
+  catch(e){
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([md], {type:"text/markdown"}));
+    a.download = "review-feedback-" + DATA.plan_id + ".md"; a.click();
+    toast("Feedback downloaded ✓");
+  }
+};
+
+render();
+</script>
+</body>
+</html>
