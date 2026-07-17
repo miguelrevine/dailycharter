@@ -150,6 +150,9 @@ details p{margin-top:10px;color:var(--muted);font-size:.95rem;max-width:66ch}
 .pp.sel{background:#fff;border-color:var(--marker);box-shadow:0 0 0 2px var(--marker)}
 .pp.pp-soon,.pp:disabled{opacity:.4;cursor:not-allowed}
 .pp.pp-soon:hover{border-color:#3A5573;transform:none}
+/* sample-quiz feedback (index/archive) */
+.quiz .quiz-why{font-size:.8rem;color:var(--error);margin:4px 0 8px}
+.quiz button:disabled{cursor:default}
 .pp.sel b{color:var(--ink)}
 .pp.sel span{color:var(--ledger)}
 .signup input[type=text]{flex:1;min-width:170px;font-family:var(--body);font-size:1rem;
