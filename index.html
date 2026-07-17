@@ -251,11 +251,16 @@
 
   document.getElementById('signup-form').addEventListener('submit', function(e){
     e.preventDefault();
-    var email = document.getElementById('su-email').value.trim();
+    var emailInput = document.getElementById('su-email');
+    var email = emailInput.value.trim();
     var name  = document.getElementById('su-name').value.trim();
     var btn   = document.getElementById('su-btn');
     var msg   = document.getElementById('su-msg');
-    if(!email){ msg.textContent = "Enter your email first."; return; }
+    if(!emailInput.checkValidity()){
+      emailInput.reportValidity();
+      msg.textContent = email ? "That doesn't look like a valid email address." : "Enter your email first.";
+      return;
+    }
     btn.disabled = true; btn.textContent = "Signing you up…";
 
     if(!WORKER_URL){ // demo mode until the Worker is deployed
