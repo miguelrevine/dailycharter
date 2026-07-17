@@ -282,13 +282,15 @@ async function sendEmail(env, to, subject, html) {
     },
     body: JSON.stringify({ from: env.FROM_EMAIL, to: [to], subject, html }),
   });
-  if (!r.ok) throw new Error(`ESP ${r.status}: ${await r.text()}`);
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(`ESP ${r.status}: ${JSON.stringify(body)}`);
+  return body;   // { id: "…" } on success — logged by the caller for observability
 }
 
 // ──────────────────────────────────────────────
 // CRON: the whole mail engine is this function
 // ──────────────────────────────────────────────
-async function runHourlySend(env) {
+async function runHourlySend(env, collectDetails) {
   const hour = new Date().getUTCHours();
 
   // THE JOIN — day-20-of-270 and day-1-of-365 users resolve identically:
@@ -302,6 +304,7 @@ async function runHourlySend(env) {
      WHERE s.status = 'active' AND s.send_hour_utc = ?`).bind(hour).all();
 
   let sent = 0, skipped = 0, failed = 0;
+  const details = [];
   for (const row of due.results) {
     // 1) idempotency guard BEFORE the ESP call
     try {
@@ -318,8 +321,10 @@ async function runHourlySend(env) {
       const token = await makeToken(env, row.sub_id);
       const stats = await statsFor(env, sub);
       const html  = renderEmail(env, sub, row, token, stats, row.plan_days);
-      await sendEmail(env, row.email,
+      const esp   = await sendEmail(env, row.email,
         `Pill ${String(row.day).padStart(3, "0")}: ${row.title}`, html);
+      console.log(`ESP accepted: to=${row.email} day=${row.next_day} esp_id=${esp.id || "?"}`);
+      if (collectDetails) details.push({ email: row.email, day: row.next_day, esp });
 
       const done = row.next_day + 1 > row.plan_days;
       await env.DB.prepare(
@@ -333,10 +338,12 @@ async function runHourlySend(env) {
         `DELETE FROM sends WHERE subscriber_id=? AND plan_id=? AND day=?`)
         .bind(row.sub_id, row.plan_id, row.next_day).run();
       failed++;
+      if (collectDetails) details.push({ email: row.email, day: row.next_day, error: e.message });
       console.error(`send failed for ${row.email}:`, e.message);
     }
   }
   console.log(`cron h${hour}: sent=${sent} skipped=${skipped} failed=${failed}`);
+  return { hour, sent, skipped, failed, details };
 }
 
 // ──────────────────────────────────────────────
@@ -521,6 +528,16 @@ async function handleFetch(req, env) {
     await env.DB.prepare(`UPDATE subscribers SET password_hash=?, password_salt=? WHERE id=?`)
       .bind(hash, salt, sub.id).run();
     return json({ ok: true }, 200, C);
+  }
+
+  // ---- admin: manually run the hourly send against THIS deployed Worker's
+  // real secrets/D1 (wrangler dev can't use real secrets — they're write-only
+  // once set via `wrangler secret put`) — same code path as the real cron,
+  // returns the ESP response per subscriber sent for fire-test verification ----
+  if (url.pathname === "/api/admin/run-cron" && req.method === "POST") {
+    if (!timingSafeEqual(bearerToken(req) || "", env.ADMIN_TOKEN || ""))
+      return json({ error: "unauthorized" }, 401, C);
+    return json(await runHourlySend(env, true), 200, C);
   }
 
   // ---- admin: read-only, single shared long-lived token (§6) ----
