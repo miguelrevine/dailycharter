@@ -223,6 +223,32 @@
     });
   });
 
+  /* Grey out plan lengths that aren't seeded in the engine yet.
+     New plans appear automatically once seeded — no site change needed. */
+  fetch(WORKER_URL + "/api/plans")
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d.days || !d.days.length) return;
+      var firstAvailable = null;
+      document.querySelectorAll('.pp').forEach(function(p){
+        var days = parseInt(p.dataset.days);
+        if(d.days.indexOf(days) === -1){
+          p.disabled = true;
+          p.classList.add('pp-soon');
+          p.classList.remove('sel'); p.removeAttribute('aria-pressed');
+          p.querySelector('span').textContent = "Coming soon";
+        } else if(firstAvailable === null){
+          firstAvailable = p;
+        }
+      });
+      if(d.days.indexOf(pickedDays) === -1 && firstAvailable){
+        firstAvailable.classList.add('sel');
+        firstAvailable.setAttribute('aria-pressed','true');
+        pickedDays = parseInt(firstAvailable.dataset.days);
+      }
+    })
+    .catch(function(){ /* leave all enabled; server validates anyway */ });
+
   document.getElementById('signup-form').addEventListener('submit', function(e){
     e.preventDefault();
     var email = document.getElementById('su-email').value.trim();

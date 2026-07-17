@@ -268,6 +268,12 @@ async function handleFetch(req, env) {
   // ---- health ----
   if (url.pathname === "/health") return json({ ok: true }, 200, C);
 
+  // ---- available plan lengths (site selector greys out unseeded ones) ----
+  if (url.pathname === "/api/plans" && req.method === "GET") {
+    const rows = await env.DB.prepare(`SELECT DISTINCT days FROM plans`).all();
+    return json({ days: rows.results.map((r) => r.days) }, 200, C);
+  }
+
   // ---- signup (from the website form / checkout success hook) ----
   if (url.pathname === "/api/subscribe" && req.method === "POST") {
     const b = await req.json().catch(() => ({}));
@@ -276,7 +282,7 @@ async function handleFetch(req, env) {
     const plan = await env.DB.prepare(
       `SELECT plan_version FROM plans WHERE plan_id=?
        ORDER BY plan_version DESC LIMIT 1`).bind(planId).first();
-    if (!plan) return json({ error: `no plan seeded for ${planId}` }, 404, C);
+    if (!plan) return json({ error: "This plan length isn't available yet" }, 404, C);
     const id = crypto.randomUUID();
     try {
       await env.DB.prepare(
