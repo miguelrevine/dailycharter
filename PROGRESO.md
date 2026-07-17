@@ -1,6 +1,6 @@
 # PROGRESO — DailyCharter
 
-Última actualización: 2026-07-17 ~22:15 (sesión autónoma — feature de cuentas + cierre fase 5)
+Última actualización: 2026-07-18 ~00:00 (sesión autónoma — fase 8 retomada, envío real confirmado)
 
 ## Estado general
 
@@ -15,8 +15,37 @@
 | 6. Motor de emails (Cloudflare) | ✅ HECHO — D1 `dailycharter` (id `d520a18f-a3d6-4884-b76d-377d9d4d2fd1`), worker en https://dailycharter-engine.miguelrevine.workers.dev, cron horario, secrets TOKEN_SECRET/ESP_API_KEY/ADMIN_TOKEN configurados (nunca en archivos), SITE_URL/FROM_EMAIL en daily-charter.com |
 | 6b. Dominio daily-charter.com | ✅ HECHO — HTTPS enforced, apex→www 301, Resend Verified |
 | 7. Cablear web ↔ motor | ✅ HECHO — WORKER_URL/API_BASE reales, bug de CORS corregido |
-| 8. Prueba de fuego (email real a miguelrevine@gmail.com) | ⛔ **PENDIENTE — NO completada.** El suscriptor existe en D1 (plan L1-90, next_day=1, creado 2026-07-17 16:57) pero **la tabla `sends` está vacía para él: la píldora 001 nunca se envió.** Esto es un hilo distinto al de la sesión de hoy (cuentas de usuario); queda abierto para retomar — ver "Qué necesito de ti" |
+| 8. Prueba de fuego (email real a miguelrevine@gmail.com) | 🔶 **EN CURSO — píldora 001 enviada y confirmada por Resend** (esp_id `a81d2ecc-ad53-4f34-bd73-2a3bbba1c43e`). Esperando que el usuario confirme recepción/SPF-DKIM/clic en quiz/unsubscribe para cerrar del todo — ver sección dedicada abajo |
 | 9. Cuentas de usuario (accounts-design.md) | ✅ HECHO — ver sección dedicada abajo |
+
+## Fase 8 — prueba de fuego (2026-07-18) — retomada desde cero
+
+1. **Alta real desde el formulario**: se borró la fila antigua sin usar (nunca había tenido envíos)
+   y se dio de alta `miguelrevine@gmail.com` de verdad, clicando el formulario de
+   https://www.daily-charter.com en el navegador (plan 90, botón "Send my first pill" →
+   "Check your inbox ✓"). Verificado en D1: `plan_id='L1-90'`, `plan_version='v20260715'`,
+   `next_day=1`, `status='active'`.
+2. **Envío de la píldora 001**: `send_hour_utc` ajustado a la hora UTC del momento (23) y disparo
+   del cron. **Problema encontrado**: `wrangler dev --test-scheduled` (incluso con `--remote`) usa
+   los secrets de `.dev.vars` local, no los reales — y los secrets de producción son de solo
+   escritura (`wrangler secret put` no permite leerlos de vuelta), así que esa vía daba 401 de
+   Resend con la key dummy. Solución: añadí `POST /api/admin/run-cron` (protegido con
+   `ADMIN_TOKEN`, mismo patrón que `/api/admin/subscribers`) que llama a la MISMA función que usa
+   el cron real, contra el worker desplegado de verdad (secrets y D1 reales). Queda como utilidad
+   permanente para reenviar manualmente sin esperar a la hora en punto.
+   **Confirmado por la respuesta de la API de Resend**: `{"sent":1,"skipped":0,"failed":0,
+   "details":[{"email":"miguelrevine@gmail.com","day":1,"esp":{"id":
+   "a81d2ecc-ad53-4f34-bd73-2a3bbba1c43e"}}]}`. D1 confirma `next_day=2` y fila en `sends`
+   (day=1, sent_at 2026-07-17 23:56:47). `send_hour_utc` restaurado a 6 después.
+3. **Avisado al usuario** ("Mira tu bandeja") con la checklist de qué comprobar.
+4. ⏳ **Pendiente de tu confirmación** para ejecutar y pegar aquí:
+   ```sql
+   -- tras el clic en el botón B del quiz:
+   SELECT * FROM attempts WHERE subscriber_id=(SELECT id FROM subscribers WHERE email='miguelrevine@gmail.com') ORDER BY created_at DESC LIMIT 1;
+   SELECT next_day, status FROM subscribers WHERE email='miguelrevine@gmail.com';
+   -- tras abrir (sin confirmar) el enlace de unsubscribe:
+   SELECT status FROM subscribers WHERE email='miguelrevine@gmail.com';  -- debe seguir 'active'
+   ```
 
 ## Feature: cuentas de usuario (2026-07-17) — HECHA y verificada
 
