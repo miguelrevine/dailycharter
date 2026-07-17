@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — DailyCharter</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230E7C5B%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial,sans-serif%27 font-size=%2734%27 font-weight=%27800%27 fill=%27%23FFE86B%27 text-anchor=%27middle%27%3ED.%3C/text%3E%3C/svg%3E">
+<style>
+  .admin-wrap{max-width:900px;margin:0 auto;padding:48px 24px 100px}
+  .token-gate{max-width:420px;margin:60px auto}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule)}
+  th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;color:var(--muted);letter-spacing:.03em}
+  .status-chip{display:inline-block;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--paper-2)}
+  .status-chip.cancelled{background:#FBEFEF;color:var(--error)}
+  .status-chip.completed{background:#E7F5EF;color:var(--ledger)}
+  .admin-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+  .admin-toolbar button{font:inherit;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html">DailyCharter<span class="dot">.</span></a>
+  </div>
+</header>
+
+<main>
+  <div id="gate" class="token-gate">
+    <div class="co-panel">
+      <h2 style="margin-bottom:6px">Admin access</h2>
+      <p class="hint" style="margin-bottom:16px">The token is kept in memory only for this tab — re-enter it each session. Never stored in localStorage.</p>
+      <div class="field">
+        <label for="admin-token">Admin token</label>
+        <input type="password" id="admin-token" autocomplete="off">
+      </div>
+      <button class="btn" id="gate-btn" style="width:100%">Enter</button>
+      <p class="acct-msg" id="gate-msg" style="font-size:.86rem;margin-top:10px"></p>
+    </div>
+  </div>
+
+  <div id="app" class="admin-wrap" style="display:none">
+    <div class="admin-toolbar">
+      <h1 style="font-size:1.4rem">Subscribers <span id="total-count" style="color:var(--muted);font-weight:400;font-size:.9rem"></span></h1>
+      <div>
+        <button class="btn btn-ghost" id="prev-btn">← Prev</button>
+        <button class="btn btn-ghost" id="next-btn">Next →</button>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Email</th><th>Plan</th><th>Pill</th><th>Status</th><th>Since</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="site" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <span class="monogram">DC<span style="color:var(--ledger)">.</span></span>
+    <span>© 2026 DailyCharter — Original study content, not affiliated with CFA Institute.</span>
+  </div>
+</footer>
+
+<script>
+var WORKER_URL = "https://dailycharter-engine.miguelrevine.workers.dev";
+var adminToken = null;   // memory only — never localStorage/sessionStorage
+var LIMIT = 50, offset = 0, total = 0;
+
+document.getElementById('gate-btn').addEventListener('click', function(){
+  var val = document.getElementById('admin-token').value.trim();
+  if(!val) return;
+  adminToken = val;
+  loadPage();
+});
+document.getElementById('admin-token').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') document.getElementById('gate-btn').click();
+});
+
+function loadPage(){
+  var msg = document.getElementById('gate-msg');
+  fetch(WORKER_URL + '/api/admin/subscribers?limit=' + LIMIT + '&offset=' + offset, {
+    headers: { 'Authorization': 'Bearer ' + adminToken }
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, status:r.status, d:d}; }); })
+    .then(function(res){
+      if(!res.ok){
+        adminToken = null;
+        msg.textContent = res.status === 401 ? 'Invalid token.' : (res.d.error || 'Something went wrong.');
+        msg.style.color = 'var(--error)';
+        return;
+      }
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('app').style.display = '';
+      total = res.d.total;
+      render(res.d.subscribers);
+    })
+    .catch(function(){ msg.textContent = 'Network error — try again.'; msg.style.color = 'var(--error)'; });
+}
+
+function render(subs){
+  document.getElementById('total-count').textContent =
+    '(' + (offset + 1) + '–' + (offset + subs.length) + ' of ' + total + ')';
+  document.getElementById('prev-btn').disabled = offset === 0;
+  document.getElementById('next-btn').disabled = offset + LIMIT >= total;
+  var tbody = document.getElementById('rows');
+  tbody.innerHTML = '';
+  subs.forEach(function(s){
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + escapeHtml(s.email) + '</td>' +
+      '<td>' + escapeHtml(s.plan_id) + '</td>' +
+      '<td>' + s.next_day + '</td>' +
+      '<td><span class="status-chip ' + s.status + '">' + s.status + '</span></td>' +
+      '<td>' + escapeHtml(s.created_at) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function escapeHtml(s){
+  var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML;
+}
+
+document.getElementById('prev-btn').addEventListener('click', function(){
+  offset = Math.max(0, offset - LIMIT); loadPage();
+});
+document.getElementById('next-btn').addEventListener('click', function(){
+  offset += LIMIT; loadPage();
+});
+</script>
+</body>
+</html>
