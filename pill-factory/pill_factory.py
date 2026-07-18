@@ -164,7 +164,7 @@ def distribute_days(days):
         schedule.append(topic)
     return schedule  # list index 0 = day 1
 
-def slice_reference(corpus_text, index, total, max_chars=6000):
+def slice_reference(corpus_text, index, total, max_chars=9000):
     """Give pill #index (of `total` in this topic) its slice of the
     topic's reference text, so pills progress through the material."""
     if not corpus_text:
@@ -180,8 +180,9 @@ def slice_reference(corpus_text, index, total, max_chars=6000):
 
 PILL_SCHEMA_HINT = """{
   "title": "short, specific concept title",
-  "concept": "2-4 sentence ORIGINAL plain-language explanation",
-  "exam_tips": ["tip 1", "tip 2"],
+  "lesson": "300-450 word ORIGINAL explanation, 2-4 flowing paragraphs: what the concept IS, why it matters for the exam, and how it works or is applied. Never a bare enumeration.",
+  "worked_example": "one solved numeric example, step by step, using different numbers from the quiz question below — or null if the concept is purely qualitative (no numbers involved)",
+  "exam_traps": ["a specific, concrete way candidates get this wrong on exam day", "a second concrete trap", "optionally a third"],
   "formula": "the key formula in plain text, or null",
   "question": {
     "stem": "one exam-style question",
@@ -218,10 +219,25 @@ def generate_pill(model, topic, day, days, reference, retries=4,
                   extra_rules="", temperature=0.7):
     """One LLM call → one validated pill dict."""
     system = (
-        "You write daily micro-lessons ('pills') for CFA Level I candidates. "
+        "You write daily micro-lessons ('pills') for CFA Level I candidates. Each pill "
+        "must stand alone as real study material: a candidate should be able to LEARN "
+        "the concept from the pill, not just be reminded of a term they already know. "
         "You are given REFERENCE MATERIAL for factual accuracy only. "
         "STRICT RULES: write completely ORIGINAL text — never copy or closely "
-        "paraphrase sentences from the reference; explain in your own words. "
+        "paraphrase sentences from the reference; explain in your own words.\n\n"
+        "LESSON (300-450 words, 2-4 flowing paragraphs): explain what the concept IS, "
+        "WHY it matters for the exam (how it's tested, what it connects to), and HOW it "
+        "works or is applied. Teach the reasoning in real sentences. NEVER write a lesson "
+        "that is mostly a bare enumeration (e.g. 'X includes six principles: 1)... 2)...') "
+        "— if the concept has multiple parts, explain each part's role and how it relates "
+        "to the others in prose, don't just list them.\n\n"
+        "WORKED EXAMPLE: if the concept involves a calculation, walk through ONE solved "
+        "numeric example step by step, using different numbers from the quiz question "
+        "below. If the concept is purely qualitative (no numbers — e.g. an ethics "
+        "principle), set worked_example to null. Never leave it out of the JSON — use "
+        "null explicitly.\n\n"
+        "EXAM TRAPS: 2-3 SPECIFIC, concrete mistakes candidates actually make on this "
+        "concept — not generic advice like 'read the question carefully'.\n\n"
         "One concept per pill. B-level English, friendly but precise. "
         "The three answer choices must include realistic distractors based on "
         "common candidate mistakes. " + extra_rules +
@@ -259,7 +275,7 @@ def generate_pill(model, topic, day, days, reference, retries=4,
         try:
             pill = json.loads(raw)
             assert isinstance(pill, dict)
-            assert pill.get("title") and pill.get("concept")
+            assert pill.get("title") and pill.get("lesson")
             q = pill.get("question") or {}
             keys = [c.get("key") for c in q.get("choices", [])]
             assert sorted(keys) == ["A","B","C"] and q.get("correct_key") in keys
@@ -275,7 +291,15 @@ def generate_pill(model, topic, day, days, reference, retries=4,
 # 4) Plan generation
 # ──────────────────────────────────────────────────────────
 
-def generate_plan(pdf_dir, days, model, log=print, progress=None):
+def generate_plan(pdf_dir, days, model, log=print, progress=None,
+                  version=None, stop_after=None):
+    """version: force a specific version string (e.g. 'v20260719') instead of
+    today's date — needed so a new schema (v2) can be generated side by side
+    with an already-seeded, immutable version without colliding on disk.
+    stop_after: generate only through this day, then leave the .partial
+    checkpoint in place instead of finalizing — used for the mandatory pilot
+    review (accounts-design.md-style workflow: review a slice, get sign-off,
+    then resume the SAME run to finish the rest)."""
     if days not in PLAN_CATALOG:
         raise SystemExit(f"Plan must be one of {sorted(PLAN_CATALOG)}")
     if not ollama_ready():
@@ -286,10 +310,11 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
     schedule = distribute_days(days)
     counts   = {t: schedule.count(t) for t in set(schedule)}
     seen     = {t: 0 for t in counts}
+    version  = version or datetime.now().strftime("v%Y%m%d")
 
     plan = {
         "plan_id":      f"L1-{days}",
-        "version":      datetime.now().strftime("v%Y%m%d"),
+        "version":      version,
         "days":         days,
         "name":         PLAN_CATALOG[days]["name"],
         "model":        model,
@@ -298,7 +323,10 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
     }
 
     os.makedirs(PLANS_DIR, exist_ok=True)
-    out_path    = os.path.join(PLANS_DIR, f"plan-{days}.json")
+    # Versioned filename (plan-<days>-<version>.json) so a new schema/version
+    # never overwrites an already-seeded plan file (those keep their legacy
+    # plan-<days>.json name from before this naming convention existed).
+    out_path    = os.path.join(PLANS_DIR, f"plan-{days}-{version}.json")
     resume_path = out_path + ".partial"
 
     # Resume support: long runs on local hardware can be interrupted.
@@ -310,8 +338,12 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
         log(f"▸ Resuming: {len(plan['pills'])} pills already generated")
 
     start_day = len(plan["pills"]) + 1
+    end_day   = min(stop_after, days) if stop_after else days
+    if start_day > end_day:
+        log(f"▸ Already have {len(plan['pills'])} pill(s) — nothing to do up to day {end_day}")
+        return resume_path if len(plan["pills"]) < days else out_path
     t0 = time.time()
-    for day in range(start_day, days + 1):
+    for day in range(start_day, end_day + 1):
         topic = schedule[day - 1]
         ref   = slice_reference(corpus.get(topic, ""), seen[topic], counts[topic])
         pill  = generate_pill(model, topic, day, days, ref)
@@ -325,11 +357,16 @@ def generate_plan(pdf_dir, days, model, log=print, progress=None):
 
         done = day - start_day + 1
         rate = (time.time() - t0) / done
-        eta  = int(rate * (days - day) / 60)
+        eta  = int(rate * (end_day - day) / 60)
         msg  = f"  [{day:>3}/{days}] {topic[:34]:<34} ~{eta} min left"
         log(msg)
         if progress:
             progress(day, days, msg)
+
+    if len(plan["pills"]) < days:
+        log(f"▸ Stopped at day {end_day}/{days} (pilot/partial) — "
+            f"checkpoint kept at {resume_path}")
+        return resume_path
 
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(plan, f, ensure_ascii=False, indent=1)
@@ -539,6 +576,10 @@ def main():
     p2.add_argument("--plan", type=int, required=True,
                     choices=sorted(PLAN_CATALOG), help="plan length in days")
     p2.add_argument("--model", default=DEFAULT_MODEL)
+    p2.add_argument("--version", default=None,
+                    help="force a version string (e.g. v20260719) instead of today's date")
+    p2.add_argument("--stop-after", type=int, default=None,
+                    help="generate only through this day, then stop (pilot/partial runs)")
 
     p4 = sub.add_parser("regen", help="regenerate specific days of an existing plan (pre-seed QA)")
     p4.add_argument("--pdf-dir", required=True)
@@ -560,7 +601,8 @@ def main():
             print(f"   topics → {', '.join(topics_for_pdf(path))}")
     elif a.cmd == "generate":
         require_model(a.model)
-        generate_plan(a.pdf_dir, a.plan, a.model)
+        generate_plan(a.pdf_dir, a.plan, a.model,
+                      version=a.version, stop_after=a.stop_after)
     elif a.cmd == "regen":
         require_model(a.model)
         regen_pills(a.pdf_dir, a.plan_json,

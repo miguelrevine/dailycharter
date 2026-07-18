@@ -212,7 +212,11 @@ async function statsFor(env, sub) {
 // ──────────────────────────────────────────────
 function renderEmail(env, sub, pill, token, stats, planDays) {
   const q = JSON.parse(pill.question);
-  const tips = JSON.parse(pill.exam_tips || "[]");
+  // "exam_tips" is the DB column name for both schema versions — v1 plans
+  // stored short tips there, v2 plans store the new exam_traps list; the
+  // column itself was never renamed (see accounts-design-era commits).
+  const traps  = JSON.parse(pill.exam_tips || "[]");
+  const lesson = pill.concept || "";         // v1: 2-4 sentences · v2: 300-450 word lesson
   const quizUrl = (k) =>
     `${env.SITE_URL}/quiz.html?pill=${encodeURIComponent(pill.id)}&u=${token}` + (k ? `&a=${k}` : "");
   const choice = (c) => `
@@ -243,12 +247,19 @@ function renderEmail(env, sub, pill, token, stats, planDays) {
       <tr><td style="padding:22px 28px 28px;">
         <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:14px;color:#5B6B7C;">Good morning ${sub.first_name || "there"},</p>
         <h1 style="margin:0 0 14px;font-family:Arial,sans-serif;font-size:22px;line-height:1.25;color:#13253A;">${pill.title}</h1>
-        <p style="margin:0 0 16px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#13253A;">${pill.concept}</p>
+        ${lesson.split(/\n\s*\n/).map((para) =>
+          `<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#13253A;">${para.trim()}</p>`
+        ).join("")}
         ${pill.formula ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;"><tr>
           <td width="4" style="background:#0E7C5B;font-size:0;">&nbsp;</td>
           <td style="background:#F2F0EA;padding:14px 18px;" align="center"><span style="font-family:'Courier New',monospace;font-size:17px;font-weight:bold;color:#13253A;">${pill.formula}</span></td>
         </tr></table>` : ""}
-        ${tips.map((t, i) => `<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#13253A;"><b style="color:#0E7C5B;">${i + 1}.</b>&nbsp;${t}</p>`).join("")}
+        ${pill.worked_example ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #D8D4C8;border-radius:8px;margin:0 0 16px;overflow:hidden;"><tr>
+          <td style="background:#F2F0EA;padding:6px 14px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#5B6B7C;">Worked example</td>
+        </tr><tr><td style="padding:12px 16px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;color:#13253A;white-space:pre-wrap;">${pill.worked_example}</td>
+        </tr></table>` : ""}
+        ${traps.length ? `<p style="margin:14px 0 4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#5B6B7C;">Exam traps</p>` : ""}
+        ${traps.map((t, i) => `<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#13253A;"><b style="color:#0E7C5B;">${i + 1}.</b>&nbsp;${t}</p>`).join("")}
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #D8D4C8;margin-top:18px;"><tr><td style="padding-top:20px;">
           <p style="margin:0 0 4px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1px;color:#0E7C5B;">✎ TEST YOURSELF · TAP YOUR ANSWER</p>
           <p style="margin:0 0 16px;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;color:#13253A;">${q.stem}</p>

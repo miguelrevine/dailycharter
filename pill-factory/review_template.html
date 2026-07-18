@@ -50,14 +50,20 @@ h1{font-size:1.35rem;margin:28px 0 6px}
 .chip{background:var(--paper-2);border:1px solid var(--rule);border-radius:99px;
   padding:1px 10px;font-size:.7rem}
 h2{margin:8px 0 10px;font-size:1.15rem}
-.concept{margin-bottom:12px}
+.lesson{margin-bottom:12px}
 pre.formula{
   background:var(--paper-2);border-left:3px solid var(--ledger);
   padding:10px 14px;border-radius:0 8px 8px 0;overflow-x:auto;
   font-family:'IBM Plex Mono',Consolas,monospace;font-size:.88rem;margin:12px 0;
   white-space:pre-wrap;
 }
-.tips{margin:10px 0 4px 20px;font-size:.9rem}
+.worked{margin:14px 0;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.worked-label{display:block;background:var(--paper-2);font-family:'IBM Plex Mono',Consolas,monospace;
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:6px 12px}
+.worked pre{margin:0;padding:12px 14px;white-space:pre-wrap;font-family:'IBM Plex Mono',Consolas,monospace;font-size:.85rem}
+.traps-label{font-family:'IBM Plex Mono',Consolas,monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.04em;color:var(--muted);margin-top:10px}
+.tips{margin:6px 0 4px 20px;font-size:.9rem}
 .tips li{margin:3px 0}
 .tips li::marker{color:var(--ledger)}
 .stem{font-weight:700;border-top:1px dashed var(--rule);padding-top:14px;margin-top:14px}
@@ -172,9 +178,10 @@ function render(){
     el.innerHTML = `
       <div class="meta">Day ${p.day} <span class="chip">${esc(p.topic)}</span></div>
       <h2>${esc(p.title)}</h2>
-      <p class="concept">${esc(p.concept)}</p>
+      ${(p.lesson||p.concept||"").split(/\n\s*\n/).map(para=>`<p class="lesson">${esc(para.trim())}</p>`).join("")}
       ${p.formula ? `<pre class="formula">${esc(p.formula)}</pre>` : ""}
-      ${(p.exam_tips&&p.exam_tips.length) ? `<ul class="tips">${p.exam_tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+      ${p.worked_example ? `<div class="worked"><span class="worked-label">Worked example</span><pre>${esc(p.worked_example)}</pre></div>` : ""}
+      ${((p.exam_traps||p.exam_tips)&&(p.exam_traps||p.exam_tips).length) ? `<div class="traps-label">Exam traps</div><ul class="tips">${(p.exam_traps||p.exam_tips).map(t=>`<li>${esc(t)}</li>`).join("")}</ul>` : ""}
       <p class="stem">${esc(q.stem)}</p>
       <ol class="chs">${(q.choices||[]).map(c=>`
         <li><button data-k="${esc(c.key)}"><span class="key">${esc(c.key)}.</span>${esc(c.text)}

@@ -11,8 +11,10 @@ Run this on every plan BEFORE committing/seeding it.
 
 Checks:
   STRUCTURE   plan fields, days == len(pills), day sequence 1..N
-  PILLS       title/concept present, 3 choices A/B/C, valid correct_key,
-              every distractor has a "why", concept length sane
+              (--allow-partial skips this for pilot/in-progress runs)
+  PILLS       title/lesson present, lesson is a real explanation (word-count
+              floor, not a bare list), exam_traps present, 3 choices A/B/C,
+              valid correct_key, every distractor has a "why"
   DUPLICATES  repeated titles (exact + case-insensitive)
   BALANCE     topic distribution vs exam weights (±3 pills tolerance)
   ORIGINALITY (with --pdf-dir) flags any pill sharing a verbatim
@@ -28,7 +30,9 @@ from collections import Counter
 # Reuse extraction + weights from the factory (same folder)
 from pill_factory import build_topic_corpus, TOPIC_WEIGHTS
 
-NGRAM = 10  # verbatim window: 10 consecutive identical words = copying
+NGRAM = 10       # verbatim window: 10 consecutive identical words = copying
+MIN_LESSON_WORDS = 250   # v2 lesson floor (spec: 300-450 word target)
+MAX_LESSON_WORDS = 600   # generous ceiling — catches runaway generations
 
 def words(text):
     return re.findall(r"[a-z0-9']+", text.lower())
@@ -38,7 +42,9 @@ def shingles(text, n=NGRAM):
     return {" ".join(w[i:i+n]) for i in range(len(w) - n + 1)}
 
 def pill_text(p):
-    parts = [p.get("concept",""), " ".join(p.get("exam_tips") or [])]
+    parts = [p.get("lesson", p.get("concept", "")),
+             p.get("worked_example") or "",
+             " ".join(p.get("exam_traps") or p.get("exam_tips") or [])]
     q = p.get("question") or {}
     parts.append(q.get("stem",""))
     parts += [c.get("why","") for c in q.get("choices",[])]
@@ -75,6 +81,8 @@ def main():
     ap.add_argument("--pdf-dir", help="source PDFs folder → enables copy check")
     ap.add_argument("--review", type=int, metavar="N",
                     help="also write review.html with N random pills for human reading")
+    ap.add_argument("--allow-partial", action="store_true",
+                    help="skip the days==len(pills) check — for pilot/in-progress runs")
     a = ap.parse_args()
 
     errors, warns = [], []
@@ -91,19 +99,31 @@ def main():
     pills = plan.get("pills", [])
     days  = plan.get("days", 0)
 
-    if len(pills) != days:
-        errors.append(f"days={days} but pills={len(pills)}")
+    if len(pills) != days and not a.allow_partial:
+        errors.append(f"days={days} but pills={len(pills)} (pass --allow-partial for a pilot slice)")
     seq = [p.get("day") for p in pills]
-    if seq != list(range(1, len(pills)+1)):
+    if seq != list(range(1, len(seq)+1)):
         errors.append("pill 'day' fields are not a clean 1..N sequence")
 
     # ---------- PILLS ----------
     for p in pills:
         d = p.get("day", "?")
         if not p.get("title"):   errors.append(f"day {d}: missing title")
-        c = p.get("concept","")
-        if len(c) < 80:          warns.append(f"day {d}: concept very short ({len(c)} chars)")
-        if len(c) > 1200:        warns.append(f"day {d}: concept very long ({len(c)} chars)")
+        lesson = p.get("lesson", p.get("concept", ""))
+        n_words = len(words(lesson))
+        if not lesson:
+            errors.append(f"day {d}: missing lesson")
+        elif n_words < MIN_LESSON_WORDS:
+            warns.append(f"day {d}: lesson too short ({n_words} words, want ≥{MIN_LESSON_WORDS})")
+        elif n_words > MAX_LESSON_WORDS:
+            warns.append(f"day {d}: lesson too long ({n_words} words, want ≤{MAX_LESSON_WORDS})")
+        traps = p.get("exam_traps", p.get("exam_tips"))
+        if not traps:
+            warns.append(f"day {d}: missing exam_traps")
+        elif len(traps) < 2:
+            warns.append(f"day {d}: only {len(traps)} exam_traps (want 2-3)")
+        if "worked_example" not in p:
+            warns.append(f"day {d}: worked_example key missing (use null explicitly if qualitative)")
         q = p.get("question") or {}
         keys = [ch.get("key") for ch in q.get("choices",[])]
         if sorted(keys) != ["A","B","C"]:
@@ -120,17 +140,20 @@ def main():
         if t and n > 1:
             warns.append(f"title repeated ×{n}: “{t}”")
 
-    # ---------- BALANCE ----------
-    total_w = sum(TOPIC_WEIGHTS.values())
-    dist = Counter(p.get("topic") for p in pills)
-    print("\nTopic distribution vs exam weight:")
-    for topic, w in sorted(TOPIC_WEIGHTS.items(), key=lambda x:-x[1]):
-        expected = round(w/total_w * days)
-        got = dist.get(topic, 0)
-        flag = "" if abs(got-expected) <= 3 else "  ← off balance"
-        if flag: warns.append(f"topic '{topic}': {got} pills, expected ≈{expected}")
-        bar = "█" * max(1, got*40//max(1,days))
-        print(f"  {topic:<36} {got:>3} (≈{expected:>3}) {bar}{flag}")
+    # ---------- BALANCE (skipped for pilot slices — meaningless on a partial plan) ----------
+    if a.allow_partial:
+        print("\nTopic distribution vs exam weight: skipped (--allow-partial)")
+    else:
+        total_w = sum(TOPIC_WEIGHTS.values())
+        dist = Counter(p.get("topic") for p in pills)
+        print("\nTopic distribution vs exam weight:")
+        for topic, w in sorted(TOPIC_WEIGHTS.items(), key=lambda x:-x[1]):
+            expected = round(w/total_w * days)
+            got = dist.get(topic, 0)
+            flag = "" if abs(got-expected) <= 3 else "  ← off balance"
+            if flag: warns.append(f"topic '{topic}': {got} pills, expected ≈{expected}")
+            bar = "█" * max(1, got*40//max(1,days))
+            print(f"  {topic:<36} {got:>3} (≈{expected:>3}) {bar}{flag}")
 
     # ---------- ORIGINALITY ----------
     if a.pdf_dir:
