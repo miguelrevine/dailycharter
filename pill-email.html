@@ -18,6 +18,9 @@
     {{progress_pct}}    integer 0-100
     {{days_to_exam}}    e.g. 96
     {{streak_days}}     e.g. 12         {{accuracy_pct}} e.g. 84
+    {{lesson}}          Pill v2: 300-450 words — split on blank lines into one <p> per paragraph
+    {{worked_example}}  Pill v2: solved numeric walkthrough — omit the whole block if null
+    {{exam_traps}}      Pill v2: 2-3 items, numbered like the old exam_tips
     {{quiz_url_a}} {{quiz_url_b}} {{quiz_url_c}}
         → https://YOURSITE/quiz.html?pill={{pill_number}}&a=A&u={{token}}
           The interactive quiz page pre-selects the tapped answer and
@@ -154,8 +157,13 @@
                 Time Value of Money:<br>Present Value of a <span style="background-color:#FFE86B; padding:0 4px;">Perpetuity</span>
               </h1>
 
+              <!-- {{lesson}} — 300-450 words, 2-4 paragraphs (Pill v2). Split on
+                   blank lines from the source JSON into one <p> per paragraph. -->
+              <p style="margin:0 0 12px 0; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#13253A;">
+                A perpetuity is a stream of equal payments that never ends. That "never ends" is exactly why you can't value it by adding up cash flows one at a time — an infinite sum of positive numbers would be infinite too. What rescues the math is that each future payment is discounted by an ever-larger factor, so the discounted values shrink toward zero far faster than the payment count grows. The infinite geometric series that results has a known closed form, and it collapses to one clean division: the payment amount over the discount rate.
+              </p>
               <p style="margin:0 0 16px 0; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#13253A;">
-                A perpetuity pays a fixed amount forever. Because payments never end, you can't sum them one by one — but the geometric series collapses to a single division:
+                The exam leans on this concept anywhere a cash flow is described as fixed and unending — textbook perpetuities, but also preferred stock with a stated, non-growing dividend. Recognizing "this is a perpetuity in disguise" is often the whole difficulty of the question; once you see it, the formula does the rest.
               </p>
 
               <!-- Formula block -->
@@ -168,14 +176,31 @@
                 </tr>
               </table>
 
-              <p style="margin:0 0 8px 0; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#13253A;">
-                Two details the exam loves to test:
+              <!-- {{worked_example}} — null on purely qualitative pills; omit this
+                   whole block in that case. -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #D8D4C8; border-radius:8px; margin:0 0 16px 0;">
+                <tr>
+                  <td style="background-color:#F2F0EA; padding:6px 14px; font-family:'Courier New',Courier,monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#5B6B7C;">
+                    Worked example
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 16px; font-family:'Courier New',Courier,monospace; font-size:13px; line-height:1.6; color:#13253A;">
+                    A preferred share pays a fixed $4.50 dividend forever. Required return: 6%.<br>
+                    PV = 4.50 / 0.06 = <strong>$75.00</strong>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- {{exam_traps}} — 2-3 items -->
+              <p style="margin:0 0 4px 0; font-family:'Courier New',Courier,monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#5B6B7C;">
+                Exam traps
               </p>
               <p style="margin:0 0 6px 0; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#13253A;">
-                <span style="color:#0E7C5B; font-weight:bold;">1.</span>&nbsp; The formula gives the value <em>one period before</em> the first payment.
+                <span style="color:#0E7C5B; font-weight:bold;">1.</span>&nbsp; The formula gives the value <em>one period before</em> the first payment — candidates forget the timing shift and misdate the answer.
               </p>
               <p style="margin:0 0 24px 0; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#13253A;">
-                <span style="color:#0E7C5B; font-weight:bold;">2.</span>&nbsp; Preferred stock with a fixed dividend is the classic real-world perpetuity.
+                <span style="color:#0E7C5B; font-weight:bold;">2.</span>&nbsp; A growing dividend is NOT a perpetuity by this formula — that's the Gordon growth model, a different denominator entirely.
               </p>
 
               <!-- ===== QUIZ ===== -->
