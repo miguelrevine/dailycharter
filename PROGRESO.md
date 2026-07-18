@@ -38,11 +38,34 @@
    "a81d2ecc-ad53-4f34-bd73-2a3bbba1c43e"}}]}`. D1 confirma `next_day=2` y fila en `sends`
    (day=1, sent_at 2026-07-17 23:56:47). `send_hour_utc` restaurado a 6 después.
 3. **Avisado al usuario** ("Mira tu bandeja") con la checklist de qué comprobar.
-4. ⏳ **Pendiente de tu confirmación** para ejecutar y pegar aquí:
-   ```sql
-   -- tras el clic en el botón B del quiz:
-   SELECT * FROM attempts WHERE subscriber_id=(SELECT id FROM subscribers WHERE email='miguelrevine@gmail.com') ORDER BY created_at DESC LIMIT 1;
-   SELECT next_day, status FROM subscribers WHERE email='miguelrevine@gmail.com';
+4. ✅ **Confirmado por el usuario y verificado en D1 (2026-07-18)**:
+   - Carpeta: Principal (no spam/promociones).
+   - SPF **PASS**, DKIM **PASS**, **DMARC FAIL** → ver pendiente DMARC abajo.
+   - `attempts`: fila real — `pill_id=L1-90-001, choice=A, is_correct=1, source=email_tap,
+     created_at=2026-07-18 00:06:45`. ⚠️ El usuario dijo haber pulsado "B"; lo grabado es "A"
+     (que además era la respuesta correcta de esa píldora — A) Independence and Objectivity,
+     B) Confidentiality, C) Diligence and Reasonable Basis). El mecanismo funciona bien
+     (`source=email_tap` prueba que vino del enlace del email, evaluado correctamente contra
+     `correct_key`); solo no cuadran las letras — sin aclarar si de verdad quería decir la opción B.
+   - `subscribers`: `next_day=2`, `status='active'`.
+   - Tras abrir (sin confirmar) el enlace de unsubscribe: `status` sigue `'active'` — el GET no
+     escribió nada, confirmado.
+
+## ⛔ Pendiente — DMARC no configurado (encontrado en fase 8, 2026-07-18)
+
+`_dmarc.daily-charter.com` no existe en DNS (NXDOMAIN) → el email salió con **DMARC FAIL**
+(SPF y DKIM sí pasan). El usuario va a crear el registro TXT:
+
+```
+Nombre: _dmarc
+Tipo:   TXT
+Valor:  v=DMARC1; p=none;
+```
+
+**Cuando confirme que lo creó**: verificar propagación (`nslookup -type=TXT _dmarc.daily-charter.com`
+contra el NS autoritativo de Cloudflare) y disparar un nuevo envío de prueba (`POST
+/api/admin/run-cron` tras ajustar `send_hour_utc`, o esperar al cron horario) para confirmar
+DMARC PASS en "Mostrar original" del siguiente email.
    -- tras abrir (sin confirmar) el enlace de unsubscribe:
    SELECT status FROM subscribers WHERE email='miguelrevine@gmail.com';  -- debe seguir 'active'
    ```
